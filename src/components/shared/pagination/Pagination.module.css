@@ -1,0 +1,32 @@
+.pagination{
+    display: inline-flex;
+    width: 90%;
+    justify-content: center;
+    gap:var(--spacing-md);
+    align-items: center;
+    & button[id="btn_pagination"]{
+        width:auto;
+        padding: var(--spacing-2xl) var(--spacing-4xl);
+    }
+    & p{
+        overflow: hidden;
+        white-space:pre-wrap;
+        color:var(--primary);
+        font-weight: 500;
+        text-align: center;
+        text-transform:none;
+    }
+}
+
+@media (min-width: 768px) {
+    .pagination{
+        justify-content: space-between;
+        gap:var(--spacing-null);
+    }
+}
+
+@media (min-width: 1400px) {
+    .pagination{
+        width:100%;
+    }
+}

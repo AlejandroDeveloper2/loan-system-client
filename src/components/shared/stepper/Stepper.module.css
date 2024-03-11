@@ -1,0 +1,75 @@
+.stepper{
+    width:auto;
+    height:auto;
+    max-width: 400px;
+    display:grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap:var(--spacing-sm);
+    background-color: transparent;
+}
+
+
+
+.step,.activeStep{
+    list-style: none;
+    background-color: var(--white);
+    display: grid;
+    place-content: center;
+    transition: all 0.6s ease;
+    border-radius: var(--radius-md);
+    cursor:pointer;
+    border: 2px solid var(--primary);
+    position: relative;
+
+    & a{   
+        padding: var(--spacing-xl) var(--spacing-3xl);
+        box-sizing: border-box;
+        text-decoration: none;
+        color:var(--primary);
+        font-weight: bold;
+        text-transform:capitalize;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    &:active{
+        background-color: var(--gray-light);
+    }
+}
+
+.activeStep{
+    & a{
+        color:var(--white);
+    }
+    background-color: var(--primary);
+    
+    &:active{
+        background-color: var(--primary);
+    }
+}
+
+@media (min-width: 768px) {
+    .stepper{
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 700px;
+        gap:var(--spacing-md);
+    }
+}
+
+@media (min-width: 1400px) {
+    .stepper{
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 1000px;
+    }
+
+    .step{
+        &:hover{
+            background-color: var(--gray-light);
+        }
+    }
+    .activeStep{
+        &:hover{
+            background-color: var(--primary);
+        }
+    }
+}

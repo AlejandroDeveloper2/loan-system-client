@@ -1,0 +1,30 @@
+.indicatorSection{
+    width:90%;
+    height: auto;
+    gap:var(--spacing-sm);
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    border-radius:var(--radius-sm);
+    background-color:var(--white);
+    border:2px solid var(--gray-light);
+    padding:var(--spacing-xl) var(--spacing-md);
+
+    & h3{
+        color:var(--gray-dark);
+        text-transform:capitalize;
+        text-align: center;
+        font-weight: bold;
+    }
+}
+
+@media (min-width: 1400px) {
+    .indicatorSection{
+        width: 100%;
+        align-items: flex-start;
+        & h3{       
+            text-align: left;
+        }
+    }
+}

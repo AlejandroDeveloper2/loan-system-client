@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+:root{
+  /* Spacing Custom Variables */
+  --spacing-null:0px;
+  --spacing-4xs:2px;
+  --spacing-3xs:4px;
+  --spacing-2xs:6px;
+  --spacing-xs:8px;
+  --spacing-sm:12px;
+  --spacing-md:16px;
+  --spacing-xl:18px;
+  --spacing-2xl:20px;
+  --spacing-3xl:24px;
+  --spacing-4xl:30px;
+  --spacing-5xl:40px;
+
+  /* Border Radius Variables */
+  --radius-null:0px;
+  --radius-sm:12px;
+  --radius-md:16px;
+  --radius-xl:20px;
+  --radius-2xl:40px;
+  --radius-rounded:50%;
+
+  /*Font Size Variables*/
+  --font-size-xs:10px;
+  --font-size-sm:14px;
+  --font-size-normal:16px;
+  --font-size-xl:18px;
+  --font-size-2xl:25px;
+  --font-size-3xl:30px;
+  --font-size-4xl:40px;
+
+  /* Font Weight */
+  --weight-light:300;
+  --weight-normal:400;
+  --weight-medium:500;
+  --weight-semi-bold:600;
+  --weight-bold:700;
+
+  /*Font Family*/
+  --font-family:"Outfit", sans-serif;
+
+  /* Color Schema */
+  --white:#ffffff;
+  --primary: #2C654D;
+  --secondary: #56BEB8;
+  --gray-dark:#43494B;
+  --gray-base:#78909C;
+  --gray-light: #CFD8DC;
+  --red:#E53535;
+  --warning:#e06f2d;
+  --bg-color:linear-gradient(180deg, var(--white) 80%, var(--primary) 100%);
+  --overlay-color:rgba(0,0,0,0.5);
+  --button-hover-color:rgba(0,0,0,0.3);
+}
+
+*{
+  margin:var(--spacing-null);
+  padding: var(--spacing-null);
+  box-sizing: border-box;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+
+body{
+  width: 100%;
+  display: block;
+  font-family: var(--font-family);
+}
+
+body::-webkit-scrollbar {
+  width: 15px;              
+}
+
+body::-webkit-scrollbar-track{
+  background: var(--white);      
+}
+
+body::-webkit-scrollbar-thumb{
+  background-color: var(--primary);  
+  border-radius: var(--radius-xl);      
+  border: none;  
+}

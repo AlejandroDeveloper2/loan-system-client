@@ -1,0 +1,121 @@
+import { AxiosError } from "axios";
+
+import {
+  ParsedLoanRequestData,
+  RequestFormData,
+  ResponseGlobal,
+  ServerResponse,
+  TableResponse,
+} from "@models/DataModels";
+
+import axiosClient from "@config/AxiosClient";
+import { LoanRequestFilters } from "@models/FiltersDataModels";
+
+export class LoanRequestService {
+  constructor() {}
+
+  public async validateClient(
+    identification: string
+  ): Promise<ResponseGlobal<boolean>> {
+    let response: ResponseGlobal<boolean>;
+    try {
+      const { data } = await axiosClient.get<ResponseGlobal<boolean>>(
+        `/clients/search-by-id?identification=${identification}`
+      );
+      response = data;
+    } catch (e: unknown) {
+      const parsedError: AxiosError = e as AxiosError;
+      const errorMessage = parsedError?.response?.data;
+      const parsedErrorMessage: ServerResponse = errorMessage as ServerResponse;
+      throw new AxiosError(parsedErrorMessage.message);
+    }
+    return response;
+  }
+
+  public async createLoanRequest(requestData: RequestFormData): Promise<void> {
+    try {
+      await axiosClient.post<void>("/loan-application", requestData);
+    } catch (e: unknown) {
+      const parsedError: AxiosError = e as AxiosError;
+      const errorMessage = parsedError?.response?.data;
+      const parsedErrorMessage: ServerResponse = errorMessage as ServerResponse;
+      throw new AxiosError(parsedErrorMessage.message);
+    }
+  }
+
+  public async approveLoanRequest(
+    token: string,
+    loanRequestId: string
+  ): Promise<void> {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      await axiosClient.patch<void>(
+        `/loan-application/approve/${loanRequestId}`,
+        {},
+        config
+      );
+    } catch (e: unknown) {
+      const parsedError: AxiosError = e as AxiosError;
+      throw new AxiosError(parsedError.message);
+    }
+  }
+
+  public async rejectLoanRequest(
+    token: string,
+    loanRequestId: string
+  ): Promise<void> {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      await axiosClient.delete<void>(
+        `/loan-application/reject/${loanRequestId}`,
+        config
+      );
+    } catch (e: unknown) {
+      const parsedError: AxiosError = e as AxiosError;
+      throw new AxiosError(parsedError.message);
+    }
+  }
+
+  public async getAllLoanRequests(
+    token: string,
+    page: number,
+    limit: string,
+    searchValue: string,
+    loanRequestFilters: LoanRequestFilters,
+    filter?: string
+  ): Promise<TableResponse<ParsedLoanRequestData>> {
+    let response: TableResponse<ParsedLoanRequestData>;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      const { data } = await axiosClient.get<
+        TableResponse<ParsedLoanRequestData>
+      >(
+        filter
+          ? `/loan-application?limit=${limit}&paymentCycle=${filter}&page=${page}&filterCriteriaText=${searchValue}&startDate=${loanRequestFilters.requestDate}`
+          : `/loan-application?limit=${limit}&page=${page}&filterCriteriaText=${searchValue}&startDate=${loanRequestFilters.requestDate}`,
+        config
+      );
+      response = data;
+    } catch (e: unknown) {
+      const parsedError: AxiosError = e as AxiosError;
+      throw new AxiosError(parsedError.message);
+    }
+    return response;
+  }
+}

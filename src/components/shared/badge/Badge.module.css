@@ -1,0 +1,49 @@
+.badge, .danger, .primary, .light, .neutral,.warning {
+    width:fit-content;
+    padding:var(--spacing-xs) var(--spacing-md);
+    border-radius:var(--radius-xl);
+    display: grid;
+    place-content: center;
+
+    & span{
+        text-align: center;
+        font-weight:500;
+        text-transform: capitalize;
+    }
+}
+
+.danger {
+    background-color: var(--red);
+    & span{
+        color:var(--white);
+    }
+}
+
+.primary {
+    background-color: var(--primary);
+    & span{
+        color:var(--white);
+    }
+}
+
+.light {
+    background-color: var(--gray-light);
+    & span{
+        color:var(--gray-dark);
+    }
+}
+
+.neutral {
+    background-color: var(--gray-base);
+    & span{
+        color:var(--gray-dark);
+    }
+}
+
+.warning{
+    background-color: var(--warning);
+    & span{
+        color:var(--white);
+    }
+}
+

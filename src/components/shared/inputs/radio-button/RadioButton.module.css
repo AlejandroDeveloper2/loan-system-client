@@ -1,0 +1,83 @@
+.radioButtonList{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap:var(--spacing-xs);
+    justify-content: flex-start;
+    align-items: center;
+    margin-top:var(--spacing-xs);
+    justify-self: center;
+    & li{
+        list-style: none;
+    }
+}
+
+.radioLabel{
+  color:var(--primary);
+  font-weight: bold;
+  text-transform:capitalize;
+  text-align: center;
+}
+
+.radioButton {
+  & input[type="radio"]{
+    position: absolute;
+    opacity: 0;
+    + .radioLabel{
+        &::before {
+            content: '';
+            background: var(--white);
+            border-radius:var(--radius-rounded);
+            border: 2px solid var(--primary);
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            position: relative;
+            top: -0.2em;
+            margin-right: var(--spacing-sm); 
+            vertical-align: top;
+            cursor: pointer;
+            text-align: center;
+            transition: all 250ms ease;
+        }
+    }
+    &:checked {
+        + .radioLabel {
+          &:before {
+            background-color: var(--primary);
+            box-shadow: inset 0 0 0 4px var(--white);
+          }
+        }
+    }
+    &:focus {
+      + .radioLabel {
+        &:before {
+          outline: none;
+          border-color:var(--primary);
+        }
+      }
+    }
+    + .radioLabel {
+        &:empty {
+          &:before {
+            margin-right: 0;
+          }
+        }
+      }
+
+  }
+}
+
+@media(min-width:768px){
+    .radioButton{
+        & input[type="radio"]{
+            + .radioLabel{
+                &::before {
+                    width: 30px;
+                    height: 30px;    
+                }
+            }
+        
+        }
+    }
+}

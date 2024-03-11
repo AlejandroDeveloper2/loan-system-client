@@ -1,0 +1,73 @@
+.avatarContainer, .userInfoList{
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap:var(--spacing-2xl);
+    display:none;
+}
+
+.avatar{
+    display:grid;
+    place-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius:var(--radius-rounded);
+    background-color: var(--white);
+    & svg{
+        width: 40px;
+        height: 40px;
+        color:var(--gray-light);
+    }
+}
+
+.userInfoList{
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap:var(--spacing-xs);
+
+    & li{
+        list-style: none;
+        display: inline-flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap:var(--spacing-xs);
+
+        & span{
+            color:var(--white);
+            font-weight:bold;
+            text-align: left;
+        }
+
+        & svg {
+            width:20px;
+            height: 20px;
+            color:var(--white);
+        }
+
+        & p, & p[id="role-text"]{
+            color:var(--white);
+            font-weight:300;
+            text-align: left;
+        }
+
+        & p[id="role-text"]{
+            font-weight:500;
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .avatarContainer{
+        display: flex;
+    }
+    .userInfoList{
+        & li {
+            & svg {
+                width:24px;
+                height: 24px;
+            }
+        }
+    }
+}

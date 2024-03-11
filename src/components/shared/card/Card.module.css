@@ -1,0 +1,153 @@
+.cardContainer{
+    width:auto;
+    height: auto;
+    padding:var(--spacing-2xl) var(--spacing-4xl);
+    border-radius:var(--radius-xl);
+    display: flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:var(--spacing-4xl);
+    background-color: transparent;
+
+    button[id="btn-more-details"]{
+        width:auto;
+        padding:var(--spacing-xl) var(--spacing-4xl);
+    }
+
+    & span[id="card-text"] {
+        width: 80%;
+        font-weight:500;
+        text-align: center;
+        text-transform: capitalize;
+    }
+    & small {
+        font-weight: 300;
+        text-transform: capitalize;
+        text-align: center;
+    }
+}
+
+.neutral{
+    border:solid 2px var(--gray-dark); 
+    & span[id="card-text"] {
+        color:var(--gray-dark);
+    }
+    & small {
+        color:var(--gray-dark);
+    }
+    .cardContent{
+        & svg {
+            color:var(--gray-dark);
+        }   
+        & h2{
+            color:var(--gray-dark);
+        } 
+    }
+}
+
+.primary{
+    border:solid 2px var(--primary); 
+    & span[id="card-text"] {
+        color:var(--primary);
+    }
+    & small {
+        color:var(--primary);
+    }
+    .cardContent{
+        & svg {
+            color:var(--primary);
+        }  
+        & h2{
+            color:var(--primary);
+        } 
+        
+    }
+}
+
+.danger{
+    border:solid 2px var(--red); 
+    & span[id="card-text"] {
+        color:var(--red);
+    }
+    & small {
+        color:var(--red);
+    }
+    .cardContent{
+        & svg {
+            color:var(--red);
+        }  
+        & h2{
+            color:var(--red);
+        } 
+    }
+}
+
+.light{
+    border:solid 2px var(--gray-base); 
+    & small {
+        color:var(--gray-base);
+    }
+    & span[id="card-text"] {
+        color:var(--gray-base);
+    }
+    .cardContent{
+        & svg {
+            color:var(--gray-base);
+        }  
+        & h2{
+            color:var(--gray-base);
+        } 
+    }
+}
+
+.warning{
+    border:solid 2px var(--warning); 
+    & span[id="card-text"]{
+        color:var(--warning);
+    }
+    & small {
+        color:var(--warning);
+    }
+    .cardContent{
+        & svg {
+            color:var(--warning);
+        }  
+        & h2{
+            color:var(--warning);
+        } 
+    }
+}
+
+.cardContent{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap:var(--spacing-sm);
+
+    & svg {
+        width:30px;
+        height: 30px;
+    }  
+    & h2{
+        font-weight:bold;
+        text-align: center;
+        text-transform: capitalize;
+    }
+}
+
+@media(min-width:768px){
+    .cardContent{
+        & svg {
+            width:40px;
+            height: 40px;
+        } 
+    }
+}
+
+/* @media(min-width:1400px){
+    .cardContainer{
+        width:300px;
+    }
+}  */
+

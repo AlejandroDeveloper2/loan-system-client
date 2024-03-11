@@ -1,0 +1,109 @@
+.tableContainer{
+    width:100%;
+    height:auto;
+    background-color:transparent;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    gap:var(--spacing-3xl);
+}   
+
+.table{
+    width:100%; 
+    border: 1px solid var(--primary); 
+    background-color: var(--white);
+    border-collapse: separate;
+    border-spacing:0;
+    border-radius:var(--radius-sm);
+    overflow: hidden;
+    table-layout: auto;
+
+    & thead {
+        background-color: var(--primary);
+        border:none;
+        & th {
+            border-right: 1px var(--white) solid;         
+            padding:var(--spacing-md);
+
+            & svg[id="icon-header"]{
+                width:20px;
+                height:20px;
+                color:var(--white);
+                text-align: left;
+                vertical-align: middle;
+                margin-right: var(--spacing-xs);
+            }
+            & span{
+                color:var(--white);
+                font-weight:bold;
+                text-align: left;   
+                vertical-align: middle;            
+            }
+        }
+        & th:last-child{
+            border-right:none;
+        }
+    }
+
+    & tr {
+        & td:last-child{
+            border-right:none;
+        }
+        & td {
+            & button {
+                width: 64px;
+                height: 64px;
+                padding:0;
+                margin-left:var(--spacing-xs);
+            }
+            & div{
+                margin: 0 auto;
+                width: 104px;
+                & span{
+                    text-align: center;
+                }
+            }
+            padding:var(--spacing-xl);
+            border-right: 1px var(--primary) solid;
+            background-color: var(--white);
+            & span{
+                width: 200px;
+                color:var(--primary);
+                font-weight:normal;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                text-align: left;   
+                vertical-align: middle; 
+            }
+        }
+    }
+}
+
+.emptyRow{
+    padding: var(--spacing-md); 
+    & td {   
+        & p{
+            color:var(--primary);
+            font-weight: 500;
+            text-transform:capitalize;
+            text-align: center;
+        }
+    } 
+}
+
+@media (min-width: 768px) {
+    .table{
+        & tr  {          
+            & th{
+
+                & svg[id="icon-header"]{
+                    width:24px;
+                    height:24px; 
+                }
+        
+            }
+        }
+    }
+}

@@ -1,0 +1,25 @@
+.select{
+    outline: none;
+    border: none;
+    width: 80%;
+    color: var(--primary);
+    justify-self: center;
+    font-weight:normal;
+    text-transform:capitalize;
+    text-align: left;
+    font-size: var(--font-size-sm);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    &::-ms-expand {
+      display: none;
+    }
+    transition: all 0.5s ease;
+}
+
+@media (min-width: 768px){
+    .select{
+        font-size: var(--font-size-normal);
+    }
+}

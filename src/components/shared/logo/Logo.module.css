@@ -1,0 +1,23 @@
+.logoContainer {
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction: column;
+    gap:var(--spacing-md);
+
+    & h1 {
+        color:var(--primary);
+        font-weight: 500;
+        text-transform: capitalize;
+        text-align: center;
+        width: 90%;
+    }
+}
+
+@media (min-width: 768px) {
+    .logoContainer {
+        & h1 {
+            width: 100%;
+        }
+    }
+}

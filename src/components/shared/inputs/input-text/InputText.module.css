@@ -1,0 +1,104 @@
+.inputContainer{
+    width: 300px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap:var(--spacing-xs);
+    align-items: flex-start;
+    justify-content: center;
+
+    & label{
+        color: var(--primary);
+        font-weight:bold;
+        text-transform:capitalize;
+        text-align: left;
+    }
+    justify-self: center;
+    align-self: flex-start;
+}
+
+.hintText{
+    color: var(--primary);
+    font-weight:300;
+    text-transform:none;
+    text-align: left;
+    margin-left:var(--spacing-2xs);
+}
+
+.inputBody{
+    width: 100%;
+    height: auto;
+    background-color:var(--white);
+    border-radius:var(--radius-sm);
+    border:2px solid var(--primary);
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items:center;
+    gap:var(--spacing-xs);
+    transition: all 0.6s ease;
+    padding: var(--spacing-sm) var(--spacing-2xl);
+
+    & input {
+        width: 80%;
+        outline: none;
+        border: none;
+        background-color: var(--white);
+        &::placeholder{
+            color: var(--gray-light);
+            font-weight:normal;
+            text-transform:capitalize;
+            text-align: left;
+            font-size: var(--font-size-sm);
+        }
+        color: var(--primary);
+        font-weight:500;
+        font-size: var(--font-size-sm);
+    }
+
+    & svg, svg[id="select-arrow"] {
+        color:var(--primary);
+        width:20px;
+        height: 20px;
+        transition: transform 0.6s ease;
+    }
+
+    &:active{
+        box-shadow: 0 0 10px var(--primary);
+    }
+    &:active svg{
+        transform: scale(1.2);
+    }
+    &:active svg[id="select-arrow"]{
+        transform: rotate(90deg);
+    }
+}
+
+@media (min-width: 768px) {
+    .inputContainer{
+        width: 350px;
+    }
+
+    .inputBody{
+        padding: var(--spacing-md) var(--spacing-2xl);
+        & input{
+            &::placeholder{
+                font-size: var(--font-size-normal);
+            }
+            font-size: var(--font-size-normal);
+        }
+        & svg, svg[id="select-arrow"] {
+            width:24px;
+            height: 24px;
+        }
+        &:hover{
+            box-shadow: 0 0 10px var(--primary);
+        }
+        &:hover svg{
+            transform: scale(1.2);
+        }
+        &:hover svg[id="select-arrow"]{
+            transform: rotate(90deg);
+        }
+    }
+}
+

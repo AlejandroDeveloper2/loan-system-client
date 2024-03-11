@@ -1,0 +1,20 @@
+.figureSvg{
+    width:90px;
+    height:97px;
+    position: absolute;
+    top:10px;
+    right: 10px;
+}
+
+@media (min-width: 768px){
+    .figureSvg{
+        position: fixed;
+    }
+}
+@media (min-width: 1400px){
+    .figureSvg{
+        width:156px;
+        height:169px;
+    }
+}
+

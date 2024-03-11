@@ -1,0 +1,16 @@
+.figureSvg2{
+    width:90px;
+    height:97px;
+    position: fixed;
+    bottom:20px;
+    left: 20px;
+    opacity: 0;
+}
+
+@media (min-width: 768px){
+    .figureSvg2{
+        width:100px;
+        height:108px;
+        opacity: 1;
+    }
+}
