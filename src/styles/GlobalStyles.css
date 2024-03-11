@@ -38,6 +38,8 @@
 }
 
 .formContainer{
+    width: 90%;
+    overflow: visible;
     & form {
         border:2px solid var(--gray-light);
         & fieldset {

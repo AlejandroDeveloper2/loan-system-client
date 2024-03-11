@@ -33,6 +33,7 @@ const InputText = (props: InputProps): JSX.Element => {
     placeholder,
     errorMessage,
     userHint,
+    disabled,
     Icon,
     onChange,
   } = props;
@@ -51,6 +52,7 @@ const InputText = (props: InputProps): JSX.Element => {
           type={type}
           name={name}
           value={value}
+          disabled={disabled ? true : false}
           placeholder={placeholder}
           onChange={onChange}
         />

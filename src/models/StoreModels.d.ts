@@ -5,6 +5,7 @@ import {
   RequestFormData,
   ParsedLoanRequestData,
   ClientLoanData,
+  LoanRequestData,
 } from "./DataModels";
 import {
   LoginFormData,
@@ -33,6 +34,7 @@ interface LoanRequestStore {
   loading: boolean;
   clientExists: boolean;
   loanRequests: ParsedLoanRequestData[];
+  loanRequest: LoanRequestData | null;
   validateClient: (identification: string) => Promise<void>;
   createLoanRequest: (requestData: RequestFormData) => Promise<void>;
   approveLoanRequest: (loanRequestId: string) => Promise<void>;
@@ -44,6 +46,7 @@ interface LoanRequestStore {
     loanRequestFilters: LoanRequestFilters,
     filter?: string
   ) => Promise<void>;
+  getLoanRequest: (loanRequestId: string) => Promise<void>;
 }
 
 interface ClientStore {

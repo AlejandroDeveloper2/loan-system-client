@@ -28,10 +28,17 @@ export { default as Filters } from "./shared/filters/Filters";
 export { default as Badge } from "./shared/badge/Badge";
 export { default as InfoSection } from "./shared/info-section/InfoSection";
 
+// loan request components
 export { default as ClientSearchValidation } from "./loan-request/client-search-validation/ClientSearchValidation";
 export { default as ContactInfoList } from "./loan-request/contact-info-list/ContactInfoList";
 export { default as InviteLinkSection } from "./loan-request/invite-link-section/InviteLinkSection";
+export { default as PersonalDataSection } from "./loan-request/loan-request-view/personal-data-section/PersonalDataSection";
+export { default as BankDataSection } from "./loan-request/loan-request-view/bank-data-section/BankDataSection";
+export { default as LoanDataSection } from "./loan-request/loan-request-view/loan-data-section/LoanDataSection";
+export { default as WorkDataSection } from "./loan-request/loan-request-view/work-data-section/WorkDataSection";
+export { default as ReferencesDataSection } from "./loan-request/loan-request-view/references-data-section/ReferencesDataSection";
 
+// client components
 export { default as PersonalForm } from "./clients/personal-form/PersonalForm";
 export { default as WorkForm } from "./clients/work-form/WorkForm";
 export { default as BankAccountForm } from "./clients/bank-account-form/BankAccountForm";

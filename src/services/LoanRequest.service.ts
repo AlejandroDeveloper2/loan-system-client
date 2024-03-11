@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 
 import {
+  LoanRequestData,
   ParsedLoanRequestData,
   RequestFormData,
   ResponseGlobal,
@@ -116,6 +117,32 @@ export class LoanRequestService {
       const parsedError: AxiosError = e as AxiosError;
       throw new AxiosError(parsedError.message);
     }
+    return response;
+  }
+
+  public async getLoanRequest(
+    token: string,
+    requestId: string
+  ): Promise<ResponseGlobal<LoanRequestData>> {
+    let response: ResponseGlobal<LoanRequestData>;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      const { data } = await axiosClient.get<ResponseGlobal<LoanRequestData>>(
+        `/loan-application/${requestId}`,
+        config
+      );
+      response = data;
+    } catch (e: unknown) {
+      const parsedError: AxiosError = e as AxiosError;
+      throw new AxiosError(parsedError.message);
+    }
+
     return response;
   }
 }

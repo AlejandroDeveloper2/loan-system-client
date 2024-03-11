@@ -74,6 +74,7 @@ interface InputProps {
   value: string | number;
   errorMessage: string;
   userHint?: string;
+  disabled?: boolean;
   Icon: React.ForwardRefExoticComponent<Omit<React.SVGProps<SVGSVGElement>>>;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -86,6 +87,7 @@ interface SelectProps {
   options: { value: string; label: string }[];
   errorMessage: string;
   userHint?: string;
+  disabled?: boolean;
   Icon: React.ForwardRefExoticComponent<Omit<React.SVGProps<SVGSVGElement>>>;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
@@ -103,6 +105,7 @@ interface RadioButtonProps {
   name: string;
   value: string;
   label: string;
+  disabled?: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -115,6 +118,7 @@ interface TextAreaProps {
   errorMessage: string;
   autoResize?: boolean;
   userHint?: string;
+  disabled?: boolean;
   Icon: React.ForwardRefExoticComponent<Omit<React.SVGProps<SVGSVGElement>>>;
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }

@@ -5,9 +5,11 @@ import { LoanRequestService } from "@services/LoanRequest.service";
 
 import { LoanRequestStore } from "@models/StoreModels";
 import {
+  LoanRequestData,
   //LoanRequestData,
   ParsedLoanRequestData,
   RequestFormData,
+  ResponseGlobal,
   ServerResponse,
   TableResponse,
 } from "@models/DataModels";
@@ -19,6 +21,7 @@ const useLoanRequestStore = create<LoanRequestStore>((set) => ({
   loading: false,
   clientExists: false,
   loanRequests: [],
+  loanRequest: null,
   validateClient: async (identification: string): Promise<void> => {
     try {
       set({ loading: true });
@@ -52,6 +55,11 @@ const useLoanRequestStore = create<LoanRequestStore>((set) => ({
     try {
       set({ loading: true });
       await loanRequestService.approveLoanRequest(token, loanRequestId);
+      set(({ loanRequests }) => ({
+        loanRequests: loanRequests.filter(
+          (request) => request.id !== loanRequestId
+        ),
+      }));
       toast.success("¡Solicitud aprobada correctamente!");
     } catch (e: unknown) {
       toast.error("Ha ocurrido un error al intentar aprobar la solicitud!");
@@ -64,6 +72,11 @@ const useLoanRequestStore = create<LoanRequestStore>((set) => ({
     try {
       set({ loading: true });
       await loanRequestService.rejectLoanRequest(token, loanRequestId);
+      set(({ loanRequests }) => ({
+        loanRequests: loanRequests.filter(
+          (request) => request.id !== loanRequestId
+        ),
+      }));
       toast.success("¡Solicitud rechazada!");
     } catch (e: unknown) {
       toast.error("Ha ocurrido un error al intentar rechazar la solicitud!");
@@ -94,6 +107,21 @@ const useLoanRequestStore = create<LoanRequestStore>((set) => ({
       set({ loanRequests });
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al listar las solicitudes!");
+    } finally {
+      set({ loading: false });
+    }
+  },
+  getLoanRequest: async (loanRequestId: string): Promise<void> => {
+    const token: string = window.localStorage.getItem("token") ?? "";
+    try {
+      set({ loading: true });
+      const { body: loanRequest }: ResponseGlobal<LoanRequestData> =
+        await loanRequestService.getLoanRequest(token, loanRequestId);
+      set({ loanRequest });
+    } catch (e: unknown) {
+      toast.error(
+        "¡Ha ocurrido un error al obtener la información de la solicitud!"
+      );
     } finally {
       set({ loading: false });
     }

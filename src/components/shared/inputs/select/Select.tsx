@@ -16,6 +16,7 @@ const Select = (props: SelectProps): JSX.Element => {
     options,
     errorMessage,
     userHint,
+    disabled,
     Icon,
     onChange,
   } = props;
@@ -34,6 +35,7 @@ const Select = (props: SelectProps): JSX.Element => {
           id={id}
           name={name}
           value={value}
+          disabled={disabled ? true : false}
           onChange={onChange}
         >
           <option value="" defaultValue={value}>

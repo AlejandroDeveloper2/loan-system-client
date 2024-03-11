@@ -11,7 +11,9 @@
 
 .table{
     width:100%; 
-    border: 1px solid var(--primary); 
+    border-top: 1px solid var(--primary); 
+    border-left:1px solid var(--primary); 
+    border-right: 1px solid var(--primary);
     background-color: var(--white);
     border-collapse: separate;
     border-spacing:0;
@@ -51,6 +53,7 @@
             border-right:none;
         }
         & td {
+            border-bottom: 1px var(--primary) solid;
             & button {
                 width: 64px;
                 height: 64px;

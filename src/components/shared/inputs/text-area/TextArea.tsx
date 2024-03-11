@@ -15,6 +15,7 @@ const TextArea = (props: TextAreaProps): JSX.Element => {
     value,
     autoResize,
     userHint,
+    disabled,
     Icon,
     onChange,
   } = props;
@@ -38,6 +39,7 @@ const TextArea = (props: TextAreaProps): JSX.Element => {
           id={id}
           name={name}
           value={value}
+          disabled={disabled ? true : false}
           placeholder={placeholder}
           onChange={onChange}
         />
