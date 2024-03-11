@@ -228,6 +228,13 @@ interface BadgeProps {
   variant: "primary" | "danger" | "warning" | "light" | "neutral";
 }
 
+interface InfoSectionProps {
+  sectionTitle: string;
+  labelId: string;
+  link: string;
+  recordId: string;
+}
+
 export type {
   TableHeaderType,
   LogoProps,
@@ -261,4 +268,5 @@ export type {
   FilterProps,
   IndicatorSectionProps,
   BadgeProps,
+  InfoSectionProps,
 };

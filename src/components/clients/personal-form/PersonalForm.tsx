@@ -32,6 +32,8 @@ const PersonalForm = (): JSX.Element => {
     updateClient<PersonalDataForm>(clientParam.clientId, formData);
   }
 
+  const { loading, client, updateClient } = useClientsStore();
+
   function fillForm(): PersonalDataForm {
     if (client)
       return {
@@ -50,7 +52,6 @@ const PersonalForm = (): JSX.Element => {
     return initialValues;
   }
 
-  const { loading, client, updateClient } = useClientsStore();
   const {
     formData,
     formRef,

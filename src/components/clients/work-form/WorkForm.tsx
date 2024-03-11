@@ -13,13 +13,13 @@ import {
 
 import { useForm, useRadioButton } from "@hooks/index";
 import useClientsStore from "@zustand/ClientsStore";
+import { validationSchema } from "./ValidationSchema";
 
 import { WorkDataForm } from "@models/FormDataModels";
 import {
   initialErrors,
   initialValues,
 } from "@constants/form-initial-values/WorkDataInitialValues";
-import { validationSchema } from "./ValidationSchema";
 
 import { CustomForm } from "@components/index";
 
@@ -30,6 +30,8 @@ const WorkForm = (): JSX.Element => {
   function action() {
     updateClient<WorkDataForm>(clientParam.clientId, formData);
   }
+
+  const { loading, client, updateClient } = useClientsStore();
 
   function fillForm(): WorkDataForm {
     if (client)
@@ -49,7 +51,6 @@ const WorkForm = (): JSX.Element => {
     return initialValues;
   }
 
-  const { loading, client, updateClient } = useClientsStore();
   const {
     formData,
     formRef,

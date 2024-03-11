@@ -26,6 +26,7 @@ export { default as CardList } from "./shared/card-list/CardList";
 export { default as IndicatorSection } from "./shared/indicator-section/IndicatorSection";
 export { default as Filters } from "./shared/filters/Filters";
 export { default as Badge } from "./shared/badge/Badge";
+export { default as InfoSection } from "./shared/info-section/InfoSection";
 
 export { default as ClientSearchValidation } from "./loan-request/client-search-validation/ClientSearchValidation";
 export { default as ContactInfoList } from "./loan-request/contact-info-list/ContactInfoList";
@@ -33,3 +34,4 @@ export { default as InviteLinkSection } from "./loan-request/invite-link-section
 
 export { default as PersonalForm } from "./clients/personal-form/PersonalForm";
 export { default as WorkForm } from "./clients/work-form/WorkForm";
+export { default as BankAccountForm } from "./clients/bank-account-form/BankAccountForm";

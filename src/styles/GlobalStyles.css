@@ -39,9 +39,7 @@
 
 .formContainer{
     & form {
-        width: 100%;
         border:2px solid var(--gray-light);
-
         & fieldset {
             display:grid;
             grid-template-columns: repeat(1, 1fr);
@@ -62,6 +60,7 @@
 @media (min-width: 1400px) {
     .formContainer{
         & form { 
+            
             & fieldset {
                 grid-template-columns: repeat(3, 1fr);
             }
