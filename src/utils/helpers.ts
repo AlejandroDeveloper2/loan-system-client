@@ -1,8 +1,11 @@
 import { toast } from "react-toastify";
 import currency from "currency.js";
 
-import { IllustrationData, ReferencesData } from "@models/DataModels";
-import { ReferencesDataForm } from "@models/FormDataModels";
+import { Client, IllustrationData, ReferencesData } from "@models/DataModels";
+import {
+  ReferencesDataForm,
+  UpdateClientDataForm,
+} from "@models/FormDataModels";
 
 import {
   IllustrationChangePass,
@@ -92,4 +95,46 @@ export const formatMoney = (moneyValue: number): string => {
     decimal: ",",
   });
   return formattedValue.format();
+};
+
+export const parseUpdatedClientInfo = (
+  clientId: string,
+  updatedClientData: UpdateClientDataForm
+): Client => {
+  const parsedClientData: Client = {
+    id: clientId,
+    email: updatedClientData.email,
+    fullName: updatedClientData.fullName,
+    typeOfIdentification: updatedClientData.typeOfIdentification,
+    identification: updatedClientData.identification,
+    phone: updatedClientData.phone,
+    civilStatus: updatedClientData.civilStatus,
+    profession: updatedClientData.profession,
+    address: updatedClientData.address,
+    houseNumber: updatedClientData.houseNumber,
+    sector: updatedClientData.sector,
+    typeOfResidence: updatedClientData.typeOfResidence,
+    workingInformation: {
+      companyName: updatedClientData.companyName,
+      phone: updatedClientData.companyPhone,
+      address: updatedClientData.companyAddress,
+      timeWorking: updatedClientData.timeWorking,
+      position: updatedClientData.position,
+      bossName: updatedClientData.bossName,
+      bossPhone: updatedClientData.bossPhone,
+      salary: updatedClientData.salary,
+      paymentOfPayroll: updatedClientData.paymentOfPayroll,
+      otherIncome: updatedClientData.otherIncome,
+      description: updatedClientData.description,
+    },
+    bankAccount: {
+      accountType: updatedClientData.accountType,
+      bank: updatedClientData.bank,
+      name: updatedClientData.name,
+      bankingApplication: updatedClientData.bankingApplication,
+      transfers: updatedClientData.transfers,
+      accountNumber: updatedClientData.accountNumber,
+    },
+  };
+  return parsedClientData;
 };

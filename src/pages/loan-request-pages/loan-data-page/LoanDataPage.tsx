@@ -37,6 +37,7 @@ const LoanDataPage = (): JSX.Element => {
   } = useForm<LoanDataForm>(
     initialValues,
     initialErrors,
+    "add",
     validationSchema,
     action
   );
@@ -81,6 +82,7 @@ const LoanDataPage = (): JSX.Element => {
               name: "paymentCycle",
               value: radioButtonData.option1,
               label: "Mensual",
+              checked: false,
               onChange: handleRadioChange,
             },
             {
@@ -88,6 +90,7 @@ const LoanDataPage = (): JSX.Element => {
               name: "paymentCycle",
               value: radioButtonData.option2,
               label: "Quincenal",
+              checked: false,
               onChange: handleRadioChange,
             },
             {
@@ -95,6 +98,7 @@ const LoanDataPage = (): JSX.Element => {
               name: "paymentCycle",
               value: radioButtonData.option3,
               label: "Semanal",
+              checked: false,
               onChange: handleRadioChange,
             },
           ]}

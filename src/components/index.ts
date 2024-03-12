@@ -39,6 +39,4 @@ export { default as WorkDataSection } from "./loan-request/loan-request-view/wor
 export { default as ReferencesDataSection } from "./loan-request/loan-request-view/references-data-section/ReferencesDataSection";
 
 // client components
-export { default as PersonalForm } from "./clients/personal-form/PersonalForm";
-export { default as WorkForm } from "./clients/work-form/WorkForm";
-export { default as BankAccountForm } from "./clients/bank-account-form/BankAccountForm";
+export { default as UpdateClientForm } from "./clients/update-client-form/UpdateClientForm";

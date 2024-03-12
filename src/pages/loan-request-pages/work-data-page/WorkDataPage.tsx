@@ -39,6 +39,7 @@ const WorkDataPage = (): JSX.Element => {
   } = useForm<WorkDataForm>(
     initialValues,
     initialErrors,
+    "add",
     validationSchema,
     action
   );
@@ -160,6 +161,7 @@ const WorkDataPage = (): JSX.Element => {
               name: "paymentOfPayroll",
               value: radioButtonData.option1,
               label: "Mensual",
+              checked: false,
               onChange: handleRadioChange,
             },
             {
@@ -167,6 +169,7 @@ const WorkDataPage = (): JSX.Element => {
               name: "paymentOfPayroll",
               value: radioButtonData.option2,
               label: "Quincenal",
+              checked: false,
               onChange: handleRadioChange,
             },
             {
@@ -174,6 +177,7 @@ const WorkDataPage = (): JSX.Element => {
               name: "paymentOfPayroll",
               value: radioButtonData.option3,
               label: "Semanal",
+              checked: false,
               onChange: handleRadioChange,
             },
           ]}

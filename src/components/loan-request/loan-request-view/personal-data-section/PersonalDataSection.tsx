@@ -179,17 +179,19 @@ const PersonalDataSection = (): JSX.Element => {
               {
                 id: "option-1",
                 name: "typeOfResidence",
-                value: fillForm().typeOfResidence,
+                value: "Propia",
                 label: "Propia",
                 disabled: true,
+                checked: fillForm().typeOfResidence === "Propia",
                 onChange: () => {},
               },
               {
                 id: "option-2",
                 name: "typeOfResidence",
-                value: fillForm().typeOfResidence,
+                value: "Alquilada",
                 label: "Alquilada",
                 disabled: true,
+                checked: fillForm().typeOfResidence === "Alquilada",
                 onChange: () => {},
               },
             ]}

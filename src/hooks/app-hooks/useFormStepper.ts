@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { FormStepData, RequestFormData } from "@models/DataModels";
@@ -13,11 +13,28 @@ const useFormStepper = <T>(nextStep: string, formKey: StepperFormNameType) => {
 
   const stepDataLS: FormStepData<T> = stepData
     ? window.JSON.parse(stepData)
-    : { stepName: "/loanRequest/personalData", stepFormData: null };
+    : { stepName: "/loanRequest/personalData", formData: {} };
 
   const [currentStepData, setCurrentStepData] = useState<FormStepData<T>>(
     () => stepDataLS
   );
+
+  useEffect(() => {
+    if (Object.keys(currentStepData.formData).length === 5) {
+      console.log(currentStepData.formData);
+      const parsedCurrentStepData: RequestFormData =
+        currentStepData.formData as RequestFormData;
+      createLoanRequest(parsedCurrentStepData);
+      console.log(parsedCurrentStepData);
+      navigate("/loanRequest");
+      window.localStorage.clear();
+      setCurrentStepData({
+        stepName: "/loanRequest/personalData",
+        formData: {},
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentStepData.formData]);
 
   const saveStepFormData = (formData: T): void => {
     const updatedStepData: FormStepData<T> = {
@@ -30,12 +47,9 @@ const useFormStepper = <T>(nextStep: string, formKey: StepperFormNameType) => {
       window.JSON.stringify(updatedStepData)
     );
     setCurrentStepData(updatedStepData);
-    if (formKey === "personalReference") {
-      const parsedCurrentStepData: RequestFormData =
-        currentStepData.formData as RequestFormData;
-      createLoanRequest(parsedCurrentStepData);
-      window.localStorage.clear();
-    } else navigate(nextStep);
+    if (formKey !== "personalReference") {
+      navigate(nextStep);
+    }
   };
 
   return {

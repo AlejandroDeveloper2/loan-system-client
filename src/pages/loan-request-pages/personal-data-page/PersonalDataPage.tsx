@@ -40,6 +40,7 @@ const PersonalDataPage = (): JSX.Element => {
   } = useForm<PersonalDataForm>(
     initialValues,
     initialErrors,
+    "add",
     validationSchema,
     action
   );
@@ -186,6 +187,7 @@ const PersonalDataPage = (): JSX.Element => {
               name: "typeOfResidence",
               value: radioButtonData.option1,
               label: "Propia",
+              checked: false,
               onChange: handleRadioChange,
             },
             {
@@ -193,6 +195,7 @@ const PersonalDataPage = (): JSX.Element => {
               name: "typeOfResidence",
               value: radioButtonData.option2,
               label: "Alquilada",
+              checked: false,
               onChange: handleRadioChange,
             },
           ]}

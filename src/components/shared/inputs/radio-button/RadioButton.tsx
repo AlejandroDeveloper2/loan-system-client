@@ -8,14 +8,14 @@ import { InputBase } from "../input-text/InputText";
 import styles from "./RadioButton.module.css";
 
 const RadioButton = (props: RadioButtonProps): JSX.Element => {
-  const { id, name, value, label, disabled, onChange } = props;
+  const { id, name, value, label, disabled, checked, onChange } = props;
 
   return (
     <div className={styles.radioButton}>
       <input
         type="radio"
         id={id}
-        checked
+        defaultChecked={checked}
         name={name}
         value={value}
         disabled={disabled ? true : false}

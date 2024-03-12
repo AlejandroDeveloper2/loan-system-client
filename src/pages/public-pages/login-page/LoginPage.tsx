@@ -23,6 +23,7 @@ const LoginPage = (): JSX.Element => {
     useForm<LoginFormData>(
       initialValues,
       initialErrors,
+      "add",
       validationSchema,
       action
     );

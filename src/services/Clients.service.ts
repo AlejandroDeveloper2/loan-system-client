@@ -9,6 +9,7 @@ import {
   TableResponse,
 } from "@models/DataModels";
 import { ClientsFilters } from "@models/FiltersDataModels";
+// import { formatDate } from "@utils/helpers";
 
 export class ClientsService {
   constructor() {}
@@ -22,22 +23,27 @@ export class ClientsService {
     filter?: string
   ): Promise<TableResponse<Client>> {
     let response: TableResponse<Client>;
+
     const config = {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      params: {
+        limit,
+        orderBy: filter,
+        page,
+        filterCriteriaText: searchValue,
+        startDate: clientFilters.initialDate,
+        endDate: clientFilters.finalDate,
+      },
     };
-
     try {
       const { data } = await axiosClient.get<TableResponse<Client>>(
-        filter
-          ? `/clients?limit=${limit}&orderBy=${filter}&page=${page}&filterCriteriaText=${searchValue}&startDate=${clientFilters.initialDate}&endDate=${clientFilters.finalDate}`
-          : `/clients?limit=${limit}&page=${page}&filterCriteriaText=${searchValue}&startDate=${clientFilters.initialDate}&endDate=${clientFilters.finalDate}`,
+        "/clients",
         config
       );
       response = data;
-      //console.log(response);
     } catch (e: unknown) {
       const parsedError: AxiosError = e as AxiosError;
       const errorMessage = parsedError?.response?.data;
@@ -66,17 +72,15 @@ export class ClientsService {
       response = data;
     } catch (e: unknown) {
       const parsedError: AxiosError = e as AxiosError;
-      const errorMessage = parsedError?.response?.data;
-      const parsedErrorMessage: ServerResponse = errorMessage as ServerResponse;
-      throw new AxiosError(parsedErrorMessage.message);
+      throw new AxiosError(parsedError.message);
     }
     return response;
   }
 
-  public async updateClient<T>(
+  public async updateClient(
     token: string,
     clientId: string,
-    updatedClientData: T
+    updatedClientData: Client
   ): Promise<Client> {
     let response: Client;
     const config = {

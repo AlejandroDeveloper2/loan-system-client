@@ -31,6 +31,7 @@ const BankAccountDataPage = (): JSX.Element => {
   } = useForm<BankAccountDataForm>(
     initialValues,
     initialErrors,
+    "add",
     validationSchema,
     action
   );
@@ -112,6 +113,7 @@ const BankAccountDataPage = (): JSX.Element => {
               name: "accountType",
               value: accountType.accountType1,
               label: "Ahorros / Nómina",
+              checked: false,
               onChange: handleAccountTypeChange,
             },
             {
@@ -119,6 +121,7 @@ const BankAccountDataPage = (): JSX.Element => {
               name: "accountType",
               value: accountType.accountType2,
               label: "Corriente",
+              checked: false,
               onChange: handleAccountTypeChange,
             },
           ]}
@@ -133,6 +136,7 @@ const BankAccountDataPage = (): JSX.Element => {
               name: "bank",
               value: bank.bank1,
               label: "Popular",
+              checked: false,
               onChange: handleBankChange,
             },
             {
@@ -140,6 +144,7 @@ const BankAccountDataPage = (): JSX.Element => {
               name: "bank",
               value: bank.bank2,
               label: "Banreservas",
+              checked: false,
               onChange: handleBankChange,
             },
             {
@@ -147,6 +152,7 @@ const BankAccountDataPage = (): JSX.Element => {
               name: "bank",
               value: bank.bank3,
               label: "BHD",
+              checked: false,
               onChange: handleBankChange,
             },
             {
@@ -154,6 +160,7 @@ const BankAccountDataPage = (): JSX.Element => {
               name: "bank",
               value: bank.bank4,
               label: "Otro",
+              checked: false,
               onChange: handleBankChange,
             },
           ]}
@@ -179,6 +186,7 @@ const BankAccountDataPage = (): JSX.Element => {
               name: "bankingApplication",
               value: String(bankApp.bankAppYes),
               label: "Si",
+              checked: false,
               onChange: handleBankAppChange,
             },
             {
@@ -186,6 +194,7 @@ const BankAccountDataPage = (): JSX.Element => {
               name: "bankingApplication",
               value: String(bankApp.bankAppNot),
               label: "No",
+              checked: false,
               onChange: handleBankAppChange,
             },
           ]}
@@ -200,6 +209,7 @@ const BankAccountDataPage = (): JSX.Element => {
               name: "transfers",
               value: String(transfers.transfersYes),
               label: "Si",
+              checked: false,
               onChange: handleTransfersChange,
             },
             {
@@ -207,6 +217,7 @@ const BankAccountDataPage = (): JSX.Element => {
               name: "transfers",
               value: String(transfers.transfersNot),
               label: "No",
+              checked: false,
               onChange: handleTransfersChange,
             },
           ]}

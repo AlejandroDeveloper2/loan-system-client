@@ -51,7 +51,9 @@ const ClientsPage = (): JSX.Element => {
       if (option.id === "btn-edit")
         return {
           ...option,
-          onClick: () => navigate(`/userPanel/clients/${recordId}`),
+          onClick: () => {
+            navigate(`/userPanel/clients/${recordId}`);
+          },
         };
       return option;
     });

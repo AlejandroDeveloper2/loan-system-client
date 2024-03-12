@@ -26,7 +26,6 @@ interface Client extends PersonalDataForm {
   id: string;
   workingInformation: WorkDataForm;
   bankAccount: BankAccountDataForm;
-  loan: LoanDataForm;
 }
 
 interface ClientWorkData extends WorkDataForm {

@@ -4,22 +4,17 @@ import { Group } from "iconoir-react";
 
 import useClientsStore from "@zustand/ClientsStore";
 
-import {
-  BankAccountForm,
-  InfoSection,
-  PersonalForm,
-  WorkForm,
-} from "@components/index";
+import { InfoSection, UpdateClientForm } from "@components/index";
 
 const EditClientPage = (): JSX.Element => {
   const params = useParams();
-  const client = params as { clientId: string };
+  const clientParam = params as { clientId: string };
   const { getClient } = useClientsStore();
 
   useEffect(() => {
-    getClient(client.clientId);
+    getClient(clientParam.clientId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [client]);
+  }, [clientParam]);
 
   return (
     <>
@@ -31,12 +26,9 @@ const EditClientPage = (): JSX.Element => {
         sectionTitle="Datos del cliente"
         labelId="id del cliente"
         link="/userPanel/clients"
-        recordId={client.clientId}
+        recordId={clientParam.clientId}
       />
-
-      <PersonalForm />
-      <WorkForm />
-      <BankAccountForm />
+      <UpdateClientForm />
     </>
   );
 };

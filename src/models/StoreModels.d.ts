@@ -12,6 +12,7 @@ import {
   RecoverPassFormData,
   ChangePasswordFormData,
   CreateLoanDataForm,
+  UpdateClientDataForm,
 } from "./FormDataModels";
 
 import { ClientsFilters, LoanRequestFilters } from "./FiltersDataModels";
@@ -61,7 +62,10 @@ interface ClientStore {
     filter?: string
   ) => Promise<void>;
   getClient: (clientId: string) => Promise<void>;
-  updateClient: <T>(clientId: string, updatedClientData: T) => Promise<void>;
+  updateClient: (
+    clientId: string,
+    updatedClientData: UpdateClientDataForm
+  ) => Promise<void>;
 }
 
 interface LoansStore {

@@ -26,6 +26,7 @@ const ChangePasswordPage = (): JSX.Element => {
     useForm<ChangePasswordFormData>(
       initialValues,
       initialErrors,
+      "add",
       validationSchema,
       action
     );

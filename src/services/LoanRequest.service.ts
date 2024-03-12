@@ -11,6 +11,7 @@ import {
 
 import axiosClient from "@config/AxiosClient";
 import { LoanRequestFilters } from "@models/FiltersDataModels";
+// import { formatDate } from "@utils/helpers";
 
 export class LoanRequestService {
   constructor() {}
@@ -101,17 +102,19 @@ export class LoanRequestService {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      params: {
+        limit,
+        paymentCycle: filter,
+        page,
+        filterCriteriaText: searchValue,
+        startDate: loanRequestFilters.requestDate,
+      },
     };
 
     try {
       const { data } = await axiosClient.get<
         TableResponse<ParsedLoanRequestData>
-      >(
-        filter
-          ? `/loan-application?limit=${limit}&paymentCycle=${filter}&page=${page}&filterCriteriaText=${searchValue}&startDate=${loanRequestFilters.requestDate}`
-          : `/loan-application?limit=${limit}&page=${page}&filterCriteriaText=${searchValue}&startDate=${loanRequestFilters.requestDate}`,
-        config
-      );
+      >("/loan-application", config);
       response = data;
     } catch (e: unknown) {
       const parsedError: AxiosError = e as AxiosError;

@@ -23,6 +23,7 @@ const RecoverPasswordPage = (): JSX.Element => {
     useForm<RecoverPassFormData>(
       initialValues,
       initialErrors,
+      "add",
       validationSchema,
       action
     );

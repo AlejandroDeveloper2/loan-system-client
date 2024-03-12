@@ -37,6 +37,7 @@ const PersonalReferencesPage = (): JSX.Element => {
   } = useForm<ReferencesDataForm>(
     initialValues,
     initialErrors,
+    "add",
     validationSchema,
     action
   );
@@ -162,6 +163,7 @@ const PersonalReferencesPage = (): JSX.Element => {
               name: "interaction",
               value: radioButtonData.option1,
               label: "Referencia de un conocido",
+              checked: false,
               onChange: handleRadioChange,
             },
             {
@@ -169,6 +171,7 @@ const PersonalReferencesPage = (): JSX.Element => {
               name: "interaction",
               value: radioButtonData.option2,
               label: "Redes sociales",
+              checked: false,
               onChange: handleRadioChange,
             },
             {
@@ -176,6 +179,7 @@ const PersonalReferencesPage = (): JSX.Element => {
               name: "interaction",
               value: radioButtonData.option3,
               label: "Publicidad de sticker",
+              checked: false,
               onChange: handleRadioChange,
             },
           ]}
