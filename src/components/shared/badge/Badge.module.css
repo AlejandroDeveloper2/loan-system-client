@@ -5,7 +5,7 @@
     display: grid;
     place-content: center;
 
-    & span{
+    & span[id="badge-text"]{
         text-align: center;
         font-weight:500;
         text-transform: capitalize;
@@ -14,35 +14,35 @@
 
 .danger {
     background-color: var(--red);
-    & span{
+    & span[id="badge-text"]{
         color:var(--white);
     }
 }
 
 .primary {
     background-color: var(--primary);
-    & span{
+    & span[id="badge-text"]{
         color:var(--white);
     }
 }
 
 .light {
     background-color: var(--gray-light);
-    & span{
+    & span[id="badge-text"]{
         color:var(--gray-dark);
     }
 }
 
 .neutral {
     background-color: var(--gray-base);
-    & span{
+    & span[id="badge-text"]{
         color:var(--gray-dark);
     }
 }
 
 .warning{
     background-color: var(--warning);
-    & span{
+    & span[id="badge-text"]{
         color:var(--white);
     }
 }

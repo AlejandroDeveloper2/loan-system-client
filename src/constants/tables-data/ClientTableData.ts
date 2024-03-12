@@ -1,5 +1,6 @@
 import {
   AtSign,
+  Calendar,
   Edit,
   Filter,
   Hashtag,
@@ -16,6 +17,7 @@ import {
 import { Columnkey } from "@models/DataModels";
 
 export const headers: TableHeaderType[] = [
+  { label: "Fecha de creación", Icon: Calendar },
   { label: "Nombres", Icon: User },
   { label: "Número de documento", Icon: Hashtag },
   { label: "Correo electrónico", Icon: AtSign },
@@ -24,6 +26,7 @@ export const headers: TableHeaderType[] = [
 ];
 
 export const columnKeys: Columnkey[] = [
+  { key: "createdAt", badgeValue: false, fieldType: "date" },
   { key: "fullName", badgeValue: false, fieldType: "text" },
   { key: "identification", badgeValue: false, fieldType: "text" },
   { key: "email", badgeValue: false, fieldType: "text" },

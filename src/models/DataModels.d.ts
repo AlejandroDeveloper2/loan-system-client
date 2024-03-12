@@ -11,6 +11,7 @@ import {
 type ScreenType = "mobile" | "tablet" | "desktop";
 type UserRoleType = "ADMINISTRADOR" | "USER";
 type AuthStatusType = "authenticated" | "no authenticated" | "checking";
+type VariantType = "warning" | "primary" | "neutral" | "danger" | "light";
 
 interface Step {
   label: string;
@@ -24,6 +25,7 @@ interface IllustrationData {
 
 interface Client extends PersonalDataForm {
   id: string;
+  createdAt?: string;
   workingInformation: WorkDataForm;
   bankAccount: BankAccountDataForm;
 }
@@ -125,6 +127,7 @@ export type {
   ScreenType,
   UserRoleType,
   AuthStatusType,
+  VariantType,
   Step,
   IllustrationData,
   Client,

@@ -1,7 +1,7 @@
 import { Eye, Plus, Search } from "iconoir-react";
 
 import { useScreenType } from "@hooks/index";
-import { formatMoney } from "@utils/helpers";
+import { formatDate, formatMoney, getBadgeVariant } from "@utils/helpers";
 
 import { TableToolsProps, TablesProps } from "@models/ComponentModels";
 
@@ -48,7 +48,10 @@ function Tables<T>(props: TablesProps<T>) {
                             ? formatMoney(Object(record)[columnKey.key])
                             : Object(record)[columnKey.key]
                         }
-                        variant="light"
+                        variant={getBadgeVariant(
+                          columnKey.key,
+                          Object(record)[columnKey.key]
+                        )}
                       />
                     </Table.Row.Column>
                   ) : (
@@ -57,6 +60,8 @@ function Tables<T>(props: TablesProps<T>) {
                       value={
                         columnKey.fieldType === "currency"
                           ? formatMoney(Object(record)[columnKey.key])
+                          : columnKey.fieldType === "date"
+                          ? formatDate(Object(record)[columnKey.key])
                           : Object(record)[columnKey.key]
                       }
                     />
@@ -102,6 +107,8 @@ function Tables<T>(props: TablesProps<T>) {
                     ? ""
                     : columnKeys[x].fieldType === "currency"
                     ? formatMoney(Object(record)[columnKeys[x].key])
+                    : columnKeys[x].fieldType === "date"
+                    ? formatDate(Object(record)[columnKeys[x].key])
                     : Object(record)[columnKeys[x].key],
               }))}
             >

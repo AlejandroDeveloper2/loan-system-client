@@ -1,8 +1,14 @@
 import { toast } from "react-toastify";
 import currency from "currency.js";
 
-import { Client, IllustrationData, ReferencesData } from "@models/DataModels";
 import {
+  Client,
+  IllustrationData,
+  ReferencesData,
+  VariantType,
+} from "@models/DataModels";
+import {
+  PaymentType,
   ReferencesDataForm,
   UpdateClientDataForm,
 } from "@models/FormDataModels";
@@ -137,4 +143,26 @@ export const parseUpdatedClientInfo = (
     },
   };
   return parsedClientData;
+};
+
+const getPaymentCycleBadgeMark = (
+  paymentCycle: PaymentType | string
+): VariantType => {
+  const badgeVariant: VariantType =
+    paymentCycle === "Mensual"
+      ? "primary"
+      : paymentCycle === "Quincenal"
+      ? "neutral"
+      : "light";
+  return badgeVariant;
+};
+
+export const getBadgeVariant = (
+  fieldKey: string,
+  fieldValue: string
+): VariantType => {
+  if (fieldKey === "paymentCycle") {
+    return getPaymentCycleBadgeMark(fieldValue);
+  }
+  return "light";
 };
