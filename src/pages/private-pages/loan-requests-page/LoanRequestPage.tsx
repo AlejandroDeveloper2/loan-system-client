@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Calendar, GoogleDocs } from "iconoir-react";
 
 import useLoanRequestStore from "@zustand/LoanRequestStore";
-import { useFilter, usePagination } from "@hooks/index";
+import { useDialog, useFilter, usePagination } from "@hooks/index";
 
 import { LoanRequestFilters } from "@models/FiltersDataModels";
 import { ParsedLoanRequestData } from "@models/DataModels";
@@ -25,6 +25,7 @@ import {
 
 const LoanRequestPage = (): JSX.Element => {
   const navigate = useNavigate();
+
   const {
     loanRequests,
     getAllLoanRequests,
@@ -45,6 +46,16 @@ const LoanRequestPage = (): JSX.Element => {
     next,
     back,
   } = usePagination<ParsedLoanRequestData>(loanRequests);
+
+  const { DialogBox, chosenOption, toggleDialog } = useDialog(
+    "¿Desea aprobar la solicitud?",
+    "Aprobar solicitud"
+  );
+  const {
+    DialogBox: DialogBox2,
+    chosenOption: chosenOption2,
+    toggleDialog: toggleDialog2,
+  } = useDialog("¿Desea rechazar la solicitud?", "Rechazar solicitud");
 
   useEffect(() => {
     getAllLoanRequests(
@@ -67,14 +78,25 @@ const LoanRequestPage = (): JSX.Element => {
       if (option.id === "btn-approve")
         return {
           ...option,
-          onClick: () => approveLoanRequest(recordId),
+          onClick: () => {
+            toggleDialog();
+            if (chosenOption === "Yes") approveLoanRequest(recordId);
+          },
         };
-      return { ...option, onClick: () => rejectLoanRequest(recordId) };
+      return {
+        ...option,
+        onClick: () => {
+          toggleDialog2();
+          if (chosenOption2 === "Yes") rejectLoanRequest(recordId);
+        },
+      };
     });
   };
 
   return (
     <>
+      <DialogBox />
+      <DialogBox2 />
       <h1 className="heading1">
         <GoogleDocs />
         Solicitudes

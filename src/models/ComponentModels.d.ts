@@ -240,6 +240,14 @@ interface InfoSectionProps {
   recordId: string;
 }
 
+interface DialogProps {
+  open: boolean;
+  dialogMessage: string;
+  acceptButtonLabel: string;
+  toggleChosenOption: (option: "Yes" | "Not") => void;
+  toggleDialog: () => void;
+}
+
 export type {
   TableHeaderType,
   LogoProps,
@@ -274,4 +282,5 @@ export type {
   IndicatorSectionProps,
   BadgeProps,
   InfoSectionProps,
+  DialogProps,
 };

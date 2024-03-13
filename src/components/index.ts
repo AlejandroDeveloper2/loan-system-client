@@ -27,6 +27,7 @@ export { default as IndicatorSection } from "./shared/indicator-section/Indicato
 export { default as Filters } from "./shared/filters/Filters";
 export { default as Badge } from "./shared/badge/Badge";
 export { default as InfoSection } from "./shared/info-section/InfoSection";
+export { default as Dialog } from "./shared/dialog/Dialog";
 
 // loan request components
 export { default as ClientSearchValidation } from "./loan-request/client-search-validation/ClientSearchValidation";

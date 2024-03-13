@@ -25,7 +25,7 @@ const useClientsStore = create<ClientStore>((set) => ({
     page: string,
     searchValue: string,
     clientFilters: ClientsFilters,
-    filter?: string
+    filter: string
   ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
     try {

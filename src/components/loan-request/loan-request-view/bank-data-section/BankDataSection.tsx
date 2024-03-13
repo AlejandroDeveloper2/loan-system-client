@@ -42,7 +42,7 @@ const BankDataSection = (): JSX.Element => {
                 value: "Nomina",
                 label: "Ahorros / Nómina",
                 disabled: true,
-                checked: fillForm().accountType === "Nomina",
+                checked: fillForm().accountType === "Ahorro",
                 onChange: () => {},
               },
               {

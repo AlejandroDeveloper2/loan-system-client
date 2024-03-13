@@ -59,7 +59,7 @@ interface ClientStore {
     page: string,
     searchValue: string,
     clientFilters: ClientsFilters,
-    filter?: string
+    filter: string
   ) => Promise<void>;
   getClient: (clientId: string) => Promise<void>;
   updateClient: (

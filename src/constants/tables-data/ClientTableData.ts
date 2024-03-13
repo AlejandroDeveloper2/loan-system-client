@@ -49,7 +49,7 @@ export const filterOptions: IconButtonProps[] = [
   {
     Icon: Filter,
     label: "Ordenar por más reciente",
-    id: "ASC",
+    id: "DESC",
     type: "button",
     title: "ordenar por orden de creación",
     variant: "neutral",
@@ -59,7 +59,7 @@ export const filterOptions: IconButtonProps[] = [
   {
     Icon: Filter,
     label: "Ordenar por más antiguo",
-    id: "DESC",
+    id: "ASC",
     type: "button",
     title: "Ordenar por orden de creación",
     variant: "primary",

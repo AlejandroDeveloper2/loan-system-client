@@ -1,0 +1,84 @@
+.dialog,.visible,.invisible{
+    padding: var(--spacing-xl);
+    border-radius:var(--radius-md);
+    border:none;
+    background-color: var(--white);
+    position: fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap:var(--spacing-4xl);
+    justify-content:center;
+    align-items:center;
+    transition: all 1s ease;
+
+    & h2{
+        color: var(--gray-dark);
+        text-transform:capitalize;
+        text-align: center;
+        vertical-align: middle;
+        font-weight: 500;
+        margin-left: var(--spacing-sm);
+        & svg{
+            width: 30px;
+            height: 30px;
+            color: var(--gray-dark);
+            vertical-align: middle;
+        }
+    }
+    & ::backdrop{      
+        background-color: var(--overlay-color);
+    }
+    box-shadow: 0 0 10px var(--overlay-color);
+}
+
+.visible{
+    opacity: 1;
+    z-index:100;
+}
+
+.invisible{
+    opacity: 0;
+    z-index:-100;
+}
+
+.dialogBody{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    gap:var(--spacing-xl);
+    & p{
+        color: var(--gray-dark);
+        text-transform:capitalize;
+        text-align: center;
+        font-weight: 400;
+    }
+}
+
+.dialogOptions{
+    display: flex;
+    gap:var(--spacing-sm);
+    justify-content:center;
+    align-items:center;
+    flex-direction: column;
+    button{
+        width:300px;
+        /* padding: var(--spacing-2xl) var(--spacing-4xl); */
+    }
+}
+
+@media (min-width: 768px) {
+    .dialogOptions{
+        flex-direction: row;
+        button{
+            width: auto;
+            padding: var(--spacing-2xl) var(--spacing-4xl);
+        }
+    }
+}
+
