@@ -32,7 +32,7 @@ const Table = (props: TableProps): JSX.Element => {
 const EmpyTableRow = (): JSX.Element => {
   return (
     <tr className={styles.emptyRow}>
-      <td colSpan={6}>
+      <td colSpan={10}>
         <p className="buttonText">¡No hay registros aún!</p>
       </td>
     </tr>

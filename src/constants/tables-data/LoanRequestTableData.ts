@@ -5,7 +5,6 @@ import {
   Eye,
   Settings,
   SwitchOff,
-  //SwitchOff,
   Triangle,
   User,
   Xmark,
@@ -28,11 +27,11 @@ export const headers: TableHeaderType[] = [
 ];
 
 export const columnKeys: Columnkey[] = [
-  { key: "fullName", badgeValue: false, fieldType: "text" },
-  { key: "createdAt", badgeValue: false, fieldType: "date" },
-  { key: "amount", badgeValue: false, fieldType: "currency" },
-  { key: "state", badgeValue: true, fieldType: "text" },
-  { key: "paymentCycle", badgeValue: true, fieldType: "text" },
+  { key: "fullName", badgeValue: false, fieldType: "text", subKey: "" },
+  { key: "createdAt", badgeValue: false, fieldType: "date", subKey: "" },
+  { key: "amount", badgeValue: false, fieldType: "currency", subKey: "" },
+  { key: "state", badgeValue: true, fieldType: "text", subKey: "" },
+  { key: "paymentCycle", badgeValue: true, fieldType: "text", subKey: "" },
 ];
 
 export const optionsData: IconOnlyButtonProps[] = [

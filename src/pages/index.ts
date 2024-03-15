@@ -17,3 +17,4 @@ export { default as LoanRequestPage } from "./private-pages/loan-requests-page/L
 export { default as EditClientPage } from "./private-pages/edit-client-page/EditClientPage";
 export { default as LoansPage } from "./private-pages/loans-page/LoansPage";
 export { default as LoanRequestViewPage } from "./private-pages/loan-request-view-page/LoanRequestViewPage";
+export { default as ApproveLoanPage } from "./private-pages/approve-loan-page/ApproveLoanPage";

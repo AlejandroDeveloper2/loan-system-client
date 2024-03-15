@@ -1,0 +1,60 @@
+.loaderContainer{
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:var(--spacing-md);
+    position: relative;
+
+    & p{
+        color:var(--primary);
+        font-weight:600;
+        text-align: center;
+        text-transform:capitalize;
+    }
+}
+
+.icons{
+    display:block;
+
+}
+
+.settingTwo, .settingOne{
+    width:100px;
+    height: 100px;
+    color: var(--primary);
+    text-align: center;
+    position: relative;
+}
+
+.settingOne{
+    animation: rotate ease alternate infinite 3s both;
+}
+
+.settingTwo{
+    width: 80px;
+    height: 80px;
+    animation: rotate-inverse ease alternate infinite 3s both;
+}
+
+@keyframes rotate {
+    0%{
+        transform: rotate(0deg);
+    }
+
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotate-inverse {
+    0%{
+        transform: rotate(0deg);
+    }
+
+    100%{
+        transform: rotate(-360deg);
+    }
+}

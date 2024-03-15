@@ -16,9 +16,7 @@ const Navigation = (): JSX.Element => {
           <li key={i}>
             <Link
               to={navItem.to}
-              className={
-                styles[setActiveNavItem(location.pathname, navItem.to)]
-              }
+              className={styles[setActiveNavItem(location, navItem.to)]}
             >
               <navItem.Icon />
             </Link>

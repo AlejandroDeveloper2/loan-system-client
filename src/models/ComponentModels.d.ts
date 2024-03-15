@@ -248,6 +248,25 @@ interface DialogProps {
   toggleDialog: () => void;
 }
 
+interface ModalProps {
+  children: ReactNode | ReactNode[];
+  modalTitle: string;
+  isModalVisible: boolean;
+  toggleModal: () => void;
+}
+
+interface ModalWindowProps {
+  children: ReactNode | ReactNode[];
+}
+
+interface LoanFormProps {
+  toggleModal: () => void;
+}
+
+interface LoaderProps {
+  message: string;
+}
+
 export type {
   TableHeaderType,
   LogoProps,
@@ -283,4 +302,8 @@ export type {
   BadgeProps,
   InfoSectionProps,
   DialogProps,
+  ModalProps,
+  ModalWindowProps,
+  LoanFormProps,
+  LoaderProps,
 };

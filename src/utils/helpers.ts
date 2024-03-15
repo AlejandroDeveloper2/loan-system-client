@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import { Location } from "react-router-dom";
 import currency from "currency.js";
 
 import {
@@ -64,8 +65,19 @@ export const parseReferenceDate = (
   };
 };
 
-export const setActiveNavItem = (pathName: string, itemTo: string): string => {
-  if (pathName === itemTo) return "linkActive";
+export const setActiveNavItem = (
+  location: Location,
+  itemTo: string
+): string => {
+  const locationArray = location.pathname
+    .split("/")
+    .filter((element) => element !== "");
+  const parsedLocation =
+    locationArray.length < 2
+      ? "/" + locationArray[0]
+      : "/" + locationArray[0] + "/" + locationArray[1];
+
+  if (parsedLocation === itemTo) return "linkActive";
   return "link";
 };
 

@@ -1,3 +1,5 @@
+import { PaymentType } from "./FormDataModels";
+
 interface ClientsFilters {
   initialDate: string;
   finalDate: string;
@@ -7,4 +9,9 @@ interface LoanRequestFilters {
   requestDate: string;
 }
 
-export type { ClientsFilters, LoanRequestFilters };
+interface LoanFilters {
+  loanDate: string;
+  paymentCycle: PaymentType | string;
+}
+
+export type { ClientsFilters, LoanRequestFilters, LoanFilters };

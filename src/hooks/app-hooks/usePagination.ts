@@ -10,7 +10,7 @@ const usePagination = <T>(records: T[]) => {
     window.parseInt(recordsToList)
   );
   const [totalPages] = useState<number>(
-    records.length / window.parseInt(recordsToList)
+    Math.floor(records.length / window.parseInt(recordsToList))
   );
 
   useEffect(() => {

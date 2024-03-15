@@ -12,6 +12,7 @@ type ScreenType = "mobile" | "tablet" | "desktop";
 type UserRoleType = "ADMINISTRADOR" | "USER";
 type AuthStatusType = "authenticated" | "no authenticated" | "checking";
 type VariantType = "warning" | "primary" | "neutral" | "danger" | "light";
+type LoanStateType = "Pendiente" | "Aprobado" | "Cancelado" | "Pagado";
 
 interface Step {
   label: string;
@@ -30,12 +31,38 @@ interface Client extends PersonalDataForm {
   bankAccount: BankAccountDataForm;
 }
 
-interface ClientWorkData extends WorkDataForm {
-  id: string;
+interface LoanUpdatedData {
+  amount: number;
+  paymentCycle: PaymentType;
+  deadline: number;
+  interest: number;
+  firstPaymentDate: string;
+  paymentSchedules: PaymentSchedule[];
+  loanState?: LoanStateType;
 }
 
-interface ClientLoanData extends LoanDataForm {
+interface ClientLoanData {
   id: string;
+  amount: number;
+  paymentCycle: PaymentType;
+  deadline: number;
+  client: Client;
+  loanState: LoanStateType;
+  interest: number;
+  earnings: number;
+  firstPaymentDate: string;
+  paymentSchedules: PaymentSchedule[];
+  numberOfPayments: string;
+  /*custom properties*/
+  amountInterest: number;
+}
+
+interface PaymentSchedule {
+  paymentDate: string;
+  amount: number;
+  quotaNumber: number;
+  paymentCycle: PaymentType;
+  paymentStatus: string;
 }
 
 interface LoanRequestData extends RequestFormData {
@@ -119,8 +146,18 @@ interface TableResponse<T> {
 
 interface Columnkey {
   key: string;
-  fieldType: "text" | "date" | "currency";
+  fieldType: "text" | "date" | "currency" | "subField";
+  subKey: string;
   badgeValue: boolean;
+}
+
+interface LoanIndicator {
+  totalInvestedCapital: number;
+  investedCapital: number;
+  totalActiveLoans: number;
+  activeLoans: number;
+  totalLoansPaid: number;
+  loansPaid: number;
 }
 
 export type {
@@ -131,7 +168,6 @@ export type {
   Step,
   IllustrationData,
   Client,
-  ClientWorkData,
   FormStepData,
   ClientLoanData,
   ReferencesData,
@@ -147,4 +183,7 @@ export type {
   Pagination,
   TableResponse,
   Columnkey,
+  PaymentSchedule,
+  LoanUpdatedData,
+  LoanIndicator,
 };

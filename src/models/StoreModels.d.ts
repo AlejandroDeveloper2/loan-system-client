@@ -6,16 +6,23 @@ import {
   ParsedLoanRequestData,
   ClientLoanData,
   LoanRequestData,
+  LoanUpdatedData,
+  LoanIndicator,
 } from "./DataModels";
 import {
   LoginFormData,
   RecoverPassFormData,
   ChangePasswordFormData,
-  CreateLoanDataForm,
   UpdateClientDataForm,
+  CreateLoanDataForm,
+  ApproveLoanDataForm,
 } from "./FormDataModels";
 
-import { ClientsFilters, LoanRequestFilters } from "./FiltersDataModels";
+import {
+  ClientsFilters,
+  LoanRequestFilters,
+  LoanFilters,
+} from "./FiltersDataModels";
 
 interface AuthStore {
   loading: boolean;
@@ -71,15 +78,20 @@ interface ClientStore {
 interface LoansStore {
   loading: boolean;
   loans: ClientLoanData[];
+  loan: LoanUpdatedData;
+  loanIndicators: LoanIndicator;
   getAllLoans: (
+    page: number,
     limit: string,
-    page: string,
     searchValue: string,
-    loanFilters: ClientsFilters,
-    filter?: string
+    loanFilters: LoanFilters,
+    filter: string
   ) => Promise<void>;
-  generatePaymentSchedule: (loanInfo: CreateLoanDataForm) => Promise<void>;
-  // createLoan: (loanData: string) => Promise<void>;
+  getLoan: (loanId: string) => Promise<void>;
+  createLoan: (loanData: CreateLoanDataForm) => Promise<void>;
+  generatePaymentSchedule: (loanData: ApproveLoanDataForm) => Promise<void>;
+  approveLoan: (loanId: string, loanData: ApproveLoanDataForm) => Promise<void>;
+  getLoanIndicators: () => Promise<void>;
 }
 
 export type { AuthStore, LoanRequestStore, ClientStore, LoansStore };

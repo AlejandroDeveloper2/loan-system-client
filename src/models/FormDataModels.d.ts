@@ -114,10 +114,24 @@ interface UpdateClientDataForm extends PersonalDataForm {
 }
 
 interface CreateLoanDataForm {
+  client: string;
   amount: number;
-  paymentMethod: PaymentType;
-  interest: number;
+  paymentCycle: PaymentType | string;
   deadline: number;
+}
+
+interface CreateLoanFinalDataForm {
+  client: PersonalDataForm;
+  amount: number;
+  paymentCycle: PaymentType | string;
+  deadline: number;
+}
+
+interface ApproveLoanDataForm {
+  amount: number;
+  paymentCycle: PaymentType | string;
+  deadline: number;
+  interest: number;
   firstPaymentDate: string;
 }
 
@@ -137,4 +151,6 @@ export type {
   ReferencesDataForm,
   CreateLoanDataForm,
   UpdateClientDataForm,
+  CreateLoanFinalDataForm,
+  ApproveLoanDataForm,
 };

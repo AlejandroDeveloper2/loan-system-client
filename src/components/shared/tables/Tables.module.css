@@ -18,6 +18,7 @@
 @media (min-width: 768px) {
     .tableTools{
         flex-direction: row;
+        flex-wrap: wrap;
         justify-content: space-between;
         align-items:center;
         gap:var(--spacing-null);
@@ -26,6 +27,7 @@
 
 @media (min-width: 1400px) {
     .tableTools{
+        flex-wrap: nowrap;
         width: 100%;
     }
 }

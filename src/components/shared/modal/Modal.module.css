@@ -1,0 +1,102 @@
+.overlay, .overlayVisible, .overlayInvisible{
+    width: 100%;
+    height:100vh;
+    background-color:var(--overlay-color);
+    position:fixed;
+    z-index:100;
+    top:0;
+    left:0;
+    display:block;
+    transition: all 0.6s ease;
+}
+
+.modal,.visible,.invisible{
+    width: 100%;
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:auto;
+    padding-bottom: var(--spacing-xl);
+    border-radius:var(--radius-md);
+    border:none;
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    gap:var(--spacing-4xl);
+    justify-content:center;
+    align-items:center;
+    transition: all 1s ease;
+    transition-delay: 0.4s;
+    box-shadow: 0 0 10px var(--overlay-color);
+    overflow: hidden;
+}
+
+.visible, .overlayVisible{
+    opacity: 1;
+    z-index:100;
+}
+
+.invisible, .overlayInvisible{
+    opacity: 0;
+    z-index:-100;
+}
+
+.modalHead{
+    width: 100%;
+    height: 100px;
+    position: relative;
+    background-color: var(--primary);
+    display: grid;
+    place-content: center;
+
+    & h2{
+        color: var(--white);
+        text-transform:capitalize;
+        text-align: center;
+        vertical-align: middle;
+        font-weight: bold;
+    }
+
+    & svg{
+        width: 40px;
+        height: 40px;
+        color: var(--gray-light);
+        cursor:pointer;
+        position: absolute;
+        right: 30px;
+        top:0;
+        bottom: 0;
+        margin:auto;
+    }
+}
+
+.modalBody{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap:var(--spacing-md);
+    
+    & form {
+        border:none;
+        figure{
+            display: none;
+        }
+    }
+}
+
+
+@media(min-width:768px){
+    .modal,.visible,.invisible{
+        width: 500px;
+        top:0;
+    }
+}
+
+@media(min-width:1400px){
+    .modal,.visible,.invisible{
+        width: 800px;
+    }
+}

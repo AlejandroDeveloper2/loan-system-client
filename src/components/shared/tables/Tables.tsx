@@ -62,6 +62,8 @@ function Tables<T>(props: TablesProps<T>) {
                           ? formatMoney(Object(record)[columnKey.key])
                           : columnKey.fieldType === "date"
                           ? formatDate(Object(record)[columnKey.key])
+                          : columnKey.fieldType === "subField"
+                          ? Object(record)[columnKey.key][columnKey.subKey]
                           : Object(record)[columnKey.key]
                       }
                     />
@@ -109,6 +111,8 @@ function Tables<T>(props: TablesProps<T>) {
                     ? formatMoney(Object(record)[columnKeys[x].key])
                     : columnKeys[x].fieldType === "date"
                     ? formatDate(Object(record)[columnKeys[x].key])
+                    : columnKeys[x].fieldType === "subField"
+                    ? Object(record)[columnKeys[x].key][columnKeys[x].subKey]
                     : Object(record)[columnKeys[x].key],
               }))}
             >
