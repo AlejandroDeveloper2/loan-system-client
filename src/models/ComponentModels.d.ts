@@ -238,6 +238,7 @@ interface InfoSectionProps {
   labelId: string;
   link: string;
   recordId: string;
+  buttonLabel?: string;
 }
 
 interface DialogProps {

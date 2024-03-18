@@ -160,6 +160,16 @@ interface LoanIndicator {
   loansPaid: number;
 }
 
+interface User {
+  id: string;
+  fistName: string;
+  lastName: string;
+  email: string;
+  roles: UserRoleType;
+  state: boolean;
+  createdAt: string;
+}
+
 export type {
   ScreenType,
   UserRoleType,
@@ -186,4 +196,5 @@ export type {
   PaymentSchedule,
   LoanUpdatedData,
   LoanIndicator,
+  User,
 };

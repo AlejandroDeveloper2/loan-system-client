@@ -62,7 +62,7 @@ const ApproveLoanPage = (): JSX.Element => {
   }, [loanParam]);
 
   useEffect(() => {
-    updateFormInitialValues(getInitialValues(loan));
+    if (loan) updateFormInitialValues(getInitialValues(loan));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loan]);
 

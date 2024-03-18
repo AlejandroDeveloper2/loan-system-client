@@ -8,6 +8,7 @@ import {
   LoanRequestData,
   LoanUpdatedData,
   LoanIndicator,
+  User,
 } from "./DataModels";
 import {
   LoginFormData,
@@ -16,6 +17,8 @@ import {
   UpdateClientDataForm,
   CreateLoanDataForm,
   ApproveLoanDataForm,
+  ChangePassDataForm,
+  ProfileDataForm,
 } from "./FormDataModels";
 
 import {
@@ -94,4 +97,15 @@ interface LoansStore {
   getLoanIndicators: () => Promise<void>;
 }
 
-export type { AuthStore, LoanRequestStore, ClientStore, LoansStore };
+interface UserStore {
+  user: User | null;
+  loading: boolean;
+  getUser: (userId: string) => Promise<void>;
+  updateUser: (userId: string, userData: ProfileDataForm) => Promise<void>;
+  updateUserPassword: (
+    userId: string,
+    userData: ChangePassDataForm
+  ) => Promise<void>;
+}
+
+export type { AuthStore, LoanRequestStore, ClientStore, LoansStore, UserStore };

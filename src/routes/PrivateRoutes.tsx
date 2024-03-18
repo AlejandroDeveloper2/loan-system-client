@@ -10,6 +10,7 @@ import {
   LoansPage,
   LoanRequestViewPage,
   ApproveLoanPage,
+  UserProfilePage,
 } from "@pages/index";
 
 const PrivateRoutes = (): JSX.Element => {
@@ -30,6 +31,7 @@ const PrivateRoutes = (): JSX.Element => {
         />
         <Route path="/userPanel/loans" element={<LoansPage />} />
         <Route path="/userPanel/loans/:loanId" element={<ApproveLoanPage />} />
+        <Route path="/userPanel/userProfile" element={<UserProfilePage />} />
       </Route>
     </Routes>
   );

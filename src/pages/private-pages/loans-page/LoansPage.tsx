@@ -109,7 +109,6 @@ const LoansPage = (): JSX.Element => {
             captionText="Mes Actual"
             variant="light"
           />
-
           <CardList.Card
             title="Total prestamos activos"
             value={String(loanIndicators.totalActiveLoans)}

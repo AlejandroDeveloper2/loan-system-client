@@ -8,7 +8,7 @@ import { IconButton } from "@components/index";
 import styles from "./InfoSection.module.css";
 
 const InfoSection = (props: InfoSectionProps): JSX.Element => {
-  const { sectionTitle, labelId, link, recordId } = props;
+  const { sectionTitle, labelId, link, recordId, buttonLabel } = props;
 
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ const InfoSection = (props: InfoSectionProps): JSX.Element => {
         <h3 className="heading3">{sectionTitle}</h3>
         <IconButton
           Icon={ArrowLeft}
-          label="Volver al listado"
+          label={buttonLabel ? buttonLabel : "Volver al listado"}
           id="btn-back-to-list"
           type="button"
           title="Volver al listado"

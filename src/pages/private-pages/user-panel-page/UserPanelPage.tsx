@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   Cash,
   Coins,
@@ -9,9 +10,26 @@ import {
   ViewGrid,
 } from "iconoir-react";
 
+import useClientsStore from "@zustand/ClientsStore";
+import useLoansStore from "@zustand/LoansStore";
+import { formatMoney } from "@utils/helpers";
+
 import { CardList } from "@components/index";
 
 const UserPanelPage = (): JSX.Element => {
+  const { loanIndicators, getLoanIndicators } = useLoansStore();
+  const { clients, getAllClients } = useClientsStore();
+
+  useEffect(() => {
+    getAllClients("", "", "", { initialDate: "", finalDate: "" }, "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    getLoanIndicators();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <h1 className="heading1">
@@ -21,7 +39,7 @@ const UserPanelPage = (): JSX.Element => {
       <CardList>
         <CardList.Card
           title="Total Clientes"
-          value="0"
+          value={String(clients.length)}
           Icon={Group}
           moreDetailsLink="/userPanel/clients"
           captionText="General"
@@ -37,7 +55,7 @@ const UserPanelPage = (): JSX.Element => {
         />
         <CardList.Card
           title="Total capital invertido"
-          value="$0"
+          value={formatMoney(loanIndicators.totalInvestedCapital)}
           Icon={Coins}
           moreDetailsLink="/userPanel/loans"
           captionText="General"
@@ -45,7 +63,7 @@ const UserPanelPage = (): JSX.Element => {
         />
         <CardList.Card
           title="Total prestamos activos"
-          value="0"
+          value={String(loanIndicators.totalActiveLoans)}
           Icon={DollarCircle}
           moreDetailsLink="/userPanel/loans"
           captionText="General"
@@ -61,14 +79,14 @@ const UserPanelPage = (): JSX.Element => {
         />
         <CardList.Card
           title="Total Prestamos pagados"
-          value="0"
+          value={String(loanIndicators.totalLoansPaid)}
           Icon={HandCash}
           moreDetailsLink="/userPanel/loans"
           captionText="General"
           variant="primary"
         />
         <CardList.Card
-          title="Total prestamos en mora"
+          title="Total pagos en mora"
           value="0"
           Icon={Cash}
           moreDetailsLink="/userPanel/loans"

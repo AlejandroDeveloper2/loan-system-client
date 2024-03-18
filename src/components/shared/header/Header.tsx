@@ -1,4 +1,5 @@
 import { LogOut, Settings } from "iconoir-react";
+import { useNavigate } from "react-router-dom";
 
 import useAuthStore from "@zustand/AuthStore";
 
@@ -8,6 +9,7 @@ import styles from "./Header.module.css";
 
 const Header = (): JSX.Element => {
   const logout = useAuthStore((state) => state.logout);
+  const navigate = useNavigate();
 
   return (
     <header className={styles.header}>
@@ -24,7 +26,7 @@ const Header = (): JSX.Element => {
             title="Configuraciones"
             variant="outline"
             loading={false}
-            onClick={() => console.log("")}
+            onClick={() => navigate("/userPanel/userProfile")}
           />
         </li>
         <li>

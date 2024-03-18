@@ -135,6 +135,18 @@ interface ApproveLoanDataForm {
   firstPaymentDate: string;
 }
 
+interface ProfileDataForm {
+  fistName: string;
+  lastName: string;
+  email: string;
+}
+
+interface ChangePassDataForm {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
 export type {
   PaymentType,
   StepperFormNameType,
@@ -153,4 +165,6 @@ export type {
   UpdateClientDataForm,
   CreateLoanFinalDataForm,
   ApproveLoanDataForm,
+  ProfileDataForm,
+  ChangePassDataForm,
 };

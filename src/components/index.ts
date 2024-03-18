@@ -47,3 +47,7 @@ export { default as UpdateClientForm } from "./clients/update-client-form/Update
 //loans
 export { default as LoanForm } from "./loans/loan-form/LoanForm";
 export { default as LoanPaymentSchedule } from "./loans/loan-payment-schedule/LoanPaymentSchedule";
+
+//profile
+export { default as ProfileForm } from "./user-profile/profile-form/ProfileForm";
+export { default as UpdatedPasswordForm } from "./user-profile/update-password-form/UpdatedPasswordForm";
