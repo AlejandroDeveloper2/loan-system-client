@@ -46,13 +46,13 @@ const ClientsPage = (): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, filtersData, chosenFilter, recordsToList, searchValue]);
 
-  const getOptions = (recordId: string): IconOnlyButtonProps[] => {
+  const getOptions = (record: Client): IconOnlyButtonProps[] => {
     return optionsData.map((option) => {
       if (option.id === "btn-edit")
         return {
           ...option,
           onClick: () => {
-            navigate(`/userPanel/clients/${recordId}`);
+            navigate(`/userPanel/clients/${record.id}`);
           },
         };
       return option;

@@ -68,26 +68,28 @@ const LoanRequestPage = (): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, filtersData, chosenFilter, recordsToList, searchValue]);
 
-  const getOptions = (recordId: string): IconOnlyButtonProps[] => {
+  const getOptions = (record: ParsedLoanRequestData): IconOnlyButtonProps[] => {
     return optionsData.map((option) => {
       if (option.id === "btn-view")
         return {
           ...option,
-          onClick: () => navigate(`/userPanel/loanRequests/${recordId}`),
+          onClick: () => navigate(`/userPanel/loanRequests/${record.id}`),
         };
       if (option.id === "btn-approve")
         return {
           ...option,
+          disabled: record.state === "Aprobado" ? true : undefined,
           onClick: () => {
             toggleDialog();
-            if (chosenOption === "Yes") approveLoanRequest(recordId);
+            if (chosenOption === "Yes") approveLoanRequest(record.id);
           },
         };
       return {
         ...option,
+        disabled: record.state === "Rechazado" ? true : undefined,
         onClick: () => {
           toggleDialog2();
-          if (chosenOption2 === "Yes") rejectLoanRequest(recordId);
+          if (chosenOption2 === "Yes") rejectLoanRequest(record.id);
         },
       };
     });

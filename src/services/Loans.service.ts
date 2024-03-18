@@ -182,4 +182,29 @@ export class LoansService {
     }
     return response;
   }
+
+  public async cancelLoan(
+    token: string,
+    loanId: string
+  ): Promise<ResponseGlobal<ClientLoanData>> {
+    let response: ResponseGlobal<ClientLoanData>;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      const { data } = await axiosClient.delete<ResponseGlobal<ClientLoanData>>(
+        `/loan/cancel/${loanId}`,
+        config
+      );
+      response = data;
+    } catch (e: unknown) {
+      const parsedError: AxiosError = e as AxiosError;
+      throw new AxiosError(parsedError.message);
+    }
+    return response;
+  }
 }

@@ -71,7 +71,7 @@ function Tables<T>(props: TablesProps<T>) {
                 )}
                 {getOptions ? (
                   <Table.Row.Column>
-                    {getOptions(Object(record).id).map((option) => (
+                    {getOptions(record).map((option) => (
                       <IconOnlyButton
                         key={option.id}
                         Icon={option.Icon}
@@ -81,6 +81,7 @@ function Tables<T>(props: TablesProps<T>) {
                         variant={option.variant}
                         loading={option.loading}
                         onClick={option.onClick}
+                        disabled={option.disabled}
                       />
                     ))}
                   </Table.Row.Column>

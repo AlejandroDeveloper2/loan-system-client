@@ -213,7 +213,7 @@ interface TablesProps<T> {
   recordsData: T[];
   columnKeys: Columnkey[];
   recordTitle: string;
-  getOptions?: (recordId: string) => IconOnlyButtonProps[];
+  getOptions?: (record: T) => IconOnlyButtonProps[];
   paginationConfig?: PaginationConfig;
 }
 

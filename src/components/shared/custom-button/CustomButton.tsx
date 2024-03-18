@@ -17,7 +17,13 @@ const BaseButton = (props: BaseButtonProps): JSX.Element => {
       id={id}
       type={type}
       title={title}
-      className={styles[variant] + " " + styles.baseButtonStyle}
+      className={
+        styles[variant] +
+        " " +
+        styles.baseButtonStyle +
+        " " +
+        styles[disabled === true ? "disabled" : ""]
+      }
       disabled={disabled ? disabled : loading ? true : false}
       onClick={onClick}
     >

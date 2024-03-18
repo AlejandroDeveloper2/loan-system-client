@@ -168,5 +168,27 @@ const useLoansStore = create<LoansStore>((set) => ({
       set({ loading: false });
     }
   },
+
+  cancelLoan: async (loanId: string): Promise<void> => {
+    const token: string = window.localStorage.getItem("token") ?? "";
+    try {
+      set({ loading: true });
+      const { body: updatedLoan }: ResponseGlobal<ClientLoanData> =
+        await loansService.cancelLoan(token, loanId);
+      set(({ loans }) => ({
+        loans: loans.map((loan) => {
+          if (loan.id === loanId) {
+            return updatedLoan;
+          }
+          return loan;
+        }),
+      }));
+      toast.success("¡Préstamo cancelado!");
+    } catch (e: unknown) {
+      toast.error("¡Ha ocurrido un error al cancelar el préstamo!");
+    } finally {
+      set({ loading: false });
+    }
+  },
 }));
 export default useLoansStore;

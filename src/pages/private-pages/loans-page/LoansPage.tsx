@@ -4,11 +4,13 @@ import {
   Calendar,
   Coins,
   DollarCircle,
+  Edit,
+  Eye,
   HandCash,
   Triangle,
 } from "iconoir-react";
 
-import { useFilter, useModal, usePagination } from "@hooks/index";
+import { useDialog, useFilter, useModal, usePagination } from "@hooks/index";
 import useLoansStore from "@zustand/LoansStore";
 
 import { LoanFilters } from "@models/FiltersDataModels";
@@ -32,7 +34,7 @@ import { formatMoney } from "@utils/helpers";
 
 const LoansPage = (): JSX.Element => {
   const navigate = useNavigate();
-  const { loans, loanIndicators, getAllLoans, getLoanIndicators } =
+  const { loans, loanIndicators, getAllLoans, getLoanIndicators, cancelLoan } =
     useLoansStore();
   const {
     searchValue,
@@ -49,6 +51,11 @@ const LoansPage = (): JSX.Element => {
 
   const { filtersData, chosenFilter, onChangeFilter, onChangeFilterInput } =
     useFilter<LoanFilters>({ loanDate: "", paymentCycle: "" }, "Todos");
+
+  const { DialogBox, chosenOption, toggleDialog } = useDialog(
+    "¿Desea Cancelar el préstamo?",
+    "Cancelar préstamo"
+  );
 
   const { ModalWindow, toggleModal } = useModal("Nuevo préstamo");
 
@@ -68,17 +75,25 @@ const LoansPage = (): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, filtersData, chosenFilter, recordsToList, searchValue]);
 
-  const getOptions = (recordId: string): IconOnlyButtonProps[] => {
+  const getOptions = (loan: ClientLoanData): IconOnlyButtonProps[] => {
     return optionsData.map((option) => {
       if (option.id === "btn-edit-loan")
         return {
           ...option,
-          onClick: () => navigate(`/userPanel/loans/${recordId}`),
+          Icon: loan.loanState !== "Pendiente" ? Eye : Edit,
+          variant: loan.loanState !== "Pendiente" ? "primary" : "warning",
+          title:
+            loan.loanState !== "Pendiente"
+              ? "Ver detalle del préstamo"
+              : "Editar préstamo",
+          onClick: () => navigate(`/userPanel/loans/${loan.id}`),
         };
       return {
         ...option,
+        disabled: loan.loanState !== "Pendiente" ? true : undefined,
         onClick: () => {
-          console.log("cancelar préstamo");
+          toggleDialog();
+          if (chosenOption === "Yes") cancelLoan(loan.id);
         },
       };
     });
@@ -86,6 +101,7 @@ const LoansPage = (): JSX.Element => {
 
   return (
     <>
+      <DialogBox />
       <ModalWindow>
         <LoanForm toggleModal={toggleModal} />
       </ModalWindow>

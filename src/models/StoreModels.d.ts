@@ -95,6 +95,7 @@ interface LoansStore {
   generatePaymentSchedule: (loanData: ApproveLoanDataForm) => Promise<void>;
   approveLoan: (loanId: string, loanData: ApproveLoanDataForm) => Promise<void>;
   getLoanIndicators: () => Promise<void>;
+  cancelLoan: (loanId: string) => Promise<void>;
 }
 
 interface UserStore {

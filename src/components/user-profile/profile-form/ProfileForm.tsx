@@ -1,8 +1,9 @@
+import { useEffect } from "react";
 import { AtSign, EditPencil, User } from "iconoir-react";
 
 import {
   initialErrors,
-  initialValues,
+  getInitialValues,
 } from "@constants/form-initial-values/ProfileDataInitialValues";
 import { ProfileDataForm } from "@models/FormDataModels";
 
@@ -14,21 +15,37 @@ import { validationSchema } from "./ValidationSchema";
 import { CustomForm } from "@components/index";
 
 const ProfileForm = (): JSX.Element => {
-  const { updateUser } = useUserStore();
+  const { user, updateUser, getUser } = useUserStore();
   const auth = useAuthStore((state) => state.auth);
 
   const action = () => {
     updateUser(auth?.sub ?? "", formData);
   };
 
-  const { formData, errors, formRef, handleChange, handleSubmit } =
-    useForm<ProfileDataForm>(
-      initialValues,
-      initialErrors,
-      "edit",
-      validationSchema,
-      action
-    );
+  const {
+    formData,
+    errors,
+    formRef,
+    handleChange,
+    handleSubmit,
+    updateFormInitialValues,
+  } = useForm<ProfileDataForm>(
+    getInitialValues(user),
+    initialErrors,
+    "edit",
+    validationSchema,
+    action
+  );
+
+  useEffect(() => {
+    if (auth) getUser(auth.sub);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth]);
+
+  useEffect(() => {
+    updateFormInitialValues(getInitialValues(user));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   return (
     <CustomForm

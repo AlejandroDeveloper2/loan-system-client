@@ -1,10 +1,11 @@
+import { User } from "@models/DataModels";
 import { ProfileDataForm, WrongInput } from "@models/FormDataModels";
 
-export const initialValues: ProfileDataForm = {
-  fistName: "",
-  lastName: "",
-  email: "",
-};
+export const getInitialValues = (user: User | null): ProfileDataForm => ({
+  fistName: user ? user.fistName : "",
+  lastName: user ? user.lastName : "",
+  email: user ? user.email : "",
+});
 
 export const initialErrors: WrongInput = {
   fistName: {

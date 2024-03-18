@@ -14,12 +14,13 @@ export const validationSchema = async (
 ): Promise<WrongInput> => ({
   currentPassword: await formValidations
     .validateEmptyFields(formData.currentPassword, "currentPassword", formRef)
-    .then(() =>
-      formValidations.validatePassword(
-        formData.currentPassword,
-        "currentPassword",
-        formRef
-      )
+    .then(
+      (wrongInput) =>
+        // formValidations.validatePassword(
+        //   formData.currentPassword,
+        //   "currentPassword",
+        //   formRef
+        wrongInput
     )
     .catch((error: FieldErrorType) => error),
   newPassword: await formValidations
