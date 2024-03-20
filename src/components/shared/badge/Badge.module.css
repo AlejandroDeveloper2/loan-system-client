@@ -36,7 +36,7 @@
 .neutral {
     background-color: var(--gray-base);
     & span[id="badge-text"]{
-        color:var(--gray-dark);
+        color:var(--white);
     }
 }
 

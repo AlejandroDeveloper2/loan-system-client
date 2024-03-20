@@ -185,6 +185,7 @@ export type {
   UserRoleType,
   AuthStatusType,
   VariantType,
+  LoanStateType,
   Step,
   IllustrationData,
   Client,

@@ -7,6 +7,7 @@ import {
   IllustrationData,
   ReferencesData,
   VariantType,
+  LoanStateType,
 } from "@models/DataModels";
 import {
   PaymentType,
@@ -169,12 +170,27 @@ const getPaymentCycleBadgeMark = (
   return badgeVariant;
 };
 
+const getLoanStatus = (loanState: LoanStateType | string): VariantType => {
+  const badgeVariant: VariantType =
+    loanState === "Aprobado"
+      ? "primary"
+      : loanState === "Cancelado"
+      ? "danger"
+      : loanState === "Pagado"
+      ? "warning"
+      : "light";
+  return badgeVariant;
+};
+
 export const getBadgeVariant = (
   fieldKey: string,
   fieldValue: string
 ): VariantType => {
   if (fieldKey === "paymentCycle") {
     return getPaymentCycleBadgeMark(fieldValue);
+  }
+  if (fieldKey === "loanState") {
+    return getLoanStatus(fieldValue);
   }
   return "light";
 };
