@@ -8,6 +8,8 @@ import {
   UpdatedPasswordForm,
 } from "@components/index";
 
+import { Figure3 } from "@assets/index";
+
 const UserProfilePage = (): JSX.Element => {
   const auth = useAuthStore((state) => state.auth);
 
@@ -31,6 +33,7 @@ const UserProfilePage = (): JSX.Element => {
       <div className="formContainer">
         <UpdatedPasswordForm />
       </div>
+      <Figure3 />
     </>
   );
 };

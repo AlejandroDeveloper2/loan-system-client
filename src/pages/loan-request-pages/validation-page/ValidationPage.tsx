@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Hashtag, Search } from "iconoir-react";
 
 import useLoanRequestStore from "@zustand/LoanRequestStore";
+import { useLoading } from "@hooks/index";
 
 import {
   ClientSearchValidation,
@@ -15,7 +16,8 @@ const ValidationPage = (): JSX.Element => {
   const [clientId, setClientId] = useState<string>("");
   const [click, setClick] = useState<boolean>(false);
 
-  const { loading, clientExists, validateClient } = useLoanRequestStore();
+  const { clientExists, validateClient } = useLoanRequestStore();
+  const { loading, toggleLoading } = useLoading();
 
   if (click) return <ClientSearchValidation clientFounded={clientExists} />;
   return (
@@ -44,7 +46,7 @@ const ValidationPage = (): JSX.Element => {
           variant="primary"
           loading={loading}
           onClick={() => {
-            validateClient(clientId);
+            validateClient(clientId, toggleLoading);
             setClick(true);
           }}
         />

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import {
   Cash,
@@ -8,7 +9,7 @@ import {
   User,
 } from "iconoir-react";
 
-import { useForm } from "@hooks/index";
+import { useForm, useLoading } from "@hooks/index";
 import useClientsStore from "@zustand/ClientsStore";
 import useLoansStore from "@zustand/LoansStore";
 import { validationSchema } from "./ValidationSchema";
@@ -20,13 +21,18 @@ import {
   initialErrors,
 } from "@constants/form-initial-values/LoanInitialValues";
 
-import { CustomForm } from "@components/index";
+import { CustomForm, Spinner } from "@components/index";
 
 const LoanForm = ({ toggleModal }: LoanFormProps): JSX.Element => {
   function action() {
-    createLoan(formData);
-    toggleModal();
+    createLoan(formData, toggleLoadingSaveLoan).then(() => {
+      toggleModal();
+    });
   }
+
+  const { loading, loadingMessage, toggleLoading } = useLoading();
+  const { loading: loadingSaveLoan, toggleLoading: toggleLoadingSaveLoan } =
+    useLoading();
 
   const { clients, getAllClients } = useClientsStore();
   const { createLoan } = useLoansStore();
@@ -41,8 +47,14 @@ const LoanForm = ({ toggleModal }: LoanFormProps): JSX.Element => {
     );
 
   useEffect(() => {
-    getAllClients("10", "", "", { initialDate: "", finalDate: "" }, "");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getAllClients(
+      "10",
+      "",
+      "",
+      { initialDate: "", finalDate: "" },
+      "",
+      toggleLoading
+    );
   }, []);
 
   return (
@@ -52,67 +64,73 @@ const LoanForm = ({ toggleModal }: LoanFormProps): JSX.Element => {
       formRef={formRef}
       handleSubmit={handleSubmit}
     >
-      <CustomForm.FieldSet id="loan-input-set" setStyle="gridForm">
-        <CustomForm.Select
-          id="client"
-          name="client"
-          label="Seleccionar cliente *"
-          value={formData.client}
-          errorMessage={errors["client"].message}
-          options={clients.map((client) => ({
-            label: client.fullName,
-            value: client.id,
-          }))}
-          Icon={User}
-          onChange={handleChange}
-        />
-        <CustomForm.Input
-          id="amount"
-          name="amount"
-          label="Monto solicitado *"
-          type="number"
-          placeholder="Digita el monto del préstamo"
-          value={formData.amount}
-          errorMessage={errors["amount"].message}
-          Icon={Cash}
-          onChange={handleChange}
-        />
-        <CustomForm.Select
-          id="paymentCycle"
-          name="paymentCycle"
-          label="Ciclo de pago *"
-          value={formData.paymentCycle}
-          errorMessage={errors["paymentCycle"].message}
-          options={[
-            { label: "Mensual", value: "Mensual" },
-            { label: "Quincenal", value: "Quincenal" },
-            { label: "Semanal", value: "Semanal" },
-          ]}
-          Icon={RefreshDouble}
-          onChange={handleChange}
-        />
-        <CustomForm.Input
-          id="deadline"
-          name="deadline"
-          label="Número de cuotas *"
-          type="number"
-          placeholder="Digita la cantidad de cuotas"
-          value={formData.deadline}
-          errorMessage={errors["deadline"].message}
-          Icon={Hashtag}
-          onChange={handleChange}
-        />
-      </CustomForm.FieldSet>
-      <CustomForm.IconButton
-        id="button-save-loan"
-        type="submit"
-        title="Crear préstamo"
-        Icon={FloppyDisk}
-        label="Crear préstamo"
-        variant="primary"
-        loading={false}
-        onClick={() => {}}
-      />
+      {loading ? (
+        <Spinner className="spinnerBarPrimary" message={loadingMessage} />
+      ) : (
+        <>
+          <CustomForm.FieldSet id="loan-input-set" setStyle="gridForm">
+            <CustomForm.Select
+              id="client"
+              name="client"
+              label="Seleccionar cliente *"
+              value={formData.client}
+              errorMessage={errors["client"].message}
+              options={clients.map((client) => ({
+                label: client.fullName,
+                value: client.id,
+              }))}
+              Icon={User}
+              onChange={handleChange}
+            />
+            <CustomForm.Input
+              id="amount"
+              name="amount"
+              label="Monto solicitado *"
+              type="number"
+              placeholder="Digita el monto del préstamo"
+              value={formData.amount}
+              errorMessage={errors["amount"].message}
+              Icon={Cash}
+              onChange={handleChange}
+            />
+            <CustomForm.Select
+              id="paymentCycle"
+              name="paymentCycle"
+              label="Ciclo de pago *"
+              value={formData.paymentCycle}
+              errorMessage={errors["paymentCycle"].message}
+              options={[
+                { label: "Mensual", value: "Mensual" },
+                { label: "Quincenal", value: "Quincenal" },
+                { label: "Semanal", value: "Semanal" },
+              ]}
+              Icon={RefreshDouble}
+              onChange={handleChange}
+            />
+            <CustomForm.Input
+              id="deadline"
+              name="deadline"
+              label="Número de cuotas *"
+              type="number"
+              placeholder="Digita la cantidad de cuotas"
+              value={formData.deadline}
+              errorMessage={errors["deadline"].message}
+              Icon={Hashtag}
+              onChange={handleChange}
+            />
+          </CustomForm.FieldSet>
+          <CustomForm.IconButton
+            id="button-save-loan"
+            type="submit"
+            title="Crear préstamo"
+            Icon={FloppyDisk}
+            label="Crear préstamo"
+            variant="primary"
+            loading={loadingSaveLoan}
+            onClick={() => {}}
+          />
+        </>
+      )}
     </CustomForm>
   );
 };

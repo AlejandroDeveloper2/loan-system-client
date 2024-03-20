@@ -1,6 +1,11 @@
 import { Community, DoubleCheck, Phone, User } from "iconoir-react";
 
-import { useForm, useFormStepper, useRadioButton } from "@hooks/index";
+import {
+  useForm,
+  useFormStepper,
+  useLoading,
+  useRadioButton,
+} from "@hooks/index";
 import { validationSchema } from "./ValidationSchema";
 import { parseReferenceDate } from "@utils/helpers";
 
@@ -12,10 +17,9 @@ import {
 import { ReferencesData } from "@models/DataModels";
 
 import { CustomForm } from "@components/index";
-import useLoanRequestStore from "@zustand/LoanRequestStore";
 
 const PersonalReferencesPage = (): JSX.Element => {
-  const loading = useLoanRequestStore((state) => state.loading);
+  const { loading, toggleLoading } = useLoading();
 
   function action() {
     const parsedData: ReferencesData = parseReferenceDate(formData);
@@ -24,7 +28,8 @@ const PersonalReferencesPage = (): JSX.Element => {
 
   const { saveStepFormData } = useFormStepper<ReferencesData>(
     "/loanRequest/personalReferences",
-    "personalReference"
+    "personalReference",
+    toggleLoading
   );
 
   const {

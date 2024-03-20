@@ -16,8 +16,8 @@ export const validationSchema = async (
     .validateEmptyFields(String(formData.email), "email", formRef)
     .then(() => formValidations.validateEmail(formData.email, "email", formRef))
     .catch((error: FieldErrorType) => error),
-  fistName: await formValidations
-    .validateEmptyFields(formData.fistName, "fistName", formRef)
+  firstName: await formValidations
+    .validateEmptyFields(formData.firstName, "firstName", formRef)
     .then((wrongInput) => wrongInput)
     .catch((error: FieldErrorType) => error),
   lastName: await formValidations

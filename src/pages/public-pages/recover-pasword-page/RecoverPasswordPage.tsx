@@ -1,6 +1,6 @@
 import { AtSign, Send, Lock } from "iconoir-react";
 
-import { useForm } from "@hooks/index";
+import { useForm, useLoading } from "@hooks/index";
 import { validationSchema } from "./ValidationSchema";
 
 import { RecoverPassFormData } from "@models/FormDataModels";
@@ -13,10 +13,11 @@ import { CustomForm, CustomLink } from "@components/index";
 import useAuthStore from "@zustand/AuthStore";
 
 const RecoverPasswordPage = (): JSX.Element => {
-  const { loading, recoverPassword } = useAuthStore();
+  const { recoverPassword } = useAuthStore();
+  const { loading, toggleLoading } = useLoading();
 
   const action = () => {
-    recoverPassword(formData);
+    recoverPassword(formData, toggleLoading);
   };
 
   const { formData, formRef, errors, handleChange, handleSubmit } =

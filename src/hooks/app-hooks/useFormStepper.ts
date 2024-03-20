@@ -6,7 +6,11 @@ import { StepperFormNameType } from "@models/FormDataModels";
 
 import useLoanRequestStore from "@zustand/LoanRequestStore";
 
-const useFormStepper = <T>(nextStep: string, formKey: StepperFormNameType) => {
+const useFormStepper = <T>(
+  nextStep: string,
+  formKey: StepperFormNameType,
+  toggleLoading?: (message: string, isLoading: boolean) => void
+) => {
   const navigate = useNavigate();
   const stepData = window.localStorage.getItem("stepFormData");
   const { createLoanRequest } = useLoanRequestStore();
@@ -20,11 +24,11 @@ const useFormStepper = <T>(nextStep: string, formKey: StepperFormNameType) => {
   );
 
   useEffect(() => {
-    if (Object.keys(currentStepData.formData).length === 5) {
+    if (Object.keys(currentStepData.formData).length === 5 && toggleLoading) {
       console.log(currentStepData.formData);
       const parsedCurrentStepData: RequestFormData =
         currentStepData.formData as RequestFormData;
-      createLoanRequest(parsedCurrentStepData);
+      createLoanRequest(parsedCurrentStepData, toggleLoading);
       console.log(parsedCurrentStepData);
       navigate("/loanRequest");
       window.localStorage.clear();

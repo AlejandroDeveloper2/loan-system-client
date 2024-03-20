@@ -52,7 +52,7 @@
         & td:last-child{
             border-right:none;
         }
-        & td {
+        & td[id="table-cell"] {
             border-bottom: 1px var(--primary) solid;
             & button {
                 width: 64px;
@@ -70,7 +70,7 @@
             padding:var(--spacing-xl);
             border-right: 1px var(--primary) solid;
             background-color: var(--white);
-            & span{
+            & span[id="cell-span"]{
                 width: 200px;
                 color:var(--primary);
                 font-weight:normal;
@@ -86,7 +86,7 @@
 
 .emptyRow{
     padding: var(--spacing-md); 
-    & td {   
+    & td[id="table-cell"]{   
         & p{
             color:var(--primary);
             font-weight: 500;
@@ -94,6 +94,14 @@
             text-align: center;
         }
     } 
+}
+
+.loadingRow{
+    padding: var(--spacing-md); 
+    & td{
+        border-bottom: 1px var(--primary) solid;
+    }
+    
 }
 
 @media (min-width: 768px) {

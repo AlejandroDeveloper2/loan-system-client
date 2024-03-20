@@ -3,16 +3,19 @@ import { useParams } from "react-router-dom";
 import { Group } from "iconoir-react";
 
 import useClientsStore from "@zustand/ClientsStore";
+import { useLoading } from "@hooks/index";
 
-import { InfoSection, UpdateClientForm } from "@components/index";
+import { InfoSection, Spinner, UpdateClientForm } from "@components/index";
 
 const EditClientPage = (): JSX.Element => {
   const params = useParams();
   const clientParam = params as { clientId: string };
   const { getClient } = useClientsStore();
 
+  const { loading, loadingMessage, toggleLoading } = useLoading();
+
   useEffect(() => {
-    getClient(clientParam.clientId);
+    getClient(clientParam.clientId, toggleLoading);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clientParam]);
 
@@ -28,7 +31,11 @@ const EditClientPage = (): JSX.Element => {
         link="/userPanel/clients"
         recordId={clientParam.clientId}
       />
-      <UpdateClientForm />
+      {loading ? (
+        <Spinner className="spinnerBarPrimary" message={loadingMessage} />
+      ) : (
+        <UpdateClientForm />
+      )}
     </>
   );
 };

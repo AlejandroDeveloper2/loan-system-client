@@ -1,27 +1,29 @@
 import { Lock, RefreshDouble } from "iconoir-react";
 import { useParams } from "react-router-dom";
 
-import { useForm } from "@hooks/index";
+import { useForm, useLoading } from "@hooks/index";
+import useAuthStore from "@zustand/AuthStore";
+import { validationSchema } from "./ValidationSchema";
 
 import { ChangePasswordFormData } from "@models/FormDataModels";
 import {
   initialValues,
   initialErrors,
 } from "@constants/form-initial-values/ChangePassInitialValues";
-import { validationSchema } from "./ValidationSchema";
 
 import { CustomForm, CustomLink } from "@components/index";
-import useAuthStore from "@zustand/AuthStore";
 
 const ChangePasswordPage = (): JSX.Element => {
   const params = useParams();
   const urlToken = params as { token: string };
 
-  const { loading, changePassword } = useAuthStore();
+  const { changePassword } = useAuthStore();
+  const { loading, toggleLoading } = useLoading();
 
   const action = () => {
-    changePassword(formData, urlToken.token);
+    changePassword(formData, urlToken.token, toggleLoading);
   };
+
   const { formData, formRef, errors, handleChange, handleSubmit } =
     useForm<ChangePasswordFormData>(
       initialValues,

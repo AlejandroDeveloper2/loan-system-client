@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Calendar, GoogleDocs } from "iconoir-react";
 
 import useLoanRequestStore from "@zustand/LoanRequestStore";
-import { useDialog, useFilter, usePagination } from "@hooks/index";
+import { useDialog, useFilter, useLoading, usePagination } from "@hooks/index";
 
 import { LoanRequestFilters } from "@models/FiltersDataModels";
 import { ParsedLoanRequestData } from "@models/DataModels";
@@ -26,8 +27,11 @@ import {
 const LoanRequestPage = (): JSX.Element => {
   const navigate = useNavigate();
 
+  const { loading, loadingMessage, toggleLoading } = useLoading();
+
   const {
     loanRequests,
+    paginationData,
     getAllLoanRequests,
     approveLoanRequest,
     rejectLoanRequest,
@@ -37,7 +41,6 @@ const LoanRequestPage = (): JSX.Element => {
   const {
     searchValue,
     recordsToList,
-    totalRecords,
     currentPage,
     firstShownRecord,
     lastShownRecord,
@@ -45,17 +48,22 @@ const LoanRequestPage = (): JSX.Element => {
     onRecordsToListChange,
     next,
     back,
-  } = usePagination<ParsedLoanRequestData>(loanRequests);
+  } = usePagination(paginationData);
 
-  const { DialogBox, chosenOption, toggleDialog } = useDialog(
+  const { DialogBox, toggleDialog, updateElementId } = useDialog(
     "¿Desea aprobar la solicitud?",
-    "Aprobar solicitud"
+    "Aprobar solicitud",
+    approveLoanRequest
   );
   const {
     DialogBox: DialogBox2,
-    chosenOption: chosenOption2,
     toggleDialog: toggleDialog2,
-  } = useDialog("¿Desea rechazar la solicitud?", "Rechazar solicitud");
+    updateElementId: updateElementId2,
+  } = useDialog(
+    "¿Desea rechazar la solicitud?",
+    "Rechazar solicitud",
+    rejectLoanRequest
+  );
 
   useEffect(() => {
     getAllLoanRequests(
@@ -63,33 +71,35 @@ const LoanRequestPage = (): JSX.Element => {
       recordsToList,
       searchValue,
       filtersData,
+      toggleLoading,
       chosenFilter === "Todo" ? undefined : chosenFilter
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, filtersData, chosenFilter, recordsToList, searchValue]);
 
-  const getOptions = (record: ParsedLoanRequestData): IconOnlyButtonProps[] => {
+  const getOptions = (
+    request: ParsedLoanRequestData
+  ): IconOnlyButtonProps[] => {
     return optionsData.map((option) => {
       if (option.id === "btn-view")
         return {
           ...option,
-          onClick: () => navigate(`/userPanel/loanRequests/${record.id}`),
+          onClick: () => navigate(`/userPanel/loanRequests/${request.id}`),
         };
       if (option.id === "btn-approve")
         return {
           ...option,
-          disabled: record.state === "Aprobado" ? true : undefined,
+          disabled: request.state === "Aprobado" ? true : undefined,
           onClick: () => {
             toggleDialog();
-            if (chosenOption === "Yes") approveLoanRequest(record.id);
+            updateElementId(request.id);
           },
         };
       return {
         ...option,
-        disabled: record.state === "Rechazado" ? true : undefined,
+        disabled: request.state === "Rechazado" ? true : undefined,
         onClick: () => {
           toggleDialog2();
-          if (chosenOption2 === "Yes") rejectLoanRequest(record.id);
+          updateElementId2(request.id);
         },
       };
     });
@@ -141,10 +151,12 @@ const LoanRequestPage = (): JSX.Element => {
         paginationConfig={{
           next,
           back,
-          totalRecords,
+          totalRecords: paginationData.totalElements,
           firstShownRecord,
           lastShownRecord,
         }}
+        isLoading={loading}
+        loadingMessage={loadingMessage}
       >
         <Tables.Tools
           recordsToList={recordsToList}

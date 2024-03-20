@@ -6,3 +6,4 @@ export { default as useFilter } from "./app-hooks/useFilter";
 export { default as usePagination } from "./app-hooks/usePagination";
 export { default as useDialog } from "./app-hooks/useDialog";
 export { default as useModal } from "./app-hooks/useModal";
+export { default as useLoading } from "./app-hooks/useLoading";

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
   User,
@@ -25,21 +26,22 @@ import {
 } from "@constants/form-initial-values/ClientInitialValues";
 
 import useClientsStore from "@zustand/ClientsStore";
-import { useForm, useRadioButton } from "@hooks/index";
+import { useForm, useLoading, useRadioButton } from "@hooks/index";
 import { validationSchema } from "./ValidationSchema";
 
 import { CustomForm } from "@components/index";
-import { useEffect } from "react";
 
 const UpdateClientForm = (): JSX.Element => {
   const params = useParams();
   const clientParam = params as { clientId: string };
 
+  const { loading, toggleLoading } = useLoading();
+
   function action() {
-    updateClient(clientParam.clientId, formData);
+    updateClient(clientParam.clientId, formData, toggleLoading);
   }
 
-  const { loading, client, updateClient } = useClientsStore();
+  const { client, updateClient } = useClientsStore();
 
   const {
     formData,

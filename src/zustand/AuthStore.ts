@@ -15,12 +15,14 @@ import { Auth, ServerResponse } from "@models/DataModels";
 const authService = new AuthService();
 
 const useAuthStore = create<AuthStore>((set) => ({
-  loading: false,
   auth: decodeToken<Auth>(localStorage.getItem("token") ?? ""),
   authStatus: "no authenticated",
-  login: async (userCredencials: LoginFormData): Promise<void> => {
+  login: async (
+    userCredencials: LoginFormData,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ): Promise<void> => {
     try {
-      set({ loading: true });
+      toggleLoading("Validando usuario...", true);
       const { token } = await authService.login(userCredencials);
       window.localStorage.setItem("token", token);
       const decodedToken = decodeToken<Auth>(token);
@@ -30,7 +32,7 @@ const useAuthStore = create<AuthStore>((set) => ({
       const parsedError = e as ServerResponse;
       toast.error(parsedError.message);
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
   logout: (): void => {
@@ -38,9 +40,12 @@ const useAuthStore = create<AuthStore>((set) => ({
     set({ auth: null, authStatus: "no authenticated" });
   },
 
-  recoverPassword: async (userEmail: RecoverPassFormData): Promise<void> => {
+  recoverPassword: async (
+    userEmail: RecoverPassFormData,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ): Promise<void> => {
     try {
-      set({ loading: true });
+      toggleLoading("Enviando solicitud...", true);
       await authService.recoverPassword(userEmail.email);
       toast.success(
         "¡Se ha enviado un mensaje a tu correo con las instrucciones!"
@@ -49,22 +54,23 @@ const useAuthStore = create<AuthStore>((set) => ({
       const parsedError = e as ServerResponse;
       toast.error(parsedError.message);
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
   changePassword: async (
     newUserPassword: ChangePasswordFormData,
-    token
+    token,
+    toggleLoading: (message: string, isLoading: boolean) => void
   ): Promise<void> => {
     try {
-      set({ loading: true });
+      toggleLoading("Cambiando contraseña...", true);
       await authService.changePassword(newUserPassword.password, token);
       toast.success("¡Se reestablecido tu contraseña con exito!");
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       toast.error(parsedError.message);
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
   verifyAuthenticatedUser: (): void => {

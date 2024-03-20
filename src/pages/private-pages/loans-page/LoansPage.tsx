@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -10,8 +11,15 @@ import {
   Triangle,
 } from "iconoir-react";
 
-import { useDialog, useFilter, useModal, usePagination } from "@hooks/index";
+import {
+  useDialog,
+  useFilter,
+  useLoading,
+  useModal,
+  usePagination,
+} from "@hooks/index";
 import useLoansStore from "@zustand/LoansStore";
+import { formatMoney } from "@utils/helpers";
 
 import { LoanFilters } from "@models/FiltersDataModels";
 import {
@@ -28,18 +36,31 @@ import {
   Filters,
   IndicatorSection,
   LoanForm,
+  Spinner,
   Tables,
 } from "@components/index";
-import { formatMoney } from "@utils/helpers";
 
 const LoansPage = (): JSX.Element => {
   const navigate = useNavigate();
-  const { loans, loanIndicators, getAllLoans, getLoanIndicators, cancelLoan } =
-    useLoansStore();
+
+  const { loading, loadingMessage, toggleLoading } = useLoading();
+  const {
+    loading: loadingIndicator,
+    loadingMessage: loadingMessageIndicator,
+    toggleLoading: toggleLoadingIndicator,
+  } = useLoading();
+
+  const {
+    loans,
+    loanIndicators,
+    paginationData,
+    getAllLoans,
+    getLoanIndicators,
+    cancelLoan,
+  } = useLoansStore();
   const {
     searchValue,
     recordsToList,
-    totalRecords,
     currentPage,
     firstShownRecord,
     lastShownRecord,
@@ -47,21 +68,21 @@ const LoansPage = (): JSX.Element => {
     onRecordsToListChange,
     next,
     back,
-  } = usePagination<ClientLoanData>(loans);
+  } = usePagination(paginationData);
 
   const { filtersData, chosenFilter, onChangeFilter, onChangeFilterInput } =
     useFilter<LoanFilters>({ loanDate: "", paymentCycle: "" }, "Todos");
 
-  const { DialogBox, chosenOption, toggleDialog } = useDialog(
+  const { DialogBox, toggleDialog, updateElementId } = useDialog(
     "¿Desea Cancelar el préstamo?",
-    "Cancelar préstamo"
+    "Cancelar préstamo",
+    cancelLoan
   );
 
   const { ModalWindow, toggleModal } = useModal("Nuevo préstamo");
 
   useEffect(() => {
-    getLoanIndicators();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getLoanIndicators(toggleLoadingIndicator);
   }, []);
 
   useEffect(() => {
@@ -70,9 +91,9 @@ const LoansPage = (): JSX.Element => {
       recordsToList,
       searchValue,
       filtersData,
-      chosenFilter === "Todos" ? "" : chosenFilter
+      chosenFilter === "Todos" ? "" : chosenFilter,
+      toggleLoading
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, filtersData, chosenFilter, recordsToList, searchValue]);
 
   const getOptions = (loan: ClientLoanData): IconOnlyButtonProps[] => {
@@ -93,7 +114,7 @@ const LoansPage = (): JSX.Element => {
         disabled: loan.loanState !== "Pendiente" ? true : undefined,
         onClick: () => {
           toggleDialog();
-          if (chosenOption === "Yes") cancelLoan(loan.id);
+          updateElementId(loan.id);
         },
       };
     });
@@ -110,50 +131,57 @@ const LoansPage = (): JSX.Element => {
         Préstamos
       </h1>
       <IndicatorSection>
-        <CardList>
-          <CardList.Card
-            title="Total capital invertido"
-            value={formatMoney(loanIndicators.totalInvestedCapital)}
-            Icon={Coins}
-            captionText="General"
-            variant="primary"
+        {loadingIndicator ? (
+          <Spinner
+            className="spinnerBarPrimary"
+            message={loadingMessageIndicator}
           />
-          <CardList.Card
-            title="Capital invertido"
-            value={formatMoney(loanIndicators.investedCapital)}
-            Icon={Coins}
-            captionText="Mes Actual"
-            variant="light"
-          />
-          <CardList.Card
-            title="Total prestamos activos"
-            value={String(loanIndicators.totalActiveLoans)}
-            Icon={DollarCircle}
-            captionText="General"
-            variant="primary"
-          />
-          <CardList.Card
-            title="Prestamos activos"
-            value={String(loanIndicators.activeLoans)}
-            Icon={DollarCircle}
-            captionText="Mes Actual"
-            variant="light"
-          />
-          <CardList.Card
-            title="Total Prestamos pagados"
-            value={String(loanIndicators.totalLoansPaid)}
-            Icon={HandCash}
-            captionText="General"
-            variant="primary"
-          />
-          <CardList.Card
-            title="Prestamos pagados"
-            value={String(loanIndicators.loansPaid)}
-            Icon={HandCash}
-            captionText="Mes Actual"
-            variant="light"
-          />
-        </CardList>
+        ) : (
+          <CardList>
+            <CardList.Card
+              title="Total capital invertido"
+              value={formatMoney(loanIndicators.totalInvestedCapital)}
+              Icon={Coins}
+              captionText="General"
+              variant="primary"
+            />
+            <CardList.Card
+              title="Capital invertido"
+              value={formatMoney(loanIndicators.investedCapital)}
+              Icon={Coins}
+              captionText="Mes Actual"
+              variant="light"
+            />
+            <CardList.Card
+              title="Total prestamos activos"
+              value={String(loanIndicators.totalActiveLoans)}
+              Icon={DollarCircle}
+              captionText="General"
+              variant="primary"
+            />
+            <CardList.Card
+              title="Prestamos activos"
+              value={String(loanIndicators.activeLoans)}
+              Icon={DollarCircle}
+              captionText="Mes Actual"
+              variant="light"
+            />
+            <CardList.Card
+              title="Total Prestamos pagados"
+              value={String(loanIndicators.totalLoansPaid)}
+              Icon={HandCash}
+              captionText="General"
+              variant="primary"
+            />
+            <CardList.Card
+              title="Prestamos pagados"
+              value={String(loanIndicators.loansPaid)}
+              Icon={HandCash}
+              captionText="Mes Actual"
+              variant="light"
+            />
+          </CardList>
+        )}
       </IndicatorSection>
       <Filters
         filterOptions={filterOptions}
@@ -195,10 +223,12 @@ const LoansPage = (): JSX.Element => {
         paginationConfig={{
           next,
           back,
-          totalRecords,
+          totalRecords: paginationData.totalElements,
           firstShownRecord,
           lastShownRecord,
         }}
+        isLoading={loading}
+        loadingMessage={loadingMessage}
       >
         <Tables.Tools
           recordsToList={recordsToList}

@@ -2,13 +2,13 @@ import { User } from "@models/DataModels";
 import { ProfileDataForm, WrongInput } from "@models/FormDataModels";
 
 export const getInitialValues = (user: User | null): ProfileDataForm => ({
-  fistName: user ? user.fistName : "",
+  firstName: user ? user.firstName : "",
   lastName: user ? user.lastName : "",
   email: user ? user.email : "",
 });
 
 export const initialErrors: WrongInput = {
-  fistName: {
+  firstName: {
     message: "",
     error: false,
   },

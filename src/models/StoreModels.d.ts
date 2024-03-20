@@ -9,6 +9,8 @@ import {
   LoanUpdatedData,
   LoanIndicator,
   User,
+  Pagination,
+  GeneralIndicators,
 } from "./DataModels";
 import {
   LoginFormData,
@@ -28,85 +30,149 @@ import {
 } from "./FiltersDataModels";
 
 interface AuthStore {
-  loading: boolean;
   auth: Auth | null;
   authStatus: AuthStatusType;
-  login: (userCredencials: LoginFormData) => Promise<void>;
+  login: (
+    userCredencials: LoginFormData,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
   logout: () => void;
-  recoverPassword: (userEmail: RecoverPassFormData) => Promise<void>;
+  recoverPassword: (
+    userEmail: RecoverPassFormData,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
   changePassword: (
     newUserPassword: ChangePasswordFormData,
-    token: string
+    token: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
   ) => Promise<void>;
   verifyAuthenticatedUser: () => void;
 }
 
 interface LoanRequestStore {
-  loading: boolean;
   clientExists: boolean;
   loanRequests: ParsedLoanRequestData[];
   loanRequest: LoanRequestData | null;
-  validateClient: (identification: string) => Promise<void>;
-  createLoanRequest: (requestData: RequestFormData) => Promise<void>;
-  approveLoanRequest: (loanRequestId: string) => Promise<void>;
-  rejectLoanRequest: (loanRequestId: string) => Promise<void>;
+  paginationData: Pagination;
+  validateClient: (
+    identification: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
+  createLoanRequest: (
+    requestData: RequestFormData,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
+  approveLoanRequest: (
+    loanRequestId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
+  rejectLoanRequest: (
+    loanRequestId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
   getAllLoanRequests: (
     page: number,
     limit: string,
     searchValue: string,
     loanRequestFilters: LoanRequestFilters,
+    toggleLoading: (message: string, isLoading: boolean) => void,
     filter?: string
   ) => Promise<void>;
-  getLoanRequest: (loanRequestId: string) => Promise<void>;
+  getLoanRequest: (
+    loanRequestId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
 }
 
 interface ClientStore {
-  loading: boolean;
   clients: Client[];
   client: Client | null;
+  paginationData: Pagination;
   getAllClients: (
     limit: string,
     page: string,
     searchValue: string,
     clientFilters: ClientsFilters,
-    filter: string
+    filter: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
   ) => Promise<void>;
-  getClient: (clientId: string) => Promise<void>;
+  getClient: (
+    clientId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
   updateClient: (
     clientId: string,
-    updatedClientData: UpdateClientDataForm
+    updatedClientData: UpdateClientDataForm,
+    toggleLoading: (message: string, isLoading: boolean) => void
   ) => Promise<void>;
 }
 
 interface LoansStore {
-  loading: boolean;
   loans: ClientLoanData[];
   loan: LoanUpdatedData;
   loanIndicators: LoanIndicator;
+  paginationData: Pagination;
   getAllLoans: (
     page: number,
     limit: string,
     searchValue: string,
     loanFilters: LoanFilters,
-    filter: string
+    filter: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
   ) => Promise<void>;
-  getLoan: (loanId: string) => Promise<void>;
-  createLoan: (loanData: CreateLoanDataForm) => Promise<void>;
-  generatePaymentSchedule: (loanData: ApproveLoanDataForm) => Promise<void>;
-  approveLoan: (loanId: string, loanData: ApproveLoanDataForm) => Promise<void>;
-  getLoanIndicators: () => Promise<void>;
-  cancelLoan: (loanId: string) => Promise<void>;
+  getLoan: (
+    loanId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
+  createLoan: (
+    loanData: CreateLoanDataForm,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
+  generatePaymentSchedule: (
+    loanData: ApproveLoanDataForm,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
+  approveLoan: (
+    loanId: string,
+    loanData: ApproveLoanDataForm,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
+  getLoanIndicators: (
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
+  cancelLoan: (
+    loanId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
 }
 
 interface UserStore {
   user: User | null;
-  loading: boolean;
-  getUser: (userId: string) => Promise<void>;
-  updateUser: (userId: string, userData: ProfileDataForm) => Promise<void>;
-  updateUserPassword: (
+  getUser: (
     userId: string,
-    userData: ChangePassDataForm
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
+  updateUser: (
+    userId: string,
+    userData: ProfileDataForm,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
+  updateUserPassword: (
+    userData: ChangePassDataForm,
+    toggleLoading: (message: string, isLoading: boolean) => void
   ) => Promise<void>;
 }
 
-export type { AuthStore, LoanRequestStore, ClientStore, LoansStore, UserStore };
+interface IndicatorsStore {
+  generalIndicators: GeneralIndicators;
+  getGeneralIndicators: () => Promise<void>;
+}
+
+export type {
+  AuthStore,
+  LoanRequestStore,
+  ClientStore,
+  LoansStore,
+  UserStore,
+  IndicatorsStore,
+};

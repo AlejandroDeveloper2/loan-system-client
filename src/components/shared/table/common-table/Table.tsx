@@ -1,4 +1,9 @@
-import { ColumnProps, RowProps, TableProps } from "@models/ComponentModels";
+import {
+  ColumnProps,
+  LoadingTableRowProps,
+  RowProps,
+  TableProps,
+} from "@models/ComponentModels";
 
 import { Pagination } from "@components/index";
 
@@ -32,9 +37,17 @@ const Table = (props: TableProps): JSX.Element => {
 const EmpyTableRow = (): JSX.Element => {
   return (
     <tr className={styles.emptyRow}>
-      <td colSpan={10}>
+      <td id="table-cell" colSpan={10}>
         <p className="buttonText">¡No hay registros aún!</p>
       </td>
+    </tr>
+  );
+};
+
+const LoadingTableRow = ({ children }: LoadingTableRowProps): JSX.Element => {
+  return (
+    <tr className={styles.loadingRow}>
+      <td colSpan={10}>{children}</td>
     </tr>
   );
 };
@@ -45,8 +58,12 @@ const Row = ({ children }: RowProps): JSX.Element => {
 
 const Column = ({ value, children }: ColumnProps): JSX.Element => {
   return (
-    <td>
-      {value ? <span className="paragraph">{value}</span> : null}
+    <td id="table-cell">
+      {value ? (
+        <span id="cell-span" className="paragraph">
+          {value}
+        </span>
+      ) : null}
       {children}
     </td>
   );
@@ -55,5 +72,6 @@ const Column = ({ value, children }: ColumnProps): JSX.Element => {
 Table.Row = Row;
 Row.Column = Column;
 Table.EmptyRow = EmpyTableRow;
+Table.LoadingRow = LoadingTableRow;
 
 export default Table;

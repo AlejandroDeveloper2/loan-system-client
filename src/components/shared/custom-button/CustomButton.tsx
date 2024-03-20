@@ -27,7 +27,7 @@ const BaseButton = (props: BaseButtonProps): JSX.Element => {
       disabled={disabled ? disabled : loading ? true : false}
       onClick={onClick}
     >
-      {loading ? <Spinner /> : children}
+      {loading ? <Spinner className="spinnerBar" /> : children}
     </button>
   );
 };

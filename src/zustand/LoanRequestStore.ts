@@ -6,7 +6,6 @@ import { LoanRequestService } from "@services/LoanRequest.service";
 import { LoanRequestStore } from "@models/StoreModels";
 import {
   LoanRequestData,
-  //LoanRequestData,
   ParsedLoanRequestData,
   RequestFormData,
   ResponseGlobal,
@@ -18,25 +17,35 @@ import { LoanRequestFilters } from "@models/FiltersDataModels";
 const loanRequestService = new LoanRequestService();
 
 const useLoanRequestStore = create<LoanRequestStore>((set) => ({
-  loading: false,
   clientExists: false,
   loanRequests: [],
   loanRequest: null,
-  validateClient: async (identification: string): Promise<void> => {
+  paginationData: {
+    page: 0,
+    totalPages: 0,
+    totalElements: 0,
+  },
+  validateClient: async (
+    identification: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ): Promise<void> => {
     try {
-      set({ loading: true });
+      toggleLoading("Validando cliente...", true);
       const { body } = await loanRequestService.validateClient(identification);
       set({ clientExists: body });
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       toast.error(parsedError.message);
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
-  createLoanRequest: async (requestData: RequestFormData): Promise<void> => {
+  createLoanRequest: async (
+    requestData: RequestFormData,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ): Promise<void> => {
     try {
-      set({ loading: true });
+      toggleLoading("Enviando información...", true);
       await loanRequestService.createLoanRequest(requestData);
       toast.success(
         "¡Solicitud enviada correctamente, espera a ser contactado!"
@@ -46,14 +55,17 @@ const useLoanRequestStore = create<LoanRequestStore>((set) => ({
       console.log(parsedError.message);
       toast.error("Ha ocurrido un error al enviar la solicituds!");
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
-  approveLoanRequest: async (loanRequestId: string): Promise<void> => {
+  approveLoanRequest: async (
+    loanRequestId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
     console.log(loanRequestId);
     try {
-      set({ loading: true });
+      toggleLoading("Aprobando solicitud...", true);
       await loanRequestService.approveLoanRequest(token, loanRequestId);
       set(({ loanRequests }) => ({
         loanRequests: loanRequests.filter(
@@ -64,13 +76,16 @@ const useLoanRequestStore = create<LoanRequestStore>((set) => ({
     } catch (e: unknown) {
       toast.error("Ha ocurrido un error al intentar aprobar la solicitud!");
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
-  rejectLoanRequest: async (loanRequestId: string): Promise<void> => {
+  rejectLoanRequest: async (
+    loanRequestId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
     try {
-      set({ loading: true });
+      toggleLoading("Rechazando solicitud...", true);
       await loanRequestService.rejectLoanRequest(token, loanRequestId);
       set(({ loanRequests }) => ({
         loanRequests: loanRequests.filter(
@@ -81,7 +96,7 @@ const useLoanRequestStore = create<LoanRequestStore>((set) => ({
     } catch (e: unknown) {
       toast.error("Ha ocurrido un error al intentar rechazar la solicitud!");
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
   getAllLoanRequests: async (
@@ -89,12 +104,16 @@ const useLoanRequestStore = create<LoanRequestStore>((set) => ({
     limit: string,
     searchValue: string,
     loanRequestFilters: LoanRequestFilters,
+    toggleLoading: (message: string, isLoading: boolean) => void,
     filter?: string
   ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
     try {
-      set({ loading: true });
-      const { body: loanRequests }: TableResponse<ParsedLoanRequestData> =
+      toggleLoading("Cargando solicitudes...", true);
+      const {
+        body: loanRequests,
+        pagination,
+      }: TableResponse<ParsedLoanRequestData> =
         await loanRequestService.getAllLoanRequests(
           token,
           page,
@@ -104,17 +123,20 @@ const useLoanRequestStore = create<LoanRequestStore>((set) => ({
           filter
         );
 
-      set({ loanRequests });
+      set({ loanRequests, paginationData: pagination });
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al listar las solicitudes!");
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
-  getLoanRequest: async (loanRequestId: string): Promise<void> => {
+  getLoanRequest: async (
+    loanRequestId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
     try {
-      set({ loading: true });
+      toggleLoading("Cargando solicitud...", true);
       const { body: loanRequest }: ResponseGlobal<LoanRequestData> =
         await loanRequestService.getLoanRequest(token, loanRequestId);
       set({ loanRequest });
@@ -123,7 +145,7 @@ const useLoanRequestStore = create<LoanRequestStore>((set) => ({
         "¡Ha ocurrido un error al obtener la información de la solicitud!"
       );
     } finally {
-      set({ loading: false });
+      toggleLoading("", true);
     }
   },
 }));

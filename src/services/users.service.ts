@@ -62,7 +62,6 @@ export class UsersService {
 
   public async updateUserPassword(
     token: string,
-    userId: string,
     userData: ChangePassDataForm
   ): Promise<ResponseGlobal<User>> {
     let response: ResponseGlobal<User>;
@@ -73,10 +72,11 @@ export class UsersService {
       },
     };
     try {
+      console.log(userData);
       const { data } = await axiosClient.patch<ResponseGlobal<User>>(
-        `/user/${userId}`,
+        "/user/change-password",
         {
-          currentPassword: userData.currentPassword,
+          password: userData.currentPassword,
           newPassword: userData.newPassword,
         },
         config
@@ -84,6 +84,7 @@ export class UsersService {
       response = data;
     } catch (e: unknown) {
       const parsedError: AxiosError = e as AxiosError;
+      console.log(parsedError);
       throw new AxiosError(parsedError.message);
     }
 

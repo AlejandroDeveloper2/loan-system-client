@@ -11,6 +11,7 @@ import {
   IconOnlyButton,
   InputText,
   Select,
+  Spinner,
   Table,
   TableResponsive,
 } from "@components/index";
@@ -26,6 +27,8 @@ function Tables<T>(props: TablesProps<T>) {
     recordTitle,
     paginationConfig,
     children,
+    isLoading,
+    loadingMessage,
   } = props;
   const screenType = useScreenType();
 
@@ -34,7 +37,11 @@ function Tables<T>(props: TablesProps<T>) {
       <>
         {children}
         <Table headers={headers} paginationConfig={paginationConfig}>
-          {recordsData.length === 0 ? (
+          {isLoading ? (
+            <Table.LoadingRow>
+              <Spinner className="spinnerBarPrimary" message={loadingMessage} />
+            </Table.LoadingRow>
+          ) : recordsData.length === 0 ? (
             <Table.EmptyRow />
           ) : (
             recordsData.map((record, i) => (
@@ -96,7 +103,9 @@ function Tables<T>(props: TablesProps<T>) {
     <>
       {children}
       <TableResponsive paginationConfig={paginationConfig}>
-        {recordsData.length === 0 ? (
+        {isLoading ? (
+          <Spinner className="spinnerBarPrimary" message={loadingMessage} />
+        ) : recordsData.length === 0 ? (
           <TableResponsive.Empty />
         ) : (
           recordsData.map((record, i) => (
@@ -128,6 +137,7 @@ function Tables<T>(props: TablesProps<T>) {
                       variant={option.variant}
                       loading={option.loading}
                       onClick={option.onClick}
+                      disabled={option.disabled}
                     />
                   ))
                 : null}
@@ -169,6 +179,7 @@ const TableTools = (props: TableToolsProps): JSX.Element => {
         label="Requistros a mostrar"
         value={recordsToList}
         options={[
+          { label: "5", value: "5" },
           { label: "10", value: "10" },
           { label: "15", value: "15" },
           { label: "20", value: "20" },

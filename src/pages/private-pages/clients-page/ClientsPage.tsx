@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Calendar, Group } from "iconoir-react";
 
-import { useFilter, usePagination } from "@hooks/index";
+import { useFilter, useLoading, usePagination } from "@hooks/index";
 import useClientsStore from "@zustand/ClientsStore";
 
 import {
@@ -19,13 +19,13 @@ import { IconOnlyButtonProps } from "@models/ComponentModels";
 
 const ClientsPage = (): JSX.Element => {
   const navigate = useNavigate();
-  const { clients, getAllClients } = useClientsStore();
+  const { loading, loadingMessage, toggleLoading } = useLoading();
+  const { clients, paginationData, getAllClients } = useClientsStore();
   const { filtersData, chosenFilter, onChangeFilter, onChangeFilterInput } =
     useFilter<ClientsFilters>({ initialDate: "", finalDate: "" }, "ASC");
   const {
     searchValue,
     recordsToList,
-    totalRecords,
     currentPage,
     firstShownRecord,
     lastShownRecord,
@@ -33,7 +33,7 @@ const ClientsPage = (): JSX.Element => {
     onRecordsToListChange,
     next,
     back,
-  } = usePagination<Client>(clients);
+  } = usePagination(paginationData);
 
   useEffect(() => {
     getAllClients(
@@ -41,10 +41,18 @@ const ClientsPage = (): JSX.Element => {
       String(currentPage),
       searchValue,
       filtersData,
-      chosenFilter
+      chosenFilter,
+      toggleLoading
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, filtersData, chosenFilter, recordsToList, searchValue]);
+  }, [
+    currentPage,
+    filtersData,
+    chosenFilter,
+    recordsToList,
+    searchValue,
+    currentPage,
+  ]);
 
   const getOptions = (record: Client): IconOnlyButtonProps[] => {
     return optionsData.map((option) => {
@@ -69,14 +77,14 @@ const ClientsPage = (): JSX.Element => {
         <CardList>
           <CardList.Card
             title="Total clientes"
-            value="0"
+            value={String(clients.length)}
             Icon={Group}
             captionText="General"
             variant="primary"
           />
           <CardList.Card
             title="Clientes nuevos"
-            value="0"
+            value={String(clients.length)}
             Icon={Group}
             captionText="Mes Actual"
             variant="light"
@@ -120,10 +128,12 @@ const ClientsPage = (): JSX.Element => {
         paginationConfig={{
           next,
           back,
-          totalRecords,
+          totalRecords: paginationData.totalElements,
           firstShownRecord,
           lastShownRecord,
         }}
+        isLoading={loading}
+        loadingMessage={loadingMessage}
       >
         <Tables.Tools
           recordsToList={recordsToList}

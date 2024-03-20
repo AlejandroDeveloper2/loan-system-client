@@ -136,7 +136,7 @@ interface ApproveLoanDataForm {
 }
 
 interface ProfileDataForm {
-  fistName: string;
+  firstName: string;
   lastName: string;
   email: string;
 }

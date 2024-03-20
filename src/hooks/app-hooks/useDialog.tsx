@@ -2,16 +2,23 @@ import { useState } from "react";
 
 import { Dialog } from "@components/index";
 
-const useDialog = (message: string, acceptButtonLabel: string) => {
+const useDialog = (
+  message: string,
+  acceptButtonLabel: string,
+  action: (
+    elementId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>
+) => {
   const [open, setOpen] = useState<boolean>(false);
-  const [chosenOption, setChosenOption] = useState<"Yes" | "Not">("Not");
+  const [elementId, setElementId] = useState<string>("");
 
   const toggleDialog = (): void => {
     setOpen(!open);
   };
 
-  const toggleChosenOption = (option: "Yes" | "Not"): void => {
-    setChosenOption(option);
+  const updateElementId = (elementId: string): void => {
+    setElementId(elementId);
   };
 
   const DialogBox = (): JSX.Element => {
@@ -20,16 +27,17 @@ const useDialog = (message: string, acceptButtonLabel: string) => {
         open={open}
         dialogMessage={message}
         acceptButtonLabel={acceptButtonLabel}
+        elementId={elementId}
         toggleDialog={toggleDialog}
-        toggleChosenOption={toggleChosenOption}
+        action={action}
       />
     );
   };
 
   return {
     DialogBox,
-    chosenOption,
     toggleDialog,
+    updateElementId,
   };
 };
 

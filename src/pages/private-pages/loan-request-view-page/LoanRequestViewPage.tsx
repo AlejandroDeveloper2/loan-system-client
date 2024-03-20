@@ -3,6 +3,7 @@ import { GoogleDocs } from "iconoir-react";
 import { useParams } from "react-router-dom";
 
 import useLoanRequestStore from "@zustand/LoanRequestStore";
+import { useLoading } from "@hooks/index";
 
 import {
   BankDataSection,
@@ -10,6 +11,7 @@ import {
   LoanDataSection,
   PersonalDataSection,
   ReferencesDataSection,
+  Spinner,
   WorkDataSection,
 } from "@components/index";
 
@@ -18,9 +20,10 @@ const LoanRequestViewPage = (): JSX.Element => {
   const request = params as { loanRequestId: string };
 
   const { getLoanRequest } = useLoanRequestStore();
+  const { loading, loadingMessage, toggleLoading } = useLoading();
 
   useEffect(() => {
-    getLoanRequest(request.loanRequestId);
+    getLoanRequest(request.loanRequestId, toggleLoading);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [request]);
 
@@ -36,11 +39,17 @@ const LoanRequestViewPage = (): JSX.Element => {
         link="/userPanel/loanRequests"
         recordId={request.loanRequestId}
       />
-      <PersonalDataSection />
-      <WorkDataSection />
-      <LoanDataSection />
-      <BankDataSection />
-      <ReferencesDataSection />
+      {loading ? (
+        <Spinner className="spinnerBarPrimary" message={loadingMessage} />
+      ) : (
+        <>
+          <PersonalDataSection />
+          <WorkDataSection />
+          <LoanDataSection />
+          <BankDataSection />
+          <ReferencesDataSection />
+        </>
+      )}
     </>
   );
 };

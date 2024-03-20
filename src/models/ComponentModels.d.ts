@@ -215,6 +215,12 @@ interface TablesProps<T> {
   recordTitle: string;
   getOptions?: (record: T) => IconOnlyButtonProps[];
   paginationConfig?: PaginationConfig;
+  isLoading?: boolean;
+  loadingMessage?: string;
+}
+
+interface LoadingTableRowProps {
+  children: ReactNode | ReactNode[];
 }
 
 interface FilterProps {
@@ -245,7 +251,11 @@ interface DialogProps {
   open: boolean;
   dialogMessage: string;
   acceptButtonLabel: string;
-  toggleChosenOption: (option: "Yes" | "Not") => void;
+  elementId: string;
+  action: (
+    elementId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
   toggleDialog: () => void;
 }
 
@@ -266,6 +276,11 @@ interface LoanFormProps {
 
 interface LoaderProps {
   message: string;
+}
+
+interface SpinnerProps {
+  message?: string;
+  className: "spinnerBar" | "spinnerBarPrimary";
 }
 
 export type {
@@ -289,6 +304,7 @@ export type {
   StepperProps,
   PaginationProps,
   TableToolsProps,
+  LoadingTableRowProps,
   TableProps,
   ResponsiveTableProps,
   TableResponsiveRecordProps,
@@ -307,4 +323,5 @@ export type {
   ModalWindowProps,
   LoanFormProps,
   LoaderProps,
+  SpinnerProps,
 };

@@ -11,12 +11,14 @@ const userService = new UsersService();
 
 const useUserStore = create<UserStore>((set) => ({
   user: null,
-  loading: false,
-  getUser: async (userId: string): Promise<void> => {
+  getUser: async (
+    userId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
 
     try {
-      set({ loading: true });
+      toggleLoading("Cargando información...", true);
       const { body: user }: ResponseGlobal<User> = await userService.getUser(
         token,
         userId
@@ -27,16 +29,17 @@ const useUserStore = create<UserStore>((set) => ({
         "¡Ha ocurrido un error al cargar la información del usuario!"
       );
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
   updateUser: async (
     userId: string,
-    userData: ProfileDataForm
+    userData: ProfileDataForm,
+    toggleLoading: (message: string, isLoading: boolean) => void
   ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
     try {
-      set({ loading: true });
+      toggleLoading("Actualizando usuario...", true);
       const { body: user }: ResponseGlobal<User> = await userService.updateUser(
         token,
         userId,
@@ -47,25 +50,25 @@ const useUserStore = create<UserStore>((set) => ({
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al editar el perfil de usuario!");
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
 
   updateUserPassword: async (
-    userId: string,
-    userData: ChangePassDataForm
+    userData: ChangePassDataForm,
+    toggleLoading: (message: string, isLoading: boolean) => void
   ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
     try {
-      set({ loading: true });
+      toggleLoading("Actualizando usuario...", true);
       const { body: user }: ResponseGlobal<User> =
-        await userService.updateUserPassword(token, userId, userData);
+        await userService.updateUserPassword(token, userData);
       set({ user });
       toast.success("¡La contraseña se ha cambiado satisfactoriamente!");
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al editar la contraseña!");
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
 }));

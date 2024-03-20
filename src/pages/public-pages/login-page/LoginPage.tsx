@@ -1,6 +1,6 @@
 import { Lock, LogIn, RefreshDouble, AtSign } from "iconoir-react";
 
-import { useForm } from "@hooks/index";
+import { useForm, useLoading } from "@hooks/index";
 import { validationSchema } from "./ValidationSchema";
 import useAuthStore from "@zustand/AuthStore";
 
@@ -13,10 +13,11 @@ import {
 import { CustomForm, CustomLink } from "@components/index";
 
 const LoginPage = (): JSX.Element => {
-  const { loading, login } = useAuthStore();
+  const { login } = useAuthStore();
+  const { loading, toggleLoading } = useLoading();
 
   const action = () => {
-    login(formData);
+    login(formData, toggleLoading);
   };
 
   const { formData, formRef, errors, handleChange, handleSubmit, clearForm } =

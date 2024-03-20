@@ -26,7 +26,6 @@ const loansService = new LoansService();
 const clientsService = new ClientsService();
 
 const useLoansStore = create<LoansStore>((set) => ({
-  loading: false,
   loans: [],
   loan: initialLoan,
   loanIndicators: {
@@ -37,18 +36,24 @@ const useLoansStore = create<LoansStore>((set) => ({
     totalLoansPaid: 0,
     loansPaid: 0,
   },
+  paginationData: {
+    page: 0,
+    totalPages: 0,
+    totalElements: 0,
+  },
   getAllLoans: async (
     page: number,
     limit: string,
     searchValue: string,
     loanFilters: LoanFilters,
-    filter: string
+    filter: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
   ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
 
     try {
-      set({ loading: true });
-      const { body: loans }: TableResponse<ClientLoanData> =
+      toggleLoading("Cargando préstamos...", true);
+      const { body: loans, pagination }: TableResponse<ClientLoanData> =
         await loansService.getAllLoans(
           token,
           page,
@@ -65,31 +70,36 @@ const useLoansStore = create<LoansStore>((set) => ({
         };
       });
 
-      set({ loans: updatedLoans });
+      set({ loans: updatedLoans, paginationData: pagination });
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al listar los préstamos!");
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
-  getLoan: async (loanId: string): Promise<void> => {
+  getLoan: async (
+    loanId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
     try {
-      // set({ loading: true });
+      toggleLoading("Cargando préstamo...", true);
       const { body: loan }: ResponseGlobal<LoanUpdatedData> =
         await loansService.getLoan(token, loanId);
       set({ loan });
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al obtener el préstamo!");
+    } finally {
+      toggleLoading("", false);
     }
-    // } finally {
-    //   set({ loading: false });
-    // }
   },
-  createLoan: async (loanData: CreateLoanDataForm): Promise<void> => {
+  createLoan: async (
+    loanData: CreateLoanDataForm,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
     try {
-      set({ loading: true });
+      toggleLoading("Creando préstamo...", true);
       const { body: client } = await clientsService.getClient(
         token,
         loanData.client
@@ -105,45 +115,70 @@ const useLoansStore = create<LoansStore>((set) => ({
       const { body: loan }: ResponseGlobal<ClientLoanData> =
         await loansService.createLoan(token, updatedLoanData);
 
-      set(({ loans }) => ({ loans: [...loans, loan] }));
+      set(({ loans }) => ({
+        loans: [
+          ...loans,
+          {
+            ...loan,
+            numberOfPayments: `${loan.numberOfPayments}/${loan.deadline}`,
+            amountInterest: loan.amount + loan.earnings,
+          },
+        ],
+      }));
 
       toast.success("¡El préstamo se ha creado exitosamente!");
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al crear el préstamo!");
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
   generatePaymentSchedule: async (
-    loanData: ApproveLoanDataForm
+    loanData: ApproveLoanDataForm,
+    toggleLoading: (message: string, isLoading: boolean) => void
   ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
     try {
-      set({ loading: true });
+      toggleLoading("Generando calendario de pagos...", true);
       const { body: paymentSchedules }: TableResponse<PaymentSchedule> =
         await loansService.generatePaymentSchedule(token, loanData);
-      set(({ loan }) => ({ loan: { ...loan, paymentSchedules } }));
+      set(({ loan }) => ({
+        loan: {
+          ...loan,
+          amount: loanData.amount,
+          firstPaymentDate: loanData.firstPaymentDate,
+          interest: loanData.interest,
+          paymentCycle: loanData.paymentCycle,
+          paymentSchedules,
+        },
+      }));
       toast.success("¡Calendario de pagos generado correctamente!");
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al generar calendario de pagos!");
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
 
   approveLoan: async (
     loanId: string,
-    loanData: ApproveLoanDataForm
+    loanData: ApproveLoanDataForm,
+    toggleLoading: (message: string, isLoading: boolean) => void
   ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
     try {
-      set({ loading: true });
+      toggleLoading("Aprobando préstamo..", true);
       const { body: updatedLoan }: ResponseGlobal<ClientLoanData> =
         await loansService.approveLoan(token, loanId, loanData);
       set({ loan: updatedLoan });
       set(({ loans }) => ({
         loans: loans.map((loan) => {
-          if (loan.id === loanId) return updatedLoan;
+          if (loan.id === loanId)
+            return {
+              ...updatedLoan,
+              numberOfPayments: `${loan.numberOfPayments}/${loan.deadline}`,
+              amountInterest: loan.amount + loan.earnings,
+            };
           return loan;
         }),
       }));
@@ -151,28 +186,33 @@ const useLoansStore = create<LoansStore>((set) => ({
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al aprobar el préstamo!");
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
 
-  getLoanIndicators: async (): Promise<void> => {
+  getLoanIndicators: async (
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
     try {
-      set({ loading: true });
+      toggleLoading("Obteniendo indicador...", true);
       const { body: loanIndicators }: ResponseGlobal<LoanIndicator> =
         await loansService.getLoanIndicators(token);
       set({ loanIndicators });
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al cargar indicadores!");
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
 
-  cancelLoan: async (loanId: string): Promise<void> => {
+  cancelLoan: async (
+    loanId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
     try {
-      set({ loading: true });
+      toggleLoading("Cancelando préstamo...", true);
       const { body: updatedLoan }: ResponseGlobal<ClientLoanData> =
         await loansService.cancelLoan(token, loanId);
       set(({ loans }) => ({
@@ -187,7 +227,7 @@ const useLoansStore = create<LoansStore>((set) => ({
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al cancelar el préstamo!");
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
 }));

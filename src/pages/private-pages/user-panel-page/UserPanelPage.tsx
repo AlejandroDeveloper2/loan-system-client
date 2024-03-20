@@ -10,23 +10,16 @@ import {
   ViewGrid,
 } from "iconoir-react";
 
-import useClientsStore from "@zustand/ClientsStore";
-import useLoansStore from "@zustand/LoansStore";
+import useIndicatorsStore from "@zustand/IndicatorsStore";
 import { formatMoney } from "@utils/helpers";
 
 import { CardList } from "@components/index";
 
 const UserPanelPage = (): JSX.Element => {
-  const { loanIndicators, getLoanIndicators } = useLoansStore();
-  const { clients, getAllClients } = useClientsStore();
+  const { generalIndicators, getGeneralIndicators } = useIndicatorsStore();
 
   useEffect(() => {
-    getAllClients("", "", "", { initialDate: "", finalDate: "" }, "");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    getLoanIndicators();
+    getGeneralIndicators();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -39,23 +32,23 @@ const UserPanelPage = (): JSX.Element => {
       <CardList>
         <CardList.Card
           title="Total Clientes"
-          value={String(clients.length)}
+          value={String(generalIndicators.totalClients)}
           Icon={Group}
           moreDetailsLink="/userPanel/clients"
           captionText="General"
           variant="primary"
         />
         <CardList.Card
-          title="Solicitudes nuevas"
-          value="0"
+          title="Total Solicitudes"
+          value={String(generalIndicators.totalRequest)}
           Icon={GoogleDocs}
           moreDetailsLink="/userPanel/loanRequests"
-          captionText="Hoy"
+          captionText="General"
           variant="neutral"
         />
         <CardList.Card
           title="Total capital invertido"
-          value={formatMoney(loanIndicators.totalInvestedCapital)}
+          value={formatMoney(generalIndicators.totalCapitalInvested)}
           Icon={Coins}
           moreDetailsLink="/userPanel/loans"
           captionText="General"
@@ -63,7 +56,7 @@ const UserPanelPage = (): JSX.Element => {
         />
         <CardList.Card
           title="Total prestamos activos"
-          value={String(loanIndicators.totalActiveLoans)}
+          value={String(generalIndicators.totalActiveLoans)}
           Icon={DollarCircle}
           moreDetailsLink="/userPanel/loans"
           captionText="General"
@@ -71,15 +64,15 @@ const UserPanelPage = (): JSX.Element => {
         />
         <CardList.Card
           title="Total ganancias"
-          value="$0"
+          value={formatMoney(generalIndicators.totalProfits)}
           Icon={Commodity}
           moreDetailsLink="/userPanel/collections"
-          captionText="Hoy"
+          captionText="General"
           variant="warning"
         />
         <CardList.Card
           title="Total Prestamos pagados"
-          value={String(loanIndicators.totalLoansPaid)}
+          value={String(generalIndicators.totalLoansRepaid)}
           Icon={HandCash}
           moreDetailsLink="/userPanel/loans"
           captionText="General"
@@ -87,7 +80,7 @@ const UserPanelPage = (): JSX.Element => {
         />
         <CardList.Card
           title="Total pagos en mora"
-          value="0"
+          value={String(generalIndicators.totalLoansInArrears)}
           Icon={Cash}
           moreDetailsLink="/userPanel/loans"
           captionText="General"

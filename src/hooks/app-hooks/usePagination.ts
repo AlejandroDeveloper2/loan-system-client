@@ -1,21 +1,15 @@
-import { ChangeEvent, useState, useEffect } from "react";
+import { ChangeEvent, useState } from "react";
 
-const usePagination = <T>(records: T[]) => {
+import { Pagination } from "@models/DataModels";
+
+const usePagination = (paginationData: Pagination) => {
   const [searchValue, setSearchValue] = useState<string>("");
-  const [recordsToList, setRecordsToList] = useState<string>("10");
-  const [totalRecords, setTotalRecords] = useState<number>(0);
-  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [recordsToList, setRecordsToList] = useState<string>("5");
+  const [currentPage, setCurrentPage] = useState<number>(paginationData.page);
   const [firstShownRecord, setFirstShownRecord] = useState<number>(1);
   const [lastShownRecord, setLastShownRecord] = useState<number>(
     window.parseInt(recordsToList)
   );
-  const [totalPages] = useState<number>(
-    Math.floor(records.length / window.parseInt(recordsToList))
-  );
-
-  useEffect(() => {
-    setTotalRecords(records.length);
-  }, [records]);
 
   const onSearchValueChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setSearchValue(e.target.value);
@@ -26,11 +20,9 @@ const usePagination = <T>(records: T[]) => {
   };
 
   const next = (): void => {
-    if (currentPage === 0 && currentPage < totalPages) {
+    if (currentPage >= 0 && currentPage < paginationData.totalPages - 1) {
       setCurrentPage((currentPage) => currentPage + 1);
       if (currentPage === 0) {
-        setFirstShownRecord((firstShownRecord) => firstShownRecord + 1);
-      } else {
         setFirstShownRecord(
           (firstShownRecord) =>
             firstShownRecord + window.parseInt(recordsToList)
@@ -44,7 +36,7 @@ const usePagination = <T>(records: T[]) => {
   };
 
   const back = (): void => {
-    if (currentPage >= 1 && currentPage <= totalPages) {
+    if (currentPage >= 1 && currentPage <= paginationData.totalPages - 1) {
       setCurrentPage((currentPage) => currentPage - 1);
       if (currentPage === 0) {
         setFirstShownRecord(1);
@@ -64,7 +56,6 @@ const usePagination = <T>(records: T[]) => {
   return {
     searchValue,
     recordsToList,
-    totalRecords,
     currentPage,
     firstShownRecord,
     lastShownRecord,

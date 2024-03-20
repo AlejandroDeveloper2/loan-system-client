@@ -6,19 +6,19 @@ import {
 } from "@constants/form-initial-values/UpdatePassInitialValues";
 import { ChangePassDataForm } from "@models/FormDataModels";
 
-import { useForm } from "@hooks/index";
+import { useForm, useLoading } from "@hooks/index";
 import { validationSchema } from "./ValidateSchema";
 import useUserStore from "@zustand/UsersStore";
-import useAuthStore from "@zustand/AuthStore";
 
 import { CustomForm } from "@components/index";
 
 const UpdatedPasswordForm = (): JSX.Element => {
   const { updateUserPassword } = useUserStore();
-  const auth = useAuthStore((state) => state.auth);
+
+  const { loading, toggleLoading } = useLoading();
 
   const action = () => {
-    updateUserPassword(auth?.sub ?? "", formData);
+    updateUserPassword(formData, toggleLoading);
   };
 
   const { formData, errors, formRef, handleChange, handleSubmit } =
@@ -79,7 +79,7 @@ const UpdatedPasswordForm = (): JSX.Element => {
         Icon={EditPencil}
         label="Actualizar contraseña"
         variant="warning"
-        loading={false}
+        loading={loading}
         onClick={() => {}}
       />
     </CustomForm>

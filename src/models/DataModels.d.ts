@@ -33,7 +33,7 @@ interface Client extends PersonalDataForm {
 
 interface LoanUpdatedData {
   amount: number;
-  paymentCycle: PaymentType;
+  paymentCycle: PaymentType | string;
   deadline: number;
   interest: number;
   firstPaymentDate: string;
@@ -162,12 +162,22 @@ interface LoanIndicator {
 
 interface User {
   id: string;
-  fistName: string;
+  firstName: string;
   lastName: string;
   email: string;
   roles: UserRoleType;
   state: boolean;
   createdAt: string;
+}
+
+interface GeneralIndicators {
+  totalClients: number;
+  totalRequest: number;
+  totalCapitalInvested: number;
+  totalActiveLoans: number;
+  totalProfits: number;
+  totalLoansRepaid: number;
+  totalLoansInArrears: number;
 }
 
 export type {
@@ -197,4 +207,5 @@ export type {
   LoanUpdatedData,
   LoanIndicator,
   User,
+  GeneralIndicators,
 };

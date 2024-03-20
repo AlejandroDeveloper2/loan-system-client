@@ -17,20 +17,25 @@ import { parseUpdatedClientInfo } from "@utils/helpers";
 const clientsService = new ClientsService();
 
 const useClientsStore = create<ClientStore>((set) => ({
-  loading: false,
   clients: [],
   client: null,
+  paginationData: {
+    page: 0,
+    totalPages: 0,
+    totalElements: 0,
+  },
   getAllClients: async (
     limit: string,
     page: string,
     searchValue: string,
     clientFilters: ClientsFilters,
-    filter: string
+    filter: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
   ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
     try {
-      set({ loading: true });
-      const { body: clients }: TableResponse<Client> =
+      toggleLoading("Cargando clientes...", true);
+      const { body: clients, pagination }: TableResponse<Client> =
         await clientsService.getAllClients(
           token,
           page,
@@ -39,17 +44,20 @@ const useClientsStore = create<ClientStore>((set) => ({
           clientFilters,
           filter
         );
-      set({ clients });
+      set({ clients, paginationData: pagination });
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al listar los clientes!");
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
-  getClient: async (clientId: string): Promise<void> => {
+  getClient: async (
+    clientId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
     try {
-      set({ loading: true });
+      toggleLoading("Cargando cliente...", true);
       const { body: client }: ResponseGlobal<Client> =
         await clientsService.getClient(token, clientId);
       set({ client });
@@ -58,12 +66,13 @@ const useClientsStore = create<ClientStore>((set) => ({
       console.log(parsedError);
       toast.error("¡Ha ocurrido un error al obtener el cliente!");
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
   updateClient: async (
     clientId: string,
-    updatedClientData: UpdateClientDataForm
+    updatedClientData: UpdateClientDataForm,
+    toggleLoading: (message: string, isLoading: boolean) => void
   ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
     const parsedClientData: Client = parseUpdatedClientInfo(
@@ -72,7 +81,7 @@ const useClientsStore = create<ClientStore>((set) => ({
     );
 
     try {
-      set({ loading: true });
+      toggleLoading("Actualizando información...", true);
       const updatedClient: Client = await clientsService.updateClient(
         token,
         clientId,
@@ -91,7 +100,7 @@ const useClientsStore = create<ClientStore>((set) => ({
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al actualizar el cliente!");
     } finally {
-      set({ loading: false });
+      toggleLoading("", false);
     }
   },
 }));
