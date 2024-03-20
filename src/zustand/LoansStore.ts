@@ -218,7 +218,11 @@ const useLoansStore = create<LoansStore>((set) => ({
       set(({ loans }) => ({
         loans: loans.map((loan) => {
           if (loan.id === loanId) {
-            return updatedLoan;
+            return {
+              ...updatedLoan,
+              numberOfPayments: `${loan.numberOfPayments}/${loan.deadline}`,
+              amountInterest: loan.amount + loan.earnings,
+            };
           }
           return loan;
         }),
