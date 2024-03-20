@@ -72,7 +72,7 @@ const UserPanelPage = (): JSX.Element => {
           title="Total ganancias"
           value={formatMoney(generalIndicators.totalProfits)}
           Icon={Commodity}
-          moreDetailsLink="/userPanel/collections"
+          moreDetailsLink="/userPanel/payments"
           captionText="General"
           variant="warning"
           loading={loading}
@@ -90,7 +90,7 @@ const UserPanelPage = (): JSX.Element => {
           title="Total pagos en mora"
           value={String(generalIndicators.totalLoansInArrears)}
           Icon={Cash}
-          moreDetailsLink="/userPanel/loans"
+          moreDetailsLink="/userPanel/payments"
           captionText="General"
           variant="danger"
           loading={loading}

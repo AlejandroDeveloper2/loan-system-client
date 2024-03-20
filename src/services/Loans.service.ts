@@ -198,6 +198,7 @@ export class LoansService {
     try {
       const { data } = await axiosClient.patch<ResponseGlobal<ClientLoanData>>(
         `/loan/cancel/${loanId}`,
+        {},
         config
       );
       response = data;
