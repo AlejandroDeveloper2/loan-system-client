@@ -79,17 +79,7 @@ function Tables<T>(props: TablesProps<T>) {
                 {getOptions ? (
                   <Table.Row.Column>
                     {getOptions(record).map((option) => (
-                      <IconOnlyButton
-                        key={option.id}
-                        Icon={option.Icon}
-                        id={option.id}
-                        type={option.type}
-                        title={option.title}
-                        variant={option.variant}
-                        loading={option.loading}
-                        onClick={option.onClick}
-                        disabled={option.disabled}
-                      />
+                      <IconOnlyButton key={option.id} {...option} />
                     ))}
                   </Table.Row.Column>
                 ) : null}
@@ -127,18 +117,8 @@ function Tables<T>(props: TablesProps<T>) {
               }))}
             >
               {getOptions
-                ? getOptions(Object(record).id).map((option) => (
-                    <IconOnlyButton
-                      key={option.id}
-                      Icon={option.Icon}
-                      id={option.id}
-                      type={option.type}
-                      title={option.title}
-                      variant={option.variant}
-                      loading={option.loading}
-                      onClick={option.onClick}
-                      disabled={option.disabled}
-                    />
+                ? getOptions(record).map((option) => (
+                    <IconOnlyButton key={option.id} {...option} />
                   ))
                 : null}
             </TableResponsive.Record>
