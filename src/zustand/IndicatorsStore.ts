@@ -18,9 +18,12 @@ const useIndicatorsStore = create<IndicatorsStore>((set) => ({
     totalLoansRepaid: 0,
     totalLoansInArrears: 0,
   },
-  getGeneralIndicators: async (): Promise<void> => {
+  getGeneralIndicators: async (
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
     try {
+      toggleLoading("Cargando indicador...", true);
       const { body: generalIndicators }: ResponseGlobal<GeneralIndicators> =
         await indicatorsService.getGeneralIndicators(token);
       set({ generalIndicators });
@@ -28,6 +31,8 @@ const useIndicatorsStore = create<IndicatorsStore>((set) => ({
       toast.error(
         "¡Ha ocurrido un error al obtener los indicadores generales!"
       );
+    } finally {
+      toggleLoading("", false);
     }
   },
 }));

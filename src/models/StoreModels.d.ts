@@ -165,7 +165,9 @@ interface UserStore {
 
 interface IndicatorsStore {
   generalIndicators: GeneralIndicators;
-  getGeneralIndicators: () => Promise<void>;
+  getGeneralIndicators: (
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
 }
 
 export type {

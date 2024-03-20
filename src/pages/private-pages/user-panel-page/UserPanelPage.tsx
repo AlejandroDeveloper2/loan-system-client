@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import {
   Cash,
@@ -12,15 +13,16 @@ import {
 
 import useIndicatorsStore from "@zustand/IndicatorsStore";
 import { formatMoney } from "@utils/helpers";
+import { useLoading } from "@hooks/index";
 
 import { CardList } from "@components/index";
 
 const UserPanelPage = (): JSX.Element => {
   const { generalIndicators, getGeneralIndicators } = useIndicatorsStore();
+  const { loading, toggleLoading } = useLoading();
 
   useEffect(() => {
-    getGeneralIndicators();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getGeneralIndicators(toggleLoading);
   }, []);
 
   return (
@@ -37,6 +39,7 @@ const UserPanelPage = (): JSX.Element => {
           moreDetailsLink="/userPanel/clients"
           captionText="General"
           variant="primary"
+          loading={loading}
         />
         <CardList.Card
           title="Total Solicitudes"
@@ -45,6 +48,7 @@ const UserPanelPage = (): JSX.Element => {
           moreDetailsLink="/userPanel/loanRequests"
           captionText="General"
           variant="neutral"
+          loading={loading}
         />
         <CardList.Card
           title="Total capital invertido"
@@ -53,6 +57,7 @@ const UserPanelPage = (): JSX.Element => {
           moreDetailsLink="/userPanel/loans"
           captionText="General"
           variant="light"
+          loading={loading}
         />
         <CardList.Card
           title="Total prestamos activos"
@@ -61,6 +66,7 @@ const UserPanelPage = (): JSX.Element => {
           moreDetailsLink="/userPanel/loans"
           captionText="General"
           variant="primary"
+          loading={loading}
         />
         <CardList.Card
           title="Total ganancias"
@@ -69,6 +75,7 @@ const UserPanelPage = (): JSX.Element => {
           moreDetailsLink="/userPanel/collections"
           captionText="General"
           variant="warning"
+          loading={loading}
         />
         <CardList.Card
           title="Total Prestamos pagados"
@@ -77,6 +84,7 @@ const UserPanelPage = (): JSX.Element => {
           moreDetailsLink="/userPanel/loans"
           captionText="General"
           variant="primary"
+          loading={loading}
         />
         <CardList.Card
           title="Total pagos en mora"
@@ -85,6 +93,7 @@ const UserPanelPage = (): JSX.Element => {
           moreDetailsLink="/userPanel/loans"
           captionText="General"
           variant="danger"
+          loading={loading}
         />
       </CardList>
     </>

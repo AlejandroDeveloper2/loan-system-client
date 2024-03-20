@@ -191,6 +191,8 @@ interface CardProps {
   moreDetailsLink?: string;
   captionText: string;
   variant: "primary" | "neutral" | "warning" | "danger" | "light";
+  loading: boolean;
+  loadingMessage?: string;
 }
 
 interface CardListProps {

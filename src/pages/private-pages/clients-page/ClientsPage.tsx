@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Calendar, Group } from "iconoir-react";
@@ -44,7 +45,6 @@ const ClientsPage = (): JSX.Element => {
       chosenFilter,
       toggleLoading
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     currentPage,
     filtersData,
@@ -81,6 +81,7 @@ const ClientsPage = (): JSX.Element => {
             Icon={Group}
             captionText="General"
             variant="primary"
+            loading={loading}
           />
           <CardList.Card
             title="Clientes nuevos"
@@ -88,6 +89,7 @@ const ClientsPage = (): JSX.Element => {
             Icon={Group}
             captionText="Mes Actual"
             variant="light"
+            loading={loading}
           />
         </CardList>
       </IndicatorSection>

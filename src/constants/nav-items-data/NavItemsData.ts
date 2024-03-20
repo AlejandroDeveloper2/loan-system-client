@@ -3,7 +3,7 @@ import {
   CoinsSwap,
   GoogleDocs,
   Group,
-  HandCash,
+  Settings,
   ViewGrid,
 } from "iconoir-react";
 
@@ -14,6 +14,10 @@ export const navItems: NavItem[] = [
   { Icon: Group, title: "Clientes", to: "/userPanel/clients" },
   { Icon: GoogleDocs, title: "Solicitudes", to: "/userPanel/loanRequests" },
   { Icon: Cash, title: "Préstamos", to: "/userPanel/loans" },
-  { Icon: HandCash, title: "Cobros", to: "/userPanel/collections" },
   { Icon: CoinsSwap, title: "Pagos", to: "/userPanel/payments" },
+  {
+    Icon: Settings,
+    title: "Configuración Perfil",
+    to: "/userPanel/userProfile",
+  },
 ];

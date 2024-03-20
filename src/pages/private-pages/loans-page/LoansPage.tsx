@@ -36,7 +36,6 @@ import {
   Filters,
   IndicatorSection,
   LoanForm,
-  Spinner,
   Tables,
 } from "@components/index";
 
@@ -44,11 +43,8 @@ const LoansPage = (): JSX.Element => {
   const navigate = useNavigate();
 
   const { loading, loadingMessage, toggleLoading } = useLoading();
-  const {
-    loading: loadingIndicator,
-    loadingMessage: loadingMessageIndicator,
-    toggleLoading: toggleLoadingIndicator,
-  } = useLoading();
+  const { loading: loadingIndicator, toggleLoading: toggleLoadingIndicator } =
+    useLoading();
 
   const {
     loans,
@@ -131,57 +127,56 @@ const LoansPage = (): JSX.Element => {
         Préstamos
       </h1>
       <IndicatorSection>
-        {loadingIndicator ? (
-          <Spinner
-            className="spinnerBarPrimary"
-            message={loadingMessageIndicator}
+        <CardList>
+          <CardList.Card
+            title="Total capital invertido"
+            value={formatMoney(loanIndicators.totalInvestedCapital)}
+            Icon={Coins}
+            captionText="General"
+            variant="primary"
+            loading={loadingIndicator}
           />
-        ) : (
-          <CardList>
-            <CardList.Card
-              title="Total capital invertido"
-              value={formatMoney(loanIndicators.totalInvestedCapital)}
-              Icon={Coins}
-              captionText="General"
-              variant="primary"
-            />
-            <CardList.Card
-              title="Capital invertido"
-              value={formatMoney(loanIndicators.investedCapital)}
-              Icon={Coins}
-              captionText="Mes Actual"
-              variant="light"
-            />
-            <CardList.Card
-              title="Total prestamos activos"
-              value={String(loanIndicators.totalActiveLoans)}
-              Icon={DollarCircle}
-              captionText="General"
-              variant="primary"
-            />
-            <CardList.Card
-              title="Prestamos activos"
-              value={String(loanIndicators.activeLoans)}
-              Icon={DollarCircle}
-              captionText="Mes Actual"
-              variant="light"
-            />
-            <CardList.Card
-              title="Total Prestamos pagados"
-              value={String(loanIndicators.totalLoansPaid)}
-              Icon={HandCash}
-              captionText="General"
-              variant="primary"
-            />
-            <CardList.Card
-              title="Prestamos pagados"
-              value={String(loanIndicators.loansPaid)}
-              Icon={HandCash}
-              captionText="Mes Actual"
-              variant="light"
-            />
-          </CardList>
-        )}
+          <CardList.Card
+            title="Capital invertido"
+            value={formatMoney(loanIndicators.investedCapital)}
+            Icon={Coins}
+            captionText="Mes Actual"
+            variant="light"
+            loading={loadingIndicator}
+          />
+          <CardList.Card
+            title="Total prestamos activos"
+            value={String(loanIndicators.totalActiveLoans)}
+            Icon={DollarCircle}
+            captionText="General"
+            variant="primary"
+            loading={loadingIndicator}
+          />
+          <CardList.Card
+            title="Prestamos activos"
+            value={String(loanIndicators.activeLoans)}
+            Icon={DollarCircle}
+            captionText="Mes Actual"
+            variant="light"
+            loading={loadingIndicator}
+          />
+          <CardList.Card
+            title="Total Prestamos pagados"
+            value={String(loanIndicators.totalLoansPaid)}
+            Icon={HandCash}
+            captionText="General"
+            variant="primary"
+            loading={loadingIndicator}
+          />
+          <CardList.Card
+            title="Prestamos pagados"
+            value={String(loanIndicators.loansPaid)}
+            Icon={HandCash}
+            captionText="Mes Actual"
+            variant="light"
+            loading={loadingIndicator}
+          />
+        </CardList>
       </IndicatorSection>
       <Filters
         filterOptions={filterOptions}

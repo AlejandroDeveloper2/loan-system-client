@@ -116,11 +116,12 @@ const LoanRequestPage = (): JSX.Element => {
       <IndicatorSection>
         <CardList>
           <CardList.Card
-            title="Solicitudes nuevas"
-            value="0"
+            title="Total Solicitudes"
+            value={String(loanRequests.length)}
             Icon={GoogleDocs}
-            captionText="Hoy"
-            variant="light"
+            captionText="General"
+            variant="neutral"
+            loading={loading}
           />
         </CardList>
       </IndicatorSection>

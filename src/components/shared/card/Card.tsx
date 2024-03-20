@@ -3,12 +3,21 @@ import { Eye } from "iconoir-react";
 
 import { CardProps } from "@models/ComponentModels";
 
-import { IconButton } from "@components/index";
+import { IconButton, Spinner } from "@components/index";
 
 import styles from "./Card.module.css";
 
 const Card = (props: CardProps): JSX.Element => {
-  const { title, value, moreDetailsLink, variant, captionText, Icon } = props;
+  const {
+    title,
+    value,
+    moreDetailsLink,
+    variant,
+    captionText,
+    Icon,
+    loading,
+    loadingMessage,
+  } = props;
   const navigate = useNavigate();
 
   return (
@@ -17,9 +26,13 @@ const Card = (props: CardProps): JSX.Element => {
         <Icon />
         <h2 className="buttonText">{title}</h2>
       </figure>
-      <span className="heading1" id="card-text">
-        {value}
-      </span>
+      {loading ? (
+        <Spinner className="spinnerBarPrimary" message={loadingMessage} />
+      ) : (
+        <span className="heading1" id="card-text">
+          {value}
+        </span>
+      )}
       <small className="captionText">{captionText}</small>
       {moreDetailsLink ? (
         <IconButton
