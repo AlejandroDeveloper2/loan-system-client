@@ -145,7 +145,7 @@ const useLoanRequestStore = create<LoanRequestStore>((set) => ({
         "¡Ha ocurrido un error al obtener la información de la solicitud!"
       );
     } finally {
-      toggleLoading("", true);
+      toggleLoading("", false);
     }
   },
 }));
