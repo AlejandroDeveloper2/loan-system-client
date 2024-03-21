@@ -214,7 +214,7 @@ const LoansPage = (): JSX.Element => {
         recordsData={loans}
         getOptions={getOptions}
         columnKeys={columnKeys}
-        recordTitle="Solicitud"
+        recordTitle="Préstamo"
         paginationConfig={{
           next,
           back,

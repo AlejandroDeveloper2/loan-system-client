@@ -11,6 +11,8 @@ import {
   User,
   Pagination,
   GeneralIndicators,
+  PaymentsData,
+  PaymentIndicators,
 } from "./DataModels";
 import {
   LoginFormData,
@@ -169,6 +171,31 @@ interface IndicatorsStore {
     toggleLoading: (message: string, isLoading: boolean) => void
   ) => Promise<void>;
 }
+interface PaymentStore {
+  payments: PaymentsData[];
+  payment: PaymentsData | null;
+  paymentIndicators: PaymentIndicators;
+  pagination: Pagination;
+  getTodayPayments: (
+    page: number,
+    limit: string,
+    searchValue: string,
+    paymentFilters: PaymentsFilters,
+    filter: PaymentStatusType,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
+  getPayment: (
+    paymentId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
+  payLoanQuota: (
+    paymentId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
+  getPaymentIndicators: (
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
+}
 
 export type {
   AuthStore,
@@ -177,4 +204,5 @@ export type {
   LoansStore,
   UserStore,
   IndicatorsStore,
+  PaymentStore,
 };

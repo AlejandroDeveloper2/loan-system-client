@@ -21,7 +21,7 @@ export class FormValidations {
     formRef: React.RefObject<HTMLFormElement>
   ): Promise<FieldErrorType> {
     let error: FieldErrorType;
-    if (field === "") {
+    if (field === "" || field === 0) {
       error = {
         message: "El campo es obligatorio!",
         error: true,

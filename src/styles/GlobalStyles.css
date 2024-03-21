@@ -38,13 +38,16 @@
 }
 
 .formContainer{
-    width: 90%;
+    width: 100%;
     overflow: visible;
     & form {
         border:2px solid var(--gray-light);
         & fieldset {
             display:grid;
             grid-template-columns: repeat(1, 1fr);
+        }
+        & figure {
+            display:none;
         }
     }
 }

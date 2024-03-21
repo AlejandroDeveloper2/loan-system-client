@@ -51,6 +51,7 @@ const ApproveLoanPage = (): JSX.Element => {
     useLoansStore();
 
   const action = () => {
+    console.log(formData);
     generatePaymentSchedule(formData, toggleLoading);
   };
 
@@ -75,7 +76,10 @@ const ApproveLoanPage = (): JSX.Element => {
 
   useEffect(() => {
     if (loan) {
-      updateFormInitialValues(loan);
+      updateFormInitialValues({
+        ...loan,
+        firstPaymentDate: loan.firstPaymentDate ? loan.firstPaymentDate : "",
+      });
     }
   }, [loan]);
 
@@ -159,7 +163,9 @@ const ApproveLoanPage = (): JSX.Element => {
                 label="Fecha primer pago *"
                 type="date"
                 placeholder="Seleccione fecha de primer pago"
-                value={formData.firstPaymentDate}
+                value={
+                  formData.firstPaymentDate ? formData.firstPaymentDate : ""
+                }
                 errorMessage={errors["firstPaymentDate"].message}
                 Icon={Calendar}
                 disabled={loan.loanState !== "Pendiente"}

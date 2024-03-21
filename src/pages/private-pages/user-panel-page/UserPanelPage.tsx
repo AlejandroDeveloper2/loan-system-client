@@ -72,7 +72,7 @@ const UserPanelPage = (): JSX.Element => {
           title="Total ganancias"
           value={formatMoney(generalIndicators.totalProfits)}
           Icon={Commodity}
-          moreDetailsLink="/userPanel/payments"
+          moreDetailsLink="/userPanel/loans"
           captionText="General"
           variant="warning"
           loading={loading}

@@ -14,4 +14,14 @@ interface LoanFilters {
   paymentCycle: PaymentType | string;
 }
 
-export type { ClientsFilters, LoanRequestFilters, LoanFilters };
+interface PaymentsFilters {
+  startDate: string;
+  paymentCycle: PaymentType | string;
+}
+
+export type {
+  ClientsFilters,
+  LoanRequestFilters,
+  LoanFilters,
+  PaymentsFilters,
+};

@@ -23,7 +23,7 @@ export const validationSchema = async (
     .then((wrongInput) => wrongInput)
     .catch((error: FieldErrorType) => error),
   interest: await formValidations
-    .validateEmptyFields(String(formData.interest), "interest", formRef)
+    .validateEmptyFields(formData.interest, "interest", formRef)
     .then(() =>
       formValidations.validateNumericFields(
         formData.interest,
@@ -43,11 +43,7 @@ export const validationSchema = async (
     )
     .catch((error: FieldErrorType) => error),
   firstPaymentDate: await formValidations
-    .validateEmptyFields(
-      String(formData.firstPaymentDate),
-      "firstPaymentDate",
-      formRef
-    )
+    .validateEmptyFields(formData.firstPaymentDate, "firstPaymentDate", formRef)
     .then((wrongInput) => wrongInput)
     .catch((error: FieldErrorType) => error),
 });

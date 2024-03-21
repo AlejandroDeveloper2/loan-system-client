@@ -13,6 +13,7 @@ type UserRoleType = "ADMINISTRADOR" | "USER";
 type AuthStatusType = "authenticated" | "no authenticated" | "checking";
 type VariantType = "warning" | "primary" | "neutral" | "danger" | "light";
 type LoanStateType = "Pendiente" | "Aprobado" | "Cancelado" | "Pagado";
+type PaymentStatusType = "Pendiente" | "Pagado" | "Mora" | "Cancelado";
 
 interface Step {
   label: string;
@@ -77,6 +78,7 @@ interface ParsedLoanRequestData {
   amount: number;
   state: string;
   paymentCycle: PaymentType;
+  paymentStatus: PaymentStatusType;
 }
 
 interface FormStepData<T> {
@@ -180,12 +182,30 @@ interface GeneralIndicators {
   totalLoansInArrears: number;
 }
 
+interface PaymentIndicators {
+  totalBalance: number;
+  raisedMoney: number;
+  paymentsMade: number;
+  overduePayments: number;
+}
+
+interface PaymentsData {
+  id: string;
+  paymentDate: string;
+  amount: number;
+  quotaNumber: number;
+  paymentCycle: PaymentType;
+  paymentStatus: PaymentStatusType;
+  loan: ClientLoanData;
+}
+
 export type {
   ScreenType,
   UserRoleType,
   AuthStatusType,
   VariantType,
   LoanStateType,
+  PaymentStatusType,
   Step,
   IllustrationData,
   Client,
@@ -209,4 +229,6 @@ export type {
   LoanIndicator,
   User,
   GeneralIndicators,
+  PaymentIndicators,
+  PaymentsData,
 };
