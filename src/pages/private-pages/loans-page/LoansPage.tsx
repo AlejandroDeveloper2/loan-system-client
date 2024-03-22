@@ -17,7 +17,9 @@ import {
   usePagination,
 } from "@hooks/index";
 import useLoansStore from "@zustand/LoansStore";
+import useAuthStore from "@zustand/AuthStore";
 import { formatMoney } from "@utils/helpers";
+import { getLoanTableOptions } from "@utils/tableOptionsHelpers";
 
 import { LoanFilters } from "@models/FiltersDataModels";
 import {
@@ -26,6 +28,7 @@ import {
   headers,
 } from "@constants/tables-data/LoansTableData";
 import { ClientLoanData } from "@models/DataModels";
+import { IconOnlyButtonProps } from "@models/ComponentModels";
 
 import {
   CardList,
@@ -34,7 +37,6 @@ import {
   LoanForm,
   Tables,
 } from "@components/index";
-import { getLoanTableOptions } from "@utils/tableOptionsHelpers";
 
 const LoansPage = (): JSX.Element => {
   const navigate = useNavigate();
@@ -42,6 +44,8 @@ const LoansPage = (): JSX.Element => {
   const { loading, loadingMessage, toggleLoading } = useLoading();
   const { loading: loadingIndicator, toggleLoading: toggleLoadingIndicator } =
     useLoading();
+
+  const auth = useAuthStore((state) => state.auth);
 
   const {
     loans,
@@ -98,6 +102,18 @@ const LoansPage = (): JSX.Element => {
       toggleLoading
     );
   }, [currentPage, filtersData, chosenFilter, recordsToList, searchValue]);
+
+  const getTableOptions = (loan: ClientLoanData): IconOnlyButtonProps[] => {
+    return getLoanTableOptions(
+      loan,
+      navigate,
+      auth,
+      toggleDialog,
+      updateElementId,
+      toggleDialogDelete,
+      updateLoanId
+    );
+  };
 
   return (
     <>
@@ -196,14 +212,7 @@ const LoansPage = (): JSX.Element => {
       <Tables<ClientLoanData>
         headers={headers}
         recordsData={loans}
-        tableOptions={getLoanTableOptions(
-          loans,
-          navigate,
-          toggleDialog,
-          updateElementId,
-          toggleDialogDelete,
-          updateLoanId
-        )}
+        getTableOptions={getTableOptions}
         columnKeys={columnKeys}
         recordTitle="Préstamo"
         paginationConfig={{

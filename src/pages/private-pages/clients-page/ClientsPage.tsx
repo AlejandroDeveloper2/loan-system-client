@@ -14,6 +14,7 @@ import {
 } from "@constants/tables-data/ClientTableData";
 import { Client } from "@models/DataModels";
 import { ClientsFilters } from "@models/FiltersDataModels";
+import { IconOnlyButtonProps } from "@models/ComponentModels";
 
 import { CardList, Filters, IndicatorSection, Tables } from "@components/index";
 
@@ -53,6 +54,10 @@ const ClientsPage = (): JSX.Element => {
     searchValue,
     currentPage,
   ]);
+
+  const getTableOptions = (client: Client): IconOnlyButtonProps[] => {
+    return getClientTableOptions(client, navigate);
+  };
 
   return (
     <>
@@ -111,7 +116,7 @@ const ClientsPage = (): JSX.Element => {
       <Tables<Client>
         headers={headers}
         recordsData={clients}
-        tableOptions={getClientTableOptions(clients, navigate)}
+        getTableOptions={getTableOptions}
         columnKeys={columnKeys}
         recordTitle="Cliente"
         paginationConfig={{

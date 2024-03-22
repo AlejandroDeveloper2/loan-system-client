@@ -10,6 +10,7 @@ import { getPaymentTableOptions } from "@utils/tableOptionsHelpers";
 
 import { PaymentsFilters } from "@models/FiltersDataModels";
 import { PaymentsData } from "@models/DataModels";
+import { IconOnlyButtonProps } from "@models/ComponentModels";
 import {
   columnKeys,
   filterOptions,
@@ -63,6 +64,10 @@ const PaymentsPage = (): JSX.Element => {
   useEffect(() => {
     getPaymentIndicators(toggleLoadingIndicators);
   }, []);
+
+  const getTableOptions = (payment: PaymentsData): IconOnlyButtonProps[] => {
+    return getPaymentTableOptions(payment, navigate);
+  };
 
   return (
     <>
@@ -140,7 +145,7 @@ const PaymentsPage = (): JSX.Element => {
       <Tables<PaymentsData>
         headers={headers}
         recordsData={payments}
-        tableOptions={getPaymentTableOptions(payments, navigate)}
+        getTableOptions={getTableOptions}
         columnKeys={columnKeys}
         recordTitle=""
         paginationConfig={{

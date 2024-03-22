@@ -1,5 +1,5 @@
 import { PaymentsData } from "@models/DataModels";
-import { QuotaInfoProps } from "@models/ComponentModels";
+import { IconOnlyButtonProps, QuotaInfoProps } from "@models/ComponentModels";
 import {
   columnKeys,
   headers,
@@ -19,17 +19,21 @@ const QuotaInfo = ({ quotaData }: QuotaInfoProps): JSX.Element => {
   const { toggleLoading } = useLoading();
   const { toggleLoading: toggleLoadingTicket } = useLoading();
 
+  const getTableOptions = (payment: PaymentsData): IconOnlyButtonProps[] => {
+    return getQuotaTableOptions(
+      payment,
+      toggleLoadingTicket,
+      toggleLoading,
+      getLoanTicket,
+      payLoanQuota
+    );
+  };
+
   return (
     <Tables<PaymentsData>
       headers={headers}
       recordsData={[{ ...quotaData }]}
-      tableOptions={getQuotaTableOptions(
-        [{ ...quotaData }],
-        toggleLoadingTicket,
-        toggleLoading,
-        getLoanTicket,
-        payLoanQuota
-      )}
+      getTableOptions={getTableOptions}
       columnKeys={columnKeys}
       recordTitle="Cuota"
     />

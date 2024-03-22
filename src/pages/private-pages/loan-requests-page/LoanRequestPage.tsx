@@ -4,10 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { Calendar, GoogleDocs } from "iconoir-react";
 
 import useLoanRequestStore from "@zustand/LoanRequestStore";
+import useAuthStore from "@zustand/AuthStore";
 import { useDialog, useFilter, useLoading, usePagination } from "@hooks/index";
+import { getLoanRequestTableOptions } from "@utils/tableOptionsHelpers";
 
 import { LoanRequestFilters } from "@models/FiltersDataModels";
 import { ParsedLoanRequestData } from "@models/DataModels";
+import { IconOnlyButtonProps } from "@models/ComponentModels";
 import {
   columnKeys,
   filterOptions,
@@ -21,12 +24,12 @@ import {
   InviteLinkSection,
   Tables,
 } from "@components/index";
-import { getLoanRequestTableOptions } from "@utils/tableOptionsHelpers";
 
 const LoanRequestPage = (): JSX.Element => {
   const navigate = useNavigate();
 
   const { loading, loadingMessage, toggleLoading } = useLoading();
+  const auth = useAuthStore((state) => state.auth);
 
   const {
     loanRequests,
@@ -75,6 +78,20 @@ const LoanRequestPage = (): JSX.Element => {
     );
   }, [currentPage, filtersData, chosenFilter, recordsToList, searchValue]);
 
+  const getTableOptions = (
+    request: ParsedLoanRequestData
+  ): IconOnlyButtonProps[] => {
+    return getLoanRequestTableOptions(
+      request,
+      navigate,
+      auth,
+      toggleDialog,
+      updateElementId,
+      toggleRejectDialog,
+      updateRejectElementId
+    );
+  };
+
   return (
     <>
       <DialogBox />
@@ -116,14 +133,7 @@ const LoanRequestPage = (): JSX.Element => {
       <Tables<ParsedLoanRequestData>
         headers={headers}
         recordsData={loanRequests}
-        tableOptions={getLoanRequestTableOptions(
-          loanRequests,
-          navigate,
-          toggleDialog,
-          updateElementId,
-          toggleRejectDialog,
-          updateRejectElementId
-        )}
+        getTableOptions={getTableOptions}
         columnKeys={columnKeys}
         recordTitle="Solicitud"
         paginationConfig={{

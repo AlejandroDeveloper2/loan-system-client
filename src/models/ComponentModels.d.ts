@@ -215,7 +215,7 @@ interface TablesProps<T> {
   recordsData: T[];
   columnKeys: Columnkey[];
   recordTitle: string;
-  tableOptions?: IconOnlyButtonProps[];
+  getTableOptions?: (record: T) => IconOnlyButtonProps[];
   paginationConfig?: PaginationConfig;
   isLoading?: boolean;
   loadingMessage?: string;

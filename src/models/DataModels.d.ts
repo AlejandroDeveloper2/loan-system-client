@@ -9,7 +9,7 @@ import {
 } from "./FormDataModels";
 
 type ScreenType = "mobile" | "tablet" | "desktop";
-type UserRoleType = "ADMINISTRADOR" | "USER";
+type UserRoleType = "ADMINISTRADOR" | "USUARIO";
 type AuthStatusType = "authenticated" | "no authenticated" | "checking";
 type VariantType = "warning" | "primary" | "neutral" | "danger" | "light";
 type LoanStateType = "Pendiente" | "Aprobado" | "Cancelado" | "Pagado";
