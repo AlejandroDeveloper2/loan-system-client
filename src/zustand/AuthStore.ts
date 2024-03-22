@@ -76,8 +76,10 @@ const useAuthStore = create<AuthStore>((set) => ({
   verifyAuthenticatedUser: (): void => {
     const token: string | null = window.localStorage.getItem("token");
     set({ authStatus: "checking" });
-    if (token) set({ authStatus: "authenticated" });
-    else set({ authStatus: "no authenticated" });
+    setTimeout(() => {
+      if (token) set({ authStatus: "authenticated" });
+      else set({ authStatus: "no authenticated" });
+    }, 2000);
   },
 }));
 export default useAuthStore;

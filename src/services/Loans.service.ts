@@ -1,4 +1,4 @@
-import { AxiosError } from "axios";
+import { AxiosError, AxiosRequestConfig } from "axios";
 
 import axiosClient from "@config/AxiosClient";
 
@@ -235,19 +235,20 @@ export class LoansService {
 
   public async getLoanTicket(token: string, loanId: string): Promise<Blob> {
     let response: Blob;
-    const config = {
+    const config: AxiosRequestConfig = {
       headers: {
         "Content-Type": "application/pdf",
         Authorization: `Bearer ${token}`,
       },
+      responseType: "blob",
     };
     try {
-      const { data } = await axiosClient.get<string>(
+      const { data } = await axiosClient.get<Blob>(
         `/loan/report/${loanId}`,
         config
       );
-      const parsedData: Blob = new Blob([data]);
-      response = parsedData;
+
+      response = data;
     } catch (e: unknown) {
       const parsedError: AxiosError = e as AxiosError;
       console.log(parsedError);

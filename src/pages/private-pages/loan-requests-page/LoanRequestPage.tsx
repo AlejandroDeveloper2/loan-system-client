@@ -8,12 +8,10 @@ import { useDialog, useFilter, useLoading, usePagination } from "@hooks/index";
 
 import { LoanRequestFilters } from "@models/FiltersDataModels";
 import { ParsedLoanRequestData } from "@models/DataModels";
-import { IconOnlyButtonProps } from "@models/ComponentModels";
 import {
   columnKeys,
   filterOptions,
   headers,
-  optionsData,
 } from "@constants/tables-data/LoanRequestTableData";
 
 import {
@@ -23,6 +21,7 @@ import {
   InviteLinkSection,
   Tables,
 } from "@components/index";
+import { getLoanRequestTableOptions } from "@utils/tableOptionsHelpers";
 
 const LoanRequestPage = (): JSX.Element => {
   const navigate = useNavigate();
@@ -57,8 +56,8 @@ const LoanRequestPage = (): JSX.Element => {
   );
   const {
     DialogBox: DialogBox2,
-    toggleDialog: toggleDialog2,
-    updateElementId: updateElementId2,
+    toggleDialog: toggleRejectDialog,
+    updateElementId: updateRejectElementId,
   } = useDialog(
     "¿Desea rechazar la solicitud?",
     "Rechazar solicitud",
@@ -75,35 +74,6 @@ const LoanRequestPage = (): JSX.Element => {
       chosenFilter === "Todo" ? undefined : chosenFilter
     );
   }, [currentPage, filtersData, chosenFilter, recordsToList, searchValue]);
-
-  const getOptions = (
-    request: ParsedLoanRequestData
-  ): IconOnlyButtonProps[] => {
-    return optionsData.map((option) => {
-      if (option.id === "btn-view")
-        return {
-          ...option,
-          onClick: () => navigate(`/userPanel/loanRequests/${request.id}`),
-        };
-      if (option.id === "btn-approve")
-        return {
-          ...option,
-          disabled: request.state === "Aprobado" ? true : undefined,
-          onClick: () => {
-            toggleDialog();
-            updateElementId(request.id);
-          },
-        };
-      return {
-        ...option,
-        disabled: request.state === "Rechazado" ? true : undefined,
-        onClick: () => {
-          toggleDialog2();
-          updateElementId2(request.id);
-        },
-      };
-    });
-  };
 
   return (
     <>
@@ -146,7 +116,14 @@ const LoanRequestPage = (): JSX.Element => {
       <Tables<ParsedLoanRequestData>
         headers={headers}
         recordsData={loanRequests}
-        getOptions={getOptions}
+        tableOptions={getLoanRequestTableOptions(
+          loanRequests,
+          navigate,
+          toggleDialog,
+          updateElementId,
+          toggleRejectDialog,
+          updateRejectElementId
+        )}
         columnKeys={columnKeys}
         recordTitle="Solicitud"
         paginationConfig={{

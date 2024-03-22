@@ -23,7 +23,7 @@ function Tables<T>(props: TablesProps<T>) {
     headers,
     recordsData,
     columnKeys,
-    getOptions,
+    tableOptions,
     recordTitle,
     paginationConfig,
     children,
@@ -82,9 +82,9 @@ function Tables<T>(props: TablesProps<T>) {
                     />
                   )
                 )}
-                {getOptions ? (
+                {tableOptions ? (
                   <Table.Row.Column>
-                    {getOptions(record).map((option) => (
+                    {tableOptions.map((option) => (
                       <IconOnlyButton key={option.id} {...option} />
                     ))}
                   </Table.Row.Column>
@@ -128,8 +128,8 @@ function Tables<T>(props: TablesProps<T>) {
                     : Object(record)[columnKeys[x].key],
               }))}
             >
-              {getOptions
-                ? getOptions(record).map((option) => (
+              {tableOptions
+                ? tableOptions.map((option) => (
                     <IconOnlyButton key={option.id} {...option} />
                   ))
                 : null}

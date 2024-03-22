@@ -149,6 +149,7 @@ const useLoansStore = create<LoansStore>((set) => ({
           firstPaymentDate: loanData.firstPaymentDate,
           interest: loanData.interest,
           paymentCycle: loanData.paymentCycle,
+          deadline: loanData.deadline,
           paymentSchedules,
         },
       }));
@@ -263,14 +264,12 @@ const useLoansStore = create<LoansStore>((set) => ({
       const ticket: Blob = await loansService.getLoanTicket(token, loanId);
       const href = URL.createObjectURL(ticket);
 
-      // create "a" HTML element with href to file & click
       const link = document.createElement("a");
       link.href = href;
-      link.setAttribute("download", "ticket.pdf"); //or any other extension
+      link.setAttribute("download", "ticket.pdf");
       document.body.appendChild(link);
       link.click();
 
-      // clean up "a" element & remove ObjectURL
       document.body.removeChild(link);
       URL.revokeObjectURL(href);
       toast.success("Ticket generado con exito!");

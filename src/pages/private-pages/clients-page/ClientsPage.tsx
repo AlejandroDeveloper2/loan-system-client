@@ -5,21 +5,21 @@ import { Calendar, Group } from "iconoir-react";
 
 import { useFilter, useLoading, usePagination } from "@hooks/index";
 import useClientsStore from "@zustand/ClientsStore";
+import { getClientTableOptions } from "@utils/tableOptionsHelpers";
 
 import {
   headers,
   columnKeys,
-  optionsData,
   filterOptions,
 } from "@constants/tables-data/ClientTableData";
 import { Client } from "@models/DataModels";
 import { ClientsFilters } from "@models/FiltersDataModels";
 
 import { CardList, Filters, IndicatorSection, Tables } from "@components/index";
-import { IconOnlyButtonProps } from "@models/ComponentModels";
 
 const ClientsPage = (): JSX.Element => {
   const navigate = useNavigate();
+
   const { loading, loadingMessage, toggleLoading } = useLoading();
   const { clients, paginationData, getAllClients } = useClientsStore();
   const { filtersData, chosenFilter, onChangeFilter, onChangeFilterInput } =
@@ -53,19 +53,6 @@ const ClientsPage = (): JSX.Element => {
     searchValue,
     currentPage,
   ]);
-
-  const getOptions = (record: Client): IconOnlyButtonProps[] => {
-    return optionsData.map((option) => {
-      if (option.id === "btn-edit")
-        return {
-          ...option,
-          onClick: () => {
-            navigate(`/userPanel/clients/${record.id}`);
-          },
-        };
-      return option;
-    });
-  };
 
   return (
     <>
@@ -124,7 +111,7 @@ const ClientsPage = (): JSX.Element => {
       <Tables<Client>
         headers={headers}
         recordsData={clients}
-        getOptions={getOptions}
+        tableOptions={getClientTableOptions(clients, navigate)}
         columnKeys={columnKeys}
         recordTitle="Cliente"
         paginationConfig={{

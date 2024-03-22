@@ -1,0 +1,21 @@
+.loadingWindow{
+    width:100vw;
+    height: 100vh;
+    background-image:var(--bg-color);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+    overflow: hidden;
+    z-index:20;
+    display:grid;
+    place-content: center;
+}
+
+.logoContainer{
+    display:flex;
+    flex-direction: column;
+    gap:var(--spacing-md);
+    justify-content: center;
+    align-items: center;
+}

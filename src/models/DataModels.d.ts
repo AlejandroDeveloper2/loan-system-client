@@ -122,6 +122,7 @@ interface Auth {
   state: boolean;
   roles: UserRoleType;
   exp: number;
+  iat: number;
 }
 
 interface ResponseGlobal<T> {

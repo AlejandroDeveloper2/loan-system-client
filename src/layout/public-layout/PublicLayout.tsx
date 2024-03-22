@@ -35,8 +35,8 @@ const PublicLayout = (): JSX.Element => {
         <Logo
           title={
             location.pathname.includes("/loanRequest")
-              ? "Solicitud de préstamo DOSECOM SEL"
-              : "Sistema de prestamos"
+              ? "Solicitud de préstamo en Cash Money RD"
+              : "Cash Money RD"
           }
         />
         {isStepperLoaded ? (

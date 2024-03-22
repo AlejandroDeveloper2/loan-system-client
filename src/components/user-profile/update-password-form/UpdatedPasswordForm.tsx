@@ -9,16 +9,20 @@ import { ChangePassDataForm } from "@models/FormDataModels";
 import { useForm, useLoading } from "@hooks/index";
 import { validationSchema } from "./ValidateSchema";
 import useUserStore from "@zustand/UsersStore";
+import useAuthStore from "@zustand/AuthStore";
 
 import { CustomForm } from "@components/index";
 
 const UpdatedPasswordForm = (): JSX.Element => {
   const { updateUserPassword } = useUserStore();
+  const { logout } = useAuthStore();
 
   const { loading, toggleLoading } = useLoading();
 
   const action = () => {
-    updateUserPassword(formData, toggleLoading);
+    updateUserPassword(formData, toggleLoading).then(() => {
+      logout();
+    });
   };
 
   const { formData, errors, formRef, handleChange, handleSubmit } =

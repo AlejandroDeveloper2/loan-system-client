@@ -6,15 +6,14 @@ import { Calendar, Cash, Coins, CoinsSwap, Triangle } from "iconoir-react";
 import { formatMoney, getCurrentDate } from "@utils/helpers";
 import { useFilter, useLoading, usePagination } from "@hooks/index";
 import usePaymentStore from "@zustand/PaymentStore";
+import { getPaymentTableOptions } from "@utils/tableOptionsHelpers";
 
 import { PaymentsFilters } from "@models/FiltersDataModels";
 import { PaymentsData } from "@models/DataModels";
-import { IconOnlyButtonProps } from "@models/ComponentModels";
 import {
   columnKeys,
   filterOptions,
   headers,
-  optionsData,
 } from "@constants/tables-data/PaymentTableData";
 
 import { CardList, Filters, IndicatorSection, Tables } from "@components/index";
@@ -64,17 +63,6 @@ const PaymentsPage = (): JSX.Element => {
   useEffect(() => {
     getPaymentIndicators(toggleLoadingIndicators);
   }, []);
-
-  const getOptions = (payment: PaymentsData): IconOnlyButtonProps[] => {
-    return optionsData.map((option) => {
-      return {
-        ...option,
-        onClick: () => {
-          navigate(`/userPanel/payments/${payment.id}`);
-        },
-      };
-    });
-  };
 
   return (
     <>
@@ -152,7 +140,7 @@ const PaymentsPage = (): JSX.Element => {
       <Tables<PaymentsData>
         headers={headers}
         recordsData={payments}
-        getOptions={getOptions}
+        tableOptions={getPaymentTableOptions(payments, navigate)}
         columnKeys={columnKeys}
         recordTitle=""
         paginationConfig={{

@@ -91,16 +91,7 @@ export const filterOptions: IconButtonProps[] = [
     loading: false,
     onClick: () => console.log(""),
   },
-  {
-    Icon: Star,
-    label: "Cancelado",
-    id: "Cancelado",
-    type: "button",
-    title: "Filtrar por pagos cancelados",
-    variant: "neutral",
-    loading: false,
-    onClick: () => console.log(""),
-  },
+
   {
     Icon: Star,
     label: "En mora",

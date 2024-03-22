@@ -5,8 +5,6 @@ import {
   Calendar,
   Coins,
   DollarCircle,
-  Edit,
-  Eye,
   HandCash,
   Triangle,
 } from "iconoir-react";
@@ -26,10 +24,8 @@ import {
   columnKeys,
   filterOptions,
   headers,
-  optionsData,
 } from "@constants/tables-data/LoansTableData";
 import { ClientLoanData } from "@models/DataModels";
-import { IconOnlyButtonProps } from "@models/ComponentModels";
 
 import {
   CardList,
@@ -38,6 +34,7 @@ import {
   LoanForm,
   Tables,
 } from "@components/index";
+import { getLoanTableOptions } from "@utils/tableOptionsHelpers";
 
 const LoansPage = (): JSX.Element => {
   const navigate = useNavigate();
@@ -101,39 +98,6 @@ const LoansPage = (): JSX.Element => {
       toggleLoading
     );
   }, [currentPage, filtersData, chosenFilter, recordsToList, searchValue]);
-
-  const getOptions = (loan: ClientLoanData): IconOnlyButtonProps[] => {
-    return optionsData.map((option) => {
-      if (option.id === "btn-edit-loan")
-        return {
-          ...option,
-          Icon: loan.loanState !== "Pendiente" ? Eye : Edit,
-          variant: loan.loanState !== "Pendiente" ? "primary" : "warning",
-          title:
-            loan.loanState !== "Pendiente"
-              ? "Ver detalle del préstamo"
-              : "Editar préstamo",
-          onClick: () => navigate(`/userPanel/loans/${loan.id}`),
-        };
-      if (option.id === "btn-delete-loan")
-        return {
-          ...option,
-          disabled: loan.loanState === "Cancelado" ? undefined : true,
-          onClick: () => {
-            toggleDialogDelete();
-            updateLoanId(loan.id);
-          },
-        };
-      return {
-        ...option,
-        disabled: loan.loanState !== "Pendiente" ? true : undefined,
-        onClick: () => {
-          toggleDialog();
-          updateElementId(loan.id);
-        },
-      };
-    });
-  };
 
   return (
     <>
@@ -232,7 +196,14 @@ const LoansPage = (): JSX.Element => {
       <Tables<ClientLoanData>
         headers={headers}
         recordsData={loans}
-        getOptions={getOptions}
+        tableOptions={getLoanTableOptions(
+          loans,
+          navigate,
+          toggleDialog,
+          updateElementId,
+          toggleDialogDelete,
+          updateLoanId
+        )}
         columnKeys={columnKeys}
         recordTitle="Préstamo"
         paginationConfig={{

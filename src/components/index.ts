@@ -1,3 +1,4 @@
+//Shared components
 export { default as Logo } from "./shared/logo/Logo";
 export {
   default as BaseButton,
@@ -31,6 +32,7 @@ export { default as Dialog } from "./shared/dialog/Dialog";
 export { default as Modal } from "./shared/modal/Modal";
 export { default as Loader } from "./shared/loader/Loader";
 export { default as InfoCard } from "./shared/info-card/InfoCard";
+export { default as LoadingWindow } from "./shared/loading-window/LoadingWindow";
 
 // loan request components
 export { default as ClientSearchValidation } from "./loan-request/client-search-validation/ClientSearchValidation";
