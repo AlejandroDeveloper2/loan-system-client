@@ -1,11 +1,11 @@
-import { DollarCircle, Calendar, Cutlery } from "iconoir-react";
+import { DollarCircle, Calendar, Cutlery, Triangle } from "iconoir-react";
 
 import useLoanRequestStore from "@zustand/LoanRequestStore";
 
 import { initialValues } from "@constants/form-initial-values/LoanDataInitialValues";
 import { LoanDataForm } from "@models/FormDataModels";
 
-import { InputIndicator, InputText, RadioButtonList } from "@components/index";
+import { InfoCard } from "@components/index";
 
 import styles from "@components/shared/custom-form/CustomForm.module.css";
 
@@ -29,83 +29,21 @@ const LoanDataSection = (): JSX.Element => {
       <form id="read-only-personal-form" className={styles.form}>
         <h2 className="heading2"> Información del préstamo</h2>
         <fieldset className={styles.fieldset}>
-          <InputText
-            id="amount"
-            name="amount"
-            label="Monto solicitado *"
-            type="number"
-            placeholder="Digita el valor del monto que solicitas"
-            value={fillForm().amount}
-            errorMessage=""
+          <InfoCard
             Icon={DollarCircle}
-            disabled
-            onChange={() => {}}
+            label="Monto solicitado"
+            value={fillForm().amount}
           />
-          <RadioButtonList
-            id="paymentCycle"
-            label="Modalidad de pago *"
-            errorMessage={""}
-            radioButtons={[
-              {
-                id: "option-1",
-                name: "paymentCycle",
-                value: "Mensual",
-                label: "Mensual",
-                disabled: true,
-                checked: fillForm().paymentCycle === "Mensual",
-                onChange: () => {},
-              },
-              {
-                id: "option-2",
-                name: "paymentCycle",
-                value: "Quincenal",
-                label: "Quincenal",
-                disabled: true,
-                checked: fillForm().paymentCycle === "Quincenal",
-                onChange: () => {},
-              },
-              {
-                id: "option-3",
-                name: "paymentCycle",
-                value: "Semanal",
-                label: "Semanal",
-                disabled: true,
-                checked: fillForm().paymentCycle === "Semanal",
-                onChange: () => {},
-              },
-            ]}
+          <InfoCard
+            Icon={Triangle}
+            label="Modalidad de pago"
+            value={fillForm().paymentCycle}
           />
-          <InputIndicator
-            id="deadline"
-            name="deadline"
-            label="Plazo *"
-            userHint="(Indique el tiempo a pagar según Modalidad)"
-            type="number"
-            placeholder="Digita el tiempo"
-            value={fillForm().deadline}
-            indicatorLabel={
-              fillForm().paymentCycle === "Mensual"
-                ? "meses"
-                : fillForm().paymentCycle === "Quincenal"
-                ? "quincenas"
-                : "semanas"
-            }
-            errorMessage={""}
-            Icon={Calendar}
-            disabled
-            onChange={() => {}}
-          />
-          <InputText
-            id="description"
-            name="description"
-            label="Destino del prestamo *"
-            type="text"
-            placeholder="Digita el valor del monto que solicitas"
-            value={fillForm().description}
-            errorMessage={""}
+          <InfoCard Icon={Calendar} label="Plazo" value={fillForm().deadline} />
+          <InfoCard
             Icon={Cutlery}
-            disabled
-            onChange={() => {}}
+            label="Destino del prestamo"
+            value={fillForm().description}
           />
         </fieldset>
       </form>

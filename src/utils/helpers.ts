@@ -201,5 +201,7 @@ export const getCurrentDate = (): string => {
   const currentMonth = currentDate.getMonth() + 1;
   const currentDay = currentDate.getDate();
 
-  return `${currentYear}-${currentMonth}-${currentDay}`;
+  return `${currentYear}-${
+    currentMonth <= 9 ? "0" + currentMonth : currentMonth
+  }-${currentDay <= 9 ? "0" + currentDay : currentDay}`;
 };

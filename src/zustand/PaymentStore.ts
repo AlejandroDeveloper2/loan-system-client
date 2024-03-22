@@ -90,6 +90,8 @@ const usePaymentStore = create<PaymentStore>((set) => ({
           return payment;
         }),
       }));
+      set({ payment: updatedPayment });
+      toast.success("¡Cuota pagada exitosamente!");
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al pagar la cuota!");
     } finally {

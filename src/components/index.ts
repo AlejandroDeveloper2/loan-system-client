@@ -30,6 +30,7 @@ export { default as InfoSection } from "./shared/info-section/InfoSection";
 export { default as Dialog } from "./shared/dialog/Dialog";
 export { default as Modal } from "./shared/modal/Modal";
 export { default as Loader } from "./shared/loader/Loader";
+export { default as InfoCard } from "./shared/info-card/InfoCard";
 
 // loan request components
 export { default as ClientSearchValidation } from "./loan-request/client-search-validation/ClientSearchValidation";
@@ -51,3 +52,6 @@ export { default as LoanPaymentSchedule } from "./loans/loan-payment-schedule/Lo
 //profile
 export { default as ProfileForm } from "./user-profile/profile-form/ProfileForm";
 export { default as UpdatedPasswordForm } from "./user-profile/update-password-form/UpdatedPasswordForm";
+
+//Payments components
+export { default as QuotaInfo } from "./payments/quota-info/QuotaInfo";

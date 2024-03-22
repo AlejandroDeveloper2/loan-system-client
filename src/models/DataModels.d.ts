@@ -54,6 +54,7 @@ interface ClientLoanData {
   firstPaymentDate: string;
   paymentSchedules: PaymentSchedule[];
   numberOfPayments: string;
+  createdAt?: string;
   /*custom properties*/
   amountInterest: number;
 }
@@ -149,7 +150,7 @@ interface TableResponse<T> {
 interface Columnkey {
   key: string;
   fieldType: "text" | "date" | "currency" | "subField";
-  subKey: string;
+  subKeys: string[];
   badgeValue: boolean;
 }
 
@@ -194,8 +195,8 @@ interface PaymentsData {
   paymentDate: string;
   amount: number;
   quotaNumber: number;
-  paymentCycle: PaymentType;
-  paymentStatus: PaymentStatusType;
+  paymentCycle: PaymentType | string;
+  paymentStatus: PaymentStatusType | string;
   loan: ClientLoanData;
 }
 

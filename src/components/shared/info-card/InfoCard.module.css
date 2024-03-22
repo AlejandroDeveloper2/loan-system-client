@@ -1,0 +1,51 @@
+.infoCard{
+    width:auto;
+    display:flex;
+    gap:var(--spacing-sm);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--white);
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    border:solid 1px var(--gray-light);
+    padding: var(--spacing-3xl) var(--spacing-2xl);
+
+    & p{
+        font-weight: normal;
+        color: var(--gray-dark);
+        text-transform:capitalize;
+        text-align:center;
+        white-space: pre-wrap;
+        overflow: hidden;
+        width: 80%;
+    }
+}
+
+.infoCardHead{
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    gap:var(--spacing-xs);
+    display: inline-flex;
+    & svg {
+        width:20px;
+        height: 20px;
+        color:var(--gray-dark);
+    }
+    & span {
+        font-weight: bold;
+        color: var(--gray-dark);
+        text-transform:capitalize;
+        text-align:center;
+    }
+}
+
+@media(min-width:768px){
+    .infoCardHead{
+        & svg {
+            width:24px;
+            height: 24px;
+        }
+    }
+}

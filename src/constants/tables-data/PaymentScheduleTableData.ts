@@ -14,13 +14,13 @@ export const columnKeys: Columnkey[] = [
     key: "quotaNumber",
     badgeValue: false,
     fieldType: "text",
-    subKey: "",
+    subKeys: [],
   },
-  { key: "paymentDate", badgeValue: false, fieldType: "date", subKey: "" },
+  { key: "paymentDate", badgeValue: false, fieldType: "date", subKeys: [] },
   {
     key: "amount",
     badgeValue: false,
     fieldType: "currency",
-    subKey: "",
+    subKeys: [],
   },
 ];

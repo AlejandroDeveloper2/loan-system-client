@@ -146,6 +146,14 @@ interface LoansStore {
     loanId: string,
     toggleLoading: (message: string, isLoading: boolean) => void
   ) => Promise<void>;
+  deleteLoan: (
+    loanId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
+  getLoanTicket: (
+    loanId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ) => Promise<void>;
 }
 
 interface UserStore {

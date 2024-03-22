@@ -1,11 +1,17 @@
-import { Bank, CreditCard } from "iconoir-react";
+import {
+  AppWindow,
+  Bank,
+  CreditCard,
+  HandCard,
+  PiggyBank,
+} from "iconoir-react";
 
 import useLoanRequestStore from "@zustand/LoanRequestStore";
 
 import { initialValues } from "@constants/form-initial-values/BankAccountInitialValues";
 import { BankAccountDataForm } from "@models/FormDataModels";
 
-import { InputText, RadioButtonList, TextArea } from "@components/index";
+import { InfoCard } from "@components/index";
 
 import styles from "@components/shared/custom-form/CustomForm.module.css";
 
@@ -31,146 +37,31 @@ const BankDataSection = (): JSX.Element => {
       <form id="read-only-personal-form" className={styles.form}>
         <h2 className="heading2"> Información de cuenta bancaria</h2>
         <fieldset className={styles.fieldset}>
-          <RadioButtonList
-            id="accountType"
-            label="Tipo de cuenta *"
-            errorMessage=""
-            radioButtons={[
-              {
-                id: "accountType1",
-                name: "accountType",
-                value: "Nomina",
-                label: "Ahorros / Nómina",
-                disabled: true,
-                checked: fillForm().accountType === "Ahorro",
-                onChange: () => {},
-              },
-              {
-                id: "accountType2",
-                name: "accountType",
-                value: "Corriente",
-                label: "Corriente",
-                disabled: true,
-                checked: fillForm().accountType === "Corriente",
-                onChange: () => {},
-              },
-            ]}
+          <InfoCard
+            Icon={PiggyBank}
+            label="Tipo de cuenta"
+            value={fillForm().accountType}
           />
-          <RadioButtonList
-            id="bank"
-            label="Banco *"
-            errorMessage={""}
-            radioButtons={[
-              {
-                id: "bank1",
-                name: "bank",
-                value: "Popular",
-                label: "Popular",
-                disabled: true,
-                checked: fillForm().bank === "Popular",
-                onChange: () => {},
-              },
-              {
-                id: "bank2",
-                name: "bank",
-                value: "Banreservas",
-                label: "Banreservas",
-                disabled: true,
-                checked: fillForm().bank === "Banreservas",
-                onChange: () => {},
-              },
-              {
-                id: "bank3",
-                name: "bank",
-                value: "BHD",
-                label: "BHD",
-                disabled: true,
-                checked: fillForm().bank === "BHD",
-                onChange: () => {},
-              },
-              {
-                id: "bank4",
-                name: "bank",
-                value: "Otro",
-                label: "Otro",
-                checked: fillForm().bank === "Otro",
-                onChange: () => {},
-              },
-            ]}
-          />
-          <InputText
-            id="name"
-            name="name"
-            label="Nombre del banco (Si escogió otro)"
-            type="text"
-            placeholder="Digita el nombre del banco"
-            value={fillForm().name}
-            errorMessage={""}
+          <InfoCard Icon={Bank} label="Banco" value={fillForm().bank} />
+          <InfoCard
             Icon={Bank}
-            disabled
-            onChange={() => {}}
+            label="Nombre del banco (Si escogió otro)"
+            value={fillForm().name}
           />
-          <RadioButtonList
-            id="bankingApplication"
-            label="¿Tiene descargada la app del banco? *"
-            errorMessage={""}
-            radioButtons={[
-              {
-                id: "bankAppYes",
-                name: "bankingApplication",
-                value: String(true),
-                label: "Si",
-                disabled: true,
-                checked: fillForm().bankingApplication === true,
-                onChange: () => {},
-              },
-              {
-                id: "bankAppNot",
-                name: "bankingApplication",
-                value: String(false),
-                label: "No",
-                disabled: true,
-                checked: fillForm().bankingApplication === false,
-                onChange: () => {},
-              },
-            ]}
+          <InfoCard
+            Icon={AppWindow}
+            label="¿Tiene descargada la app del banco?"
+            value={fillForm().bankingApplication ? "Si" : "No"}
           />
-          <RadioButtonList
-            id="transfers"
-            label="¿Sabe como realizar tranferencias bancarias? *"
-            errorMessage={""}
-            radioButtons={[
-              {
-                id: "transfersYes",
-                name: "transfers",
-                value: String(true),
-                label: "Si",
-                disabled: true,
-                checked: fillForm().transfers === true,
-                onChange: () => {},
-              },
-              {
-                id: "transfersNot",
-                name: "transfers",
-                value: String(false),
-                label: "No",
-                disabled: true,
-                checked: fillForm().transfers === false,
-                onChange: () => {},
-              },
-            ]}
+          <InfoCard
+            Icon={HandCard}
+            label="¿Sabe como realizar tranferencias bancarias?"
+            value={fillForm().transfers ? "Si" : "No"}
           />
-          <TextArea
-            id="accountNumber"
-            name="accountNumber"
-            label="Número de cuenta *"
-            placeholder="Describe los datos de tu cuenta"
-            value={fillForm().accountNumber}
-            errorMessage={""}
-            userHint="(Esta cuenta podrá ser usada para depositar el monto de su préstamo solicitado.)"
+          <InfoCard
             Icon={CreditCard}
-            disabled
-            onChange={() => {}}
+            label="Número de cuenta"
+            value={fillForm().accountNumber}
           />
         </fieldset>
       </form>

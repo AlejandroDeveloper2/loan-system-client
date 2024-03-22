@@ -37,6 +37,7 @@ export class PaymentsService {
         paymentCycle: paymentFilters.paymentCycle,
       },
     };
+
     try {
       const { data } = await axiosClient.get<TableResponse<PaymentsData>>(
         "/payment-schedule",

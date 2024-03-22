@@ -3,6 +3,7 @@ import {
   Building,
   Cash,
   Clock,
+  Coins,
   MapPin,
   Phone,
   Suitcase,
@@ -10,11 +11,12 @@ import {
 } from "iconoir-react";
 
 import useLoanRequestStore from "@zustand/LoanRequestStore";
+import { formatMoney } from "@utils/helpers";
 
 import { initialValues } from "@constants/form-initial-values/WorkDataInitialValues";
 import { WorkDataForm } from "@models/FormDataModels";
 
-import { InputText, RadioButtonList, TextArea } from "@components/index";
+import { InfoCard } from "@components/index";
 
 import styles from "@components/shared/custom-form/CustomForm.module.css";
 
@@ -45,159 +47,60 @@ const WorkDataSection = (): JSX.Element => {
       <form id="read-only-personal-form" className={styles.form}>
         <h2 className="heading2"> Información laboral</h2>
         <fieldset className={styles.fieldset}>
-          <InputText
-            id="companyName"
-            name="companyName"
-            label="Empresa donde labora *"
-            type="text"
-            placeholder="Digita el nombre de la empresa"
-            value={fillForm().companyName}
-            errorMessage={""}
+          <InfoCard
             Icon={Building}
-            disabled
-            onChange={() => {}}
+            label="Empresa donde labora"
+            value={fillForm().companyName}
           />
-          <InputText
-            id="phone"
-            name="phone"
-            label="Teléfono de la empresa *"
-            type="phone"
-            placeholder="Digita el número de telefono de la empresa"
+          <InfoCard
+            Icon={Phone}
+            label="Teléfono de la empresa"
             value={fillForm().phone}
-            errorMessage={""}
-            Icon={Phone}
-            disabled
-            onChange={() => {}}
           />
-          <InputText
-            id="address"
-            name="address"
-            label="Dirección de la empresa *"
-            type="text"
-            placeholder="Digita la dirección de la empresa"
-            value={fillForm().address}
-            errorMessage={""}
+          <InfoCard
             Icon={MapPin}
-            disabled
-            onChange={() => {}}
+            label="Dirección de la empresa"
+            value={fillForm().address}
           />
-          <InputText
-            id="timeWorking"
-            name="timeWorking"
-            label="Tiempo trabajando en la empresa (En meses) *"
-            type="number"
-            placeholder="Digita el tiempo trabajando en la empresa"
-            value={fillForm().timeWorking}
-            errorMessage={""}
+          <InfoCard
             Icon={Clock}
-            disabled
-            onChange={() => {}}
+            label="Tiempo trabajando en la empresa (En meses)"
+            value={fillForm().timeWorking}
           />
-          <InputText
-            id="position"
-            name="position"
-            label="Posición que ocupa"
-            type="text"
-            placeholder="Digita tu cargo en la empresa"
-            value={fillForm().position}
-            errorMessage={""}
+          <InfoCard
             Icon={Suitcase}
-            disabled
-            onChange={() => {}}
+            label="Posición que ocupa"
+            value={fillForm().position}
           />
-
-          <InputText
-            id="bossName"
-            name="bossName"
-            label="Nombre de su jefe inmediato *"
-            type="text"
-            placeholder="Digita el nombre de su jefe "
-            value={fillForm().bossName}
-            errorMessage={""}
+          <InfoCard
             Icon={User}
-            disabled
-            onChange={() => {}}
+            label="Nombre de su jefe inmediato"
+            value={fillForm().bossName}
           />
-          <InputText
-            id="bossPhone"
-            name="bossPhone"
-            label="Teléfono jefe inmediato *"
-            type="phone"
-            placeholder="Digita el número de teléfono de su jefe"
-            value={fillForm().bossPhone}
-            errorMessage={""}
+          <InfoCard
             Icon={Phone}
-            disabled
-            onChange={() => {}}
+            label="Teléfono jefe inmediato"
+            value={fillForm().bossPhone}
           />
-          <InputText
-            id="salary"
-            name="salary"
-            label="Salarío mensual *"
-            type="number"
-            placeholder="Digita tu salarío mensual "
-            value={fillForm().salary}
-            errorMessage={""}
+          <InfoCard
             Icon={Cash}
-            disabled
-            onChange={() => {}}
+            label="Salarío mensual"
+            value={formatMoney(fillForm().salary)}
           />
-          <RadioButtonList
-            id="paymentOfPayroll"
-            label="El Pago De Su Nomina Es: *"
-            errorMessage={""}
-            radioButtons={[
-              {
-                id: "option-1",
-                name: "paymentOfPayroll",
-                value: "Mensual",
-                label: "Mensual",
-                disabled: true,
-                checked: fillForm().paymentOfPayroll === "Mensual",
-                onChange: () => {},
-              },
-              {
-                id: "option-2",
-                name: "paymentOfPayroll",
-                value: "Quincenal",
-                label: "Quincenal",
-                disabled: true,
-                checked: fillForm().paymentOfPayroll === "Quincenal",
-                onChange: () => {},
-              },
-              {
-                id: "option-3",
-                name: "paymentOfPayroll",
-                value: "Semanal",
-                label: "Semanal",
-                disabled: true,
-                checked: fillForm().paymentOfPayroll === "Semanal",
-                onChange: () => {},
-              },
-            ]}
+          <InfoCard
+            Icon={Coins}
+            label="El Pago De Su Nomina Es:"
+            value={fillForm().paymentOfPayroll}
           />
-          <InputText
-            id="otherIncome"
-            name="otherIncome"
-            label="Valor otros ingresos *"
-            type="number"
-            placeholder="Digita el valor de otros ingresos"
-            value={fillForm().otherIncome}
-            errorMessage={""}
+          <InfoCard
             Icon={Cash}
-            disabled
-            onChange={() => {}}
+            label="Valor otros ingresos"
+            value={formatMoney(fillForm().otherIncome)}
           />
-          <TextArea
-            id="description"
-            name="description"
-            label="Fuente otros ingresos *"
-            placeholder="Describe la fuente de otros ingresos"
-            value={fillForm().description}
-            errorMessage={""}
+          <InfoCard
             Icon={AlignLeft}
-            disabled
-            onChange={() => {}}
+            label="Fuente otros ingresos"
+            value={fillForm().description}
           />
         </fieldset>
       </form>

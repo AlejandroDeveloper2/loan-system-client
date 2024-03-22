@@ -234,5 +234,52 @@ const useLoansStore = create<LoansStore>((set) => ({
       toggleLoading("", false);
     }
   },
+  deleteLoan: async (
+    loanId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ): Promise<void> => {
+    const token: string = window.localStorage.getItem("token") ?? "";
+    try {
+      toggleLoading("Eliminando préstamo...", true);
+      const { body: loanUuid }: ResponseGlobal<{ id: string }> =
+        await loansService.deleteLoan(token, loanId);
+      set(({ loans }) => ({
+        loans: loans.filter((loan) => loan.id !== loanUuid.id),
+      }));
+      toast.success("¡Préstamo eliminado!");
+    } catch (e: unknown) {
+      toast.error("¡Ha ocurrido un error al eliminar el préstamo!");
+    } finally {
+      toggleLoading("", false);
+    }
+  },
+  getLoanTicket: async (
+    loanId: string,
+    toggleLoading: (message: string, isLoading: boolean) => void
+  ): Promise<void> => {
+    const token: string = window.localStorage.getItem("token") ?? "";
+    try {
+      toggleLoading("Generando ticket...", true);
+      const ticket: Blob = await loansService.getLoanTicket(token, loanId);
+      const href = URL.createObjectURL(ticket);
+
+      // create "a" HTML element with href to file & click
+      const link = document.createElement("a");
+      link.href = href;
+      link.setAttribute("download", "ticket.pdf"); //or any other extension
+      document.body.appendChild(link);
+      link.click();
+
+      // clean up "a" element & remove ObjectURL
+      document.body.removeChild(link);
+      URL.revokeObjectURL(href);
+      toast.success("Ticket generado con exito!");
+    } catch (e: unknown) {
+      toast.error("¡Ha ocurrido un error al generar el ticket!");
+    } finally {
+      toggleLoading("", false);
+    }
+  },
 }));
+
 export default useLoansStore;

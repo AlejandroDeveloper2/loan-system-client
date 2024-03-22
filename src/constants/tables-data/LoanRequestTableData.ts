@@ -27,11 +27,11 @@ export const headers: TableHeaderType[] = [
 ];
 
 export const columnKeys: Columnkey[] = [
-  { key: "fullName", badgeValue: false, fieldType: "text", subKey: "" },
-  { key: "createdAt", badgeValue: false, fieldType: "date", subKey: "" },
-  { key: "amount", badgeValue: false, fieldType: "currency", subKey: "" },
-  { key: "state", badgeValue: true, fieldType: "text", subKey: "" },
-  { key: "paymentCycle", badgeValue: true, fieldType: "text", subKey: "" },
+  { key: "fullName", badgeValue: false, fieldType: "text", subKeys: [] },
+  { key: "createdAt", badgeValue: false, fieldType: "date", subKeys: [] },
+  { key: "amount", badgeValue: false, fieldType: "currency", subKeys: [] },
+  { key: "state", badgeValue: true, fieldType: "text", subKeys: [] },
+  { key: "paymentCycle", badgeValue: true, fieldType: "text", subKeys: [] },
 ];
 
 export const optionsData: IconOnlyButtonProps[] = [

@@ -49,7 +49,7 @@
     }
 
     & tr {
-        & td:last-child{
+        & td[id="table-cell"]:last-child{
             border-right:none;
         }
         & td[id="table-cell"] {

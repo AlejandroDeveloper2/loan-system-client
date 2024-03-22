@@ -53,6 +53,7 @@ const LoansPage = (): JSX.Element => {
     getAllLoans,
     getLoanIndicators,
     cancelLoan,
+    deleteLoan,
   } = useLoansStore();
   const {
     searchValue,
@@ -73,6 +74,15 @@ const LoansPage = (): JSX.Element => {
     "¿Desea Cancelar el préstamo?",
     "Cancelar préstamo",
     cancelLoan
+  );
+  const {
+    DialogBox: DialogDelete,
+    toggleDialog: toggleDialogDelete,
+    updateElementId: updateLoanId,
+  } = useDialog(
+    "¿Desea eliminar el préstamo?",
+    "Eliminar préstamo",
+    deleteLoan
   );
 
   const { ModalWindow, toggleModal } = useModal("Nuevo préstamo");
@@ -105,6 +115,15 @@ const LoansPage = (): JSX.Element => {
               : "Editar préstamo",
           onClick: () => navigate(`/userPanel/loans/${loan.id}`),
         };
+      if (option.id === "btn-delete-loan")
+        return {
+          ...option,
+          disabled: loan.loanState === "Cancelado" ? undefined : true,
+          onClick: () => {
+            toggleDialogDelete();
+            updateLoanId(loan.id);
+          },
+        };
       return {
         ...option,
         disabled: loan.loanState !== "Pendiente" ? true : undefined,
@@ -119,6 +138,7 @@ const LoansPage = (): JSX.Element => {
   return (
     <>
       <DialogBox />
+      <DialogDelete />
       <ModalWindow>
         <LoanForm toggleModal={toggleModal} />
       </ModalWindow>

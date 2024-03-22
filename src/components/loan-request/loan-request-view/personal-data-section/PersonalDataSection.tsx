@@ -8,6 +8,7 @@ import {
   MapPin,
   Home,
   MapsArrow,
+  Triangle,
 } from "iconoir-react";
 
 import useLoanRequestStore from "@zustand/LoanRequestStore";
@@ -15,7 +16,7 @@ import useLoanRequestStore from "@zustand/LoanRequestStore";
 import { PersonalDataForm } from "@models/FormDataModels";
 import { initialValues } from "@constants/form-initial-values/PersonalDataInitialValues";
 
-import { InputText, RadioButtonList, Select } from "@components/index";
+import { InfoCard } from "@components/index";
 
 import styles from "@components/shared/custom-form/CustomForm.module.css";
 
@@ -46,155 +47,60 @@ const PersonalDataSection = (): JSX.Element => {
       <form id="read-only-personal-form" className={styles.form}>
         <h2 className="heading2"> Información personal</h2>
         <fieldset className={styles.fieldset}>
-          <InputText
-            id="email"
-            name="email"
-            label="Correo Electronico *"
-            type="text"
-            placeholder="Digita tu correo electrónico"
-            value={fillForm().email}
-            errorMessage=""
+          <InfoCard
             Icon={AtSign}
-            disabled
-            onChange={() => {}}
+            label="Correo Eléctronico"
+            value={fillForm().email}
           />
-          <InputText
-            id="fullName"
-            name="fullName"
-            label="Nombre completo *"
-            type="text"
-            placeholder="Digita tu nombre completo"
+          <InfoCard
+            Icon={User}
+            label="Nombre completo"
             value={fillForm().fullName}
-            errorMessage=""
-            disabled
-            Icon={User}
-            onChange={() => {}}
           />
-          <Select
-            id="typeOfIdentification"
-            name="typeOfIdentification"
-            label="Tipo de identificación *"
+          <InfoCard
+            Icon={User}
+            label="Tipo de identificación"
             value={fillForm().typeOfIdentification}
-            errorMessage=""
-            disabled
-            options={[
-              { label: "Cédula", value: "Cedula" },
-              { label: "Cédula extrangera", value: "CedulaExtranjera" },
-            ]}
-            Icon={User}
-            onChange={() => {}}
           />
-          <InputText
-            id="identification"
-            name="identification"
-            label="Número de identificación *"
-            type="text"
-            placeholder="Digita tu identificación"
-            value={fillForm().identification}
-            errorMessage={""}
-            disabled
+          <InfoCard
             Icon={Hashtag}
-            onChange={() => {}}
+            label="Número de identificación"
+            value={fillForm().identification}
           />
-          <InputText
-            id="phone"
-            name="phone"
-            label="Número de teléfono"
-            type="phone"
-            placeholder="Digita tu número de telefono"
-            value={fillForm().phone}
-            errorMessage=""
-            disabled
+          <InfoCard
             Icon={Phone}
-            onChange={() => {}}
+            label="Número de teléfono"
+            value={fillForm().phone}
           />
-          <Select
-            id="civilStatus"
-            name="civilStatus"
-            label="Estado civil *"
-            value={fillForm().civilStatus}
-            errorMessage=""
-            disabled
-            options={[
-              { label: "Casado", value: "Casado" },
-              { label: "Soltero", value: "Soltero" },
-              { label: "Viudo", value: "Viudo" },
-            ]}
+          <InfoCard
             Icon={PeopleTag}
-            onChange={() => {}}
+            label="Estado civil"
+            value={fillForm().civilStatus}
           />
-          <InputText
-            id="profession"
-            name="profession"
-            label="Profesión u ocupación *"
-            type="text"
-            placeholder="Digita tu ocupación o profesión "
-            value={fillForm().profession}
-            errorMessage=""
-            disabled
+          <InfoCard
             Icon={Suitcase}
-            onChange={() => {}}
+            label="Profesión u ocupación"
+            value={fillForm().profession}
           />
-          <InputText
-            id="address"
-            name="address"
-            label="Dirección de residencia *"
-            type="text"
-            placeholder="Digita la dirección de recidencia "
-            value={fillForm().address}
-            errorMessage=""
-            disabled
+          <InfoCard
             Icon={MapPin}
-            onChange={() => {}}
+            label="Dirección de residencia"
+            value={fillForm().address}
           />
-          <InputText
-            id="houseNumber"
-            name="houseNumber"
-            label="Número de casa *"
-            type="text"
-            placeholder="Digita el número de la casa "
-            value={fillForm().houseNumber}
-            errorMessage={""}
-            disabled
+          <InfoCard
             Icon={Home}
-            onChange={() => {}}
+            label="Digita el número de la casa"
+            value={fillForm().houseNumber}
           />
-          <InputText
-            id="sector"
-            name="sector"
-            label="Sector de residencia *"
-            type="text"
-            placeholder="Digita el sector de tu residencia "
-            value={fillForm().sector}
-            errorMessage=""
-            disabled
+          <InfoCard
             Icon={MapsArrow}
-            onChange={() => {}}
+            label="Sector de residencia"
+            value={fillForm().sector}
           />
-          <RadioButtonList
-            id="typeOfResidence"
-            label="Tipo de residencia *"
-            errorMessage=""
-            radioButtons={[
-              {
-                id: "option-1",
-                name: "typeOfResidence",
-                value: "Propia",
-                label: "Propia",
-                disabled: true,
-                checked: fillForm().typeOfResidence === "Propia",
-                onChange: () => {},
-              },
-              {
-                id: "option-2",
-                name: "typeOfResidence",
-                value: "Alquilada",
-                label: "Alquilada",
-                disabled: true,
-                checked: fillForm().typeOfResidence === "Alquilada",
-                onChange: () => {},
-              },
-            ]}
+          <InfoCard
+            Icon={Triangle}
+            label="Tipo de residencia"
+            value={fillForm().typeOfResidence}
           />
         </fieldset>
       </form>

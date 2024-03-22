@@ -208,4 +208,51 @@ export class LoansService {
     }
     return response;
   }
+  public async deleteLoan(
+    token: string,
+    loanId: string
+  ): Promise<ResponseGlobal<{ id: string }>> {
+    let response: ResponseGlobal<{ id: string }>;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      const { data } = await axiosClient.delete<ResponseGlobal<{ id: string }>>(
+        `/loan/${loanId}`,
+        config
+      );
+      response = data;
+    } catch (e: unknown) {
+      const parsedError: AxiosError = e as AxiosError;
+      throw new AxiosError(parsedError.message);
+    }
+    return response;
+  }
+
+  public async getLoanTicket(token: string, loanId: string): Promise<Blob> {
+    let response: Blob;
+    const config = {
+      headers: {
+        "Content-Type": "application/pdf",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const { data } = await axiosClient.get<string>(
+        `/loan/report/${loanId}`,
+        config
+      );
+      const parsedData: Blob = new Blob([data]);
+      response = parsedData;
+    } catch (e: unknown) {
+      const parsedError: AxiosError = e as AxiosError;
+      console.log(parsedError);
+      throw new AxiosError(parsedError.message);
+    }
+    return response;
+  }
 }

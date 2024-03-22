@@ -1,11 +1,12 @@
 import {
+  Calendar,
   Cash,
   Coins,
   Edit,
-  Hashtag,
   Settings,
   Star,
   SwitchOff,
+  Trash,
   Triangle,
   User,
   Xmark,
@@ -19,39 +20,45 @@ import {
 import { Columnkey } from "@models/DataModels";
 
 export const headers: TableHeaderType[] = [
+  { label: "Fecha de creación", Icon: Calendar },
   { label: "Cliente", Icon: User },
   { label: "Monto original", Icon: Cash },
   { label: "Monto + interes", Icon: Cash },
   { label: "Estado", Icon: SwitchOff },
   { label: "Ciclo de pago", Icon: Triangle },
   { label: "N° cuotas pagadas", Icon: Coins },
-  { label: "N° de cuotas", Icon: Hashtag },
   { label: "Opciones", Icon: Settings },
 ];
 
 export const columnKeys: Columnkey[] = [
   {
+    key: "createdAt",
+    badgeValue: false,
+    fieldType: "date",
+    subKeys: [],
+  },
+  {
     key: "client",
     badgeValue: false,
     fieldType: "subField",
-    subKey: "fullName",
+    subKeys: ["fullName"],
   },
-  { key: "amount", badgeValue: false, fieldType: "currency", subKey: "" },
+
+  { key: "amount", badgeValue: false, fieldType: "currency", subKeys: [] },
   {
     key: "amountInterest",
     badgeValue: false,
     fieldType: "currency",
-    subKey: "",
+    subKeys: [],
   },
-  { key: "loanState", badgeValue: true, fieldType: "text", subKey: "" },
-  { key: "paymentCycle", badgeValue: true, fieldType: "text", subKey: "" },
+  { key: "loanState", badgeValue: true, fieldType: "text", subKeys: [] },
+  { key: "paymentCycle", badgeValue: true, fieldType: "text", subKeys: [] },
   {
     key: "numberOfPayments",
     badgeValue: false,
     fieldType: "text",
-    subKey: "",
+    subKeys: [],
   },
-  { key: "deadline", badgeValue: false, fieldType: "text", subKey: "" },
 ];
 
 export const optionsData: IconOnlyButtonProps[] = [
@@ -69,6 +76,15 @@ export const optionsData: IconOnlyButtonProps[] = [
     id: "btn-cancel-loan",
     type: "button",
     title: "Cancelar préstamo",
+    variant: "danger",
+    loading: false,
+    onClick: () => console.log(""),
+  },
+  {
+    Icon: Trash,
+    id: "btn-delete-loan",
+    type: "button",
+    title: "Eliminar préstamo",
     variant: "danger",
     loading: false,
     onClick: () => console.log(""),

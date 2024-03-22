@@ -30,31 +30,31 @@ export const headers: TableHeaderType[] = [
 
 export const columnKeys: Columnkey[] = [
   {
-    key: "client",
+    key: "loan",
     badgeValue: false,
     fieldType: "subField",
-    subKey: "fullName",
+    subKeys: ["client", "fullName"],
   },
   {
-    key: "client",
+    key: "loan",
     badgeValue: false,
     fieldType: "subField",
-    subKey: "identification",
+    subKeys: ["client", "identification"],
   },
-  { key: "quotaNumber", badgeValue: false, fieldType: "text", subKey: "" },
+  { key: "quotaNumber", badgeValue: false, fieldType: "text", subKeys: [] },
   {
     key: "amount",
     badgeValue: false,
     fieldType: "currency",
-    subKey: "",
+    subKeys: [],
   },
-  { key: "paymentStatus", badgeValue: true, fieldType: "text", subKey: "" },
-  { key: "paymentCycle", badgeValue: true, fieldType: "text", subKey: "" },
+  { key: "paymentStatus", badgeValue: true, fieldType: "text", subKeys: [] },
+  { key: "paymentCycle", badgeValue: true, fieldType: "text", subKeys: [] },
   {
     key: "paymentDate",
     badgeValue: false,
     fieldType: "date",
-    subKey: "",
+    subKeys: [],
   },
 ];
 

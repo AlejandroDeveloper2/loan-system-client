@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, ReactNode } from "react";
 
-import { Step, PaginationConfig, Columnkey } from "./DataModels";
+import { Step, PaginationConfig, Columnkey, PaymentsData } from "./DataModels";
 
 type ButtonType = "button" | "submit";
 type ButtonVariantType =
@@ -285,6 +285,16 @@ interface SpinnerProps {
   className: "spinnerBar" | "spinnerBarPrimary";
 }
 
+interface InfoCardProps {
+  Icon: React.ForwardRefExoticComponent<Omit<React.SVGProps<SVGSVGElement>>>;
+  label: string;
+  value: string | number;
+}
+
+interface QuotaInfoProps {
+  quotaData: PaymentsData;
+}
+
 export type {
   TableHeaderType,
   LogoProps,
@@ -326,4 +336,6 @@ export type {
   LoanFormProps,
   LoaderProps,
   SpinnerProps,
+  InfoCardProps,
+  QuotaInfoProps,
 };

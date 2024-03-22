@@ -20,3 +20,4 @@ export { default as LoanRequestViewPage } from "./private-pages/loan-request-vie
 export { default as ApproveLoanPage } from "./private-pages/approve-loan-page/ApproveLoanPage";
 export { default as UserProfilePage } from "./private-pages/user-profile-page/UserProfilePage";
 export { default as PaymentsPage } from "./private-pages/payments-page/PaymentsPage";
+export { default as PaymentDetailsPage } from "./private-pages/payment-details-page/PaymentDetailsPage";

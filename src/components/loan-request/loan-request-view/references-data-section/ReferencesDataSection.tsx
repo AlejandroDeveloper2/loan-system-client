@@ -1,11 +1,11 @@
-import { User, Phone } from "iconoir-react";
+import { User, Phone, HelpSquare } from "iconoir-react";
 
 import useLoanRequestStore from "@zustand/LoanRequestStore";
 
 import { initialValues } from "@constants/form-initial-values/ReferencesInitialValues";
 import { ReferencesDataForm } from "@models/FormDataModels";
 
-import { InputText, RadioButtonList } from "@components/index";
+import { InfoCard } from "@components/index";
 
 import styles from "@components/shared/custom-form/CustomForm.module.css";
 
@@ -36,159 +36,60 @@ const ReferencesDataSection = (): JSX.Element => {
       <form id="read-only-personal-form" className={styles.form}>
         <h2 className="heading2"> Referencias personales</h2>
         <fieldset className={styles.fieldset}>
-          <InputText
-            id="firstRelativeNames"
-            name="firstRelativeNames"
-            label="Nombres del primer familiar *"
-            type="text"
-            placeholder="Digita el nombre de tu primer familiar"
+          <InfoCard
+            Icon={User}
+            label="Nombres del primer familiar"
             value={fillForm().firstRelativeNames}
-            errorMessage={""}
-            Icon={User}
-            disabled
-            onChange={() => {}}
           />
-          <InputText
-            id="firstRelativePhone"
-            name="firstRelativePhone"
-            label="Celular del familiar *"
-            type="phone"
-            placeholder="Digita el teléfono del familiar"
+          <InfoCard
+            Icon={Phone}
+            label="Celular del familiar"
             value={fillForm().firstRelativePhone}
-            errorMessage={""}
-            Icon={Phone}
-            disabled
-            onChange={() => {}}
           />
-          <InputText
-            id="secondRelativeNames"
-            name="secondRelativeNames"
-            label="Nombres del segundo familiar *"
-            type="text"
-            placeholder="Digita el nombre de tu segundo familiar"
+          <InfoCard
+            Icon={User}
+            label="Nombres del segundo familiar"
             value={fillForm().secondRelativeNames}
-            errorMessage={""}
-            Icon={User}
-            disabled
-            onChange={() => {}}
           />
-          <InputText
-            id="secondRelativePhone"
-            name="secondRelativePhone"
-            label="Celular del familiar *"
-            type="phone"
-            placeholder="Digita el teléfono del familiar"
+          <InfoCard
+            Icon={Phone}
+            label="Celular del familiar"
             value={fillForm().secondRelativePhone}
-            errorMessage={""}
-            Icon={Phone}
-            disabled
-            onChange={() => {}}
           />
-          <InputText
-            id="firstFriendNames"
-            name="firstFriendNames"
-            label="Primer nombre referencia (Amigo)*"
-            type="text"
-            placeholder="Digita el nombre de tu primer amigo"
+          <InfoCard
+            Icon={User}
+            label="Primer nombre referencia (Amigo)"
             value={fillForm().firstFriendNames}
-            errorMessage={""}
-            Icon={User}
-            disabled
-            onChange={() => {}}
           />
-          <InputText
-            id="firstFriendPhone"
-            name="firstFriendPhone"
-            label="Celular *"
-            type="phone"
-            placeholder="Digita el teléfono de la referencia"
+          <InfoCard
+            Icon={Phone}
+            label="Celular"
             value={fillForm().firstFriendPhone}
-            errorMessage={""}
-            Icon={Phone}
-            disabled
-            onChange={() => {}}
           />
-          <InputText
-            id="secondFriendNames"
-            name="secondFriendNames"
-            label="Segundo nombre referencia (Amigo)*"
-            type="text"
-            placeholder="Digita el nombre de tu segundo amigo"
+          <InfoCard
+            Icon={User}
+            label="Segundo nombre referencia (Amigo)"
             value={fillForm().secondFriendNames}
-            errorMessage={""}
-            Icon={User}
-            disabled
-            onChange={() => {}}
           />
-          <InputText
-            id="secondFriendPhone"
-            name="secondFriendPhone"
-            label="Celular *"
-            type="phone"
-            placeholder="Digita el teléfono de la referencia"
+          <InfoCard
+            Icon={Phone}
+            label="Celular"
             value={fillForm().secondFriendPhone}
-            errorMessage={""}
-            Icon={Phone}
-            disabled
-            onChange={() => {}}
           />
-          <RadioButtonList
-            id="interaction"
-            label="¿Porque medio se enteró de nosotros? *"
-            errorMessage={""}
-            radioButtons={[
-              {
-                id: "option-1",
-                name: "interaction",
-                value: "Referencia de un conocido",
-                label: "Referencia de un conocido",
-                disabled: true,
-                checked: fillForm().interaction === "Referencia de un conocido",
-                onChange: () => {},
-              },
-              {
-                id: "option-2",
-                name: "interaction",
-                value: "Redes sociales",
-                label: "Redes sociales",
-                disabled: true,
-                checked: fillForm().interaction === "Redes sociales",
-                onChange: () => {},
-              },
-              {
-                id: "option-3",
-                name: "interaction",
-                value: "Publicidad de sticker",
-                label: "Publicidad de sticker",
-                disabled: true,
-                checked: fillForm().interaction === "Publicidad de sticker",
-                onChange: () => {},
-              },
-            ]}
+          <InfoCard
+            Icon={HelpSquare}
+            label="¿Porque medio se enteró de nosotros?"
+            value={fillForm().interaction}
           />
-          <InputText
-            id="referredName"
-            name="referredName"
-            label="Nombre de la persona que lo recomendó *"
-            type="text"
-            placeholder="Digita el nombre de la persona"
-            value={fillForm().referredName}
-            errorMessage={""}
+          <InfoCard
             Icon={User}
-            disabled
-            onChange={() => {}}
+            label="Nombre de la persona que lo recomendó"
+            value={fillForm().referredName}
           />
-          <InputText
-            id="referredPhone"
-            name="referredPhone"
-            label="Celular *"
-            type="phone"
-            placeholder="Digita el teléfono de la persona"
-            value={fillForm().referredPhone}
-            errorMessage={""}
+          <InfoCard
             Icon={Phone}
-            disabled
-            onChange={() => {}}
+            label="Celular"
+            value={fillForm().referredPhone}
           />
         </fieldset>
       </form>
