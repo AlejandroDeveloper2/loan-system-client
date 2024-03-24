@@ -48,7 +48,7 @@ interface AuthStore {
     token: string,
     toggleLoading: (message: string, isLoading: boolean) => void
   ) => Promise<void>;
-  verifyAuthenticatedUser: () => void;
+  verifyAuthenticatedUser: () => Promise<void>;
 }
 
 interface LoanRequestStore {

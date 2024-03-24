@@ -46,4 +46,14 @@ export const validationSchema = async (
     .validateEmptyFields(formData.firstPaymentDate, "firstPaymentDate", formRef)
     .then((wrongInput) => wrongInput)
     .catch((error: FieldErrorType) => error),
+  numberOfQuotas: await formValidations
+    .validateEmptyFields(formData.numberOfQuotas, "numberOfQuotas", formRef)
+    .then(() =>
+      formValidations.validateNumericFields(
+        formData.numberOfQuotas,
+        "numberOfQuotas",
+        formRef
+      )
+    )
+    .catch((error: FieldErrorType) => error),
 });

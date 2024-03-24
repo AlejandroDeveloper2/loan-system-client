@@ -48,7 +48,8 @@ export class LoanRequestService {
   public async approveLoanRequest(
     token: string,
     loanRequestId: string
-  ): Promise<void> {
+  ): Promise<ResponseGlobal<{ id: string }>> {
+    let response: ResponseGlobal<{ id: string }>;
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -56,21 +57,24 @@ export class LoanRequestService {
       },
     };
     try {
-      await axiosClient.patch<void>(
+      const { data } = await axiosClient.patch<ResponseGlobal<{ id: string }>>(
         `/loan-application/approve/${loanRequestId}`,
         {},
         config
       );
+      response = data;
     } catch (e: unknown) {
       const parsedError: AxiosError = e as AxiosError;
       throw new AxiosError(parsedError.message);
     }
+    return response;
   }
 
   public async rejectLoanRequest(
     token: string,
     loanRequestId: string
-  ): Promise<void> {
+  ): Promise<ResponseGlobal<{ id: string }>> {
+    let response: ResponseGlobal<{ id: string }>;
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -78,14 +82,16 @@ export class LoanRequestService {
       },
     };
     try {
-      await axiosClient.delete<void>(
+      const { data } = await axiosClient.delete<ResponseGlobal<{ id: string }>>(
         `/loan-application/reject/${loanRequestId}`,
         config
       );
+      response = data;
     } catch (e: unknown) {
       const parsedError: AxiosError = e as AxiosError;
       throw new AxiosError(parsedError.message);
     }
+    return response;
   }
 
   public async getAllLoanRequests(

@@ -4,15 +4,11 @@ import PublicRoutes from "./PublicRoutes";
 import PrivateRoutes from "./PrivateRoutes";
 
 import useAuthStore from "@zustand/AuthStore";
-import { useSession } from "@hooks/index";
 
 import { LoadingWindow } from "@components/index";
 
 const MainRoutes = (): JSX.Element => {
   const { authStatus } = useAuthStore();
-  useSession(
-    authStatus === "no authenticated" || authStatus === "checking" ? 0 : 100
-  );
 
   if (authStatus === "checking") return <LoadingWindow />;
   return (

@@ -6,6 +6,7 @@ export const initialValues = {
   interest: 0,
   deadline: 0,
   firstPaymentDate: "",
+  numberOfQuotas: 0,
 };
 
 export const initialErrors: WrongInput = {
@@ -28,6 +29,10 @@ export const initialErrors: WrongInput = {
     error: false,
   },
   firstPaymentDate: {
+    message: "",
+    error: false,
+  },
+  numberOfQuotas: {
     message: "",
     error: false,
   },

@@ -133,6 +133,7 @@ interface ApproveLoanDataForm {
   deadline: number;
   interest: number;
   firstPaymentDate: string;
+  numberOfQuotas: number;
 }
 
 interface ProfileDataForm {

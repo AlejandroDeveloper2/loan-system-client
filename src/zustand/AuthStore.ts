@@ -14,7 +14,7 @@ import { Auth, ServerResponse } from "@models/DataModels";
 
 const authService = new AuthService();
 
-const useAuthStore = create<AuthStore>((set) => ({
+const useAuthStore = create<AuthStore>((set, get) => ({
   auth: decodeToken<Auth>(localStorage.getItem("token") ?? ""),
   authStatus: "no authenticated",
   login: async (
@@ -23,8 +23,9 @@ const useAuthStore = create<AuthStore>((set) => ({
   ): Promise<void> => {
     try {
       toggleLoading("Validando usuario...", true);
-      const { token } = await authService.login(userCredencials);
+      const { token, refreshToken } = await authService.login(userCredencials);
       window.localStorage.setItem("token", token);
+      window.localStorage.setItem("refreshToken", refreshToken);
       const decodedToken = decodeToken<Auth>(token);
       set({ auth: decodedToken, authStatus: "authenticated" });
       toast.success("¡Inicio de sesión exitoso!");
@@ -73,13 +74,28 @@ const useAuthStore = create<AuthStore>((set) => ({
       toggleLoading("", false);
     }
   },
-  verifyAuthenticatedUser: (): void => {
+  verifyAuthenticatedUser: async (): Promise<void> => {
+    const refreshToken: string | null =
+      window.localStorage.getItem("refreshToken");
     const token: string | null = window.localStorage.getItem("token");
-    set({ authStatus: "checking" });
-    setTimeout(() => {
-      if (token) set({ authStatus: "authenticated" });
-      else set({ authStatus: "no authenticated" });
-    }, 2000);
+    try {
+      set({ authStatus: "checking" });
+      if (refreshToken && token) {
+        const res = await authService.verifyAuthenticatedUser({
+          refreshToken,
+          token,
+        });
+        window.localStorage.setItem("refreshToken", res.refreshToken);
+        window.localStorage.setItem("token", res.token);
+
+        set({ authStatus: "authenticated" });
+      } else {
+        get().logout();
+      }
+    } catch (e: unknown) {
+      const parsedError = e as ServerResponse;
+      toast.error(parsedError.message);
+    }
   },
 }));
 export default useAuthStore;

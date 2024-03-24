@@ -107,17 +107,11 @@ const LoanDataPage = (): JSX.Element => {
           id="deadline"
           name="deadline"
           label="Plazo *"
-          userHint="(Indique el tiempo a pagar según Modalidad)"
+          userHint="(Indique el tiempo a pagar en meses)"
           type="number"
           placeholder="Digita el tiempo"
           value={formData.deadline}
-          indicatorLabel={
-            radioButtonData.selectedValue === "Mensual"
-              ? "meses"
-              : radioButtonData.selectedValue === "Quincenal"
-              ? "quincenas"
-              : "semanas"
-          }
+          indicatorLabel={"meses"}
           errorMessage={errors["deadline"].message}
           Icon={Calendar}
           onChange={handleChange}

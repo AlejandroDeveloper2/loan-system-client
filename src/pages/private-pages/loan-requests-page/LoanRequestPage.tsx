@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Calendar, GoogleDocs } from "iconoir-react";
+import { GoogleDocs } from "iconoir-react";
 
 import useLoanRequestStore from "@zustand/LoanRequestStore";
 import useAuthStore from "@zustand/AuthStore";
@@ -38,7 +38,7 @@ const LoanRequestPage = (): JSX.Element => {
     approveLoanRequest,
     rejectLoanRequest,
   } = useLoanRequestStore();
-  const { filtersData, chosenFilter, onChangeFilter, onChangeFilterInput } =
+  const { filtersData, chosenFilter, onChangeFilter } =
     useFilter<LoanRequestFilters>({ requestDate: "" }, "Todo");
   const {
     searchValue,
@@ -117,19 +117,7 @@ const LoanRequestPage = (): JSX.Element => {
         filterOptions={filterOptions}
         chosenFilter={chosenFilter}
         onChangeFilter={onChangeFilter}
-      >
-        <Filters.Input
-          type="date"
-          id="requestDate"
-          name="requestDate"
-          value={filtersData.requestDate}
-          label="Fecha de creación"
-          placeholder="Ingresa la fecha de la solicitud"
-          Icon={Calendar}
-          errorMessage=""
-          onChange={onChangeFilterInput}
-        />
-      </Filters>
+      ></Filters>
       <Tables<ParsedLoanRequestData>
         headers={headers}
         recordsData={loanRequests}

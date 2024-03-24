@@ -23,6 +23,7 @@ const useClientsStore = create<ClientStore>((set) => ({
     page: 0,
     totalPages: 0,
     totalElements: 0,
+    limit: "",
   },
   getAllClients: async (
     limit: string,
@@ -44,7 +45,7 @@ const useClientsStore = create<ClientStore>((set) => ({
           clientFilters,
           filter
         );
-      set({ clients, paginationData: pagination });
+      set({ clients, paginationData: { ...pagination, limit } });
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al listar los clientes!");
     } finally {

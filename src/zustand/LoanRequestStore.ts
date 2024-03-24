@@ -16,7 +16,7 @@ import { LoanRequestFilters } from "@models/FiltersDataModels";
 
 const loanRequestService = new LoanRequestService();
 
-const useLoanRequestStore = create<LoanRequestStore>((set) => ({
+const useLoanRequestStore = create<LoanRequestStore>((set, get) => ({
   clientExists: false,
   loanRequests: [],
   loanRequest: null,
@@ -24,6 +24,7 @@ const useLoanRequestStore = create<LoanRequestStore>((set) => ({
     page: 0,
     totalPages: 0,
     totalElements: 0,
+    limit: "",
   },
   validateClient: async (
     identification: string,
@@ -63,15 +64,27 @@ const useLoanRequestStore = create<LoanRequestStore>((set) => ({
     toggleLoading: (message: string, isLoading: boolean) => void
   ): Promise<void> => {
     const token: string = window.localStorage.getItem("token") ?? "";
-    console.log(loanRequestId);
+
     try {
       toggleLoading("Aprobando solicitud...", true);
-      await loanRequestService.approveLoanRequest(token, loanRequestId);
+      const { body } = await loanRequestService.approveLoanRequest(
+        token,
+        loanRequestId
+      );
       set(({ loanRequests }) => ({
-        loanRequests: loanRequests.filter(
-          (request) => request.id !== loanRequestId
-        ),
+        loanRequests: loanRequests.filter((request) => request.id !== body.id),
       }));
+
+      await get().getAllLoanRequests(
+        get().paginationData.page,
+        get().paginationData.limit,
+        "",
+        {
+          requestDate: "",
+        },
+        toggleLoading,
+        ""
+      );
       toast.success("¡Solicitud aprobada correctamente!");
     } catch (e: unknown) {
       toast.error("Ha ocurrido un error al intentar aprobar la solicitud!");
@@ -86,12 +99,23 @@ const useLoanRequestStore = create<LoanRequestStore>((set) => ({
     const token: string = window.localStorage.getItem("token") ?? "";
     try {
       toggleLoading("Rechazando solicitud...", true);
-      await loanRequestService.rejectLoanRequest(token, loanRequestId);
+      const { body } = await loanRequestService.rejectLoanRequest(
+        token,
+        loanRequestId
+      );
       set(({ loanRequests }) => ({
-        loanRequests: loanRequests.filter(
-          (request) => request.id !== loanRequestId
-        ),
+        loanRequests: loanRequests.filter((request) => request.id !== body.id),
       }));
+      await get().getAllLoanRequests(
+        get().paginationData.page,
+        get().paginationData.limit,
+        "",
+        {
+          requestDate: "",
+        },
+        toggleLoading,
+        ""
+      );
       toast.success("¡Solicitud rechazada!");
     } catch (e: unknown) {
       toast.error("Ha ocurrido un error al intentar rechazar la solicitud!");
@@ -123,7 +147,7 @@ const useLoanRequestStore = create<LoanRequestStore>((set) => ({
           filter
         );
 
-      set({ loanRequests, paginationData: pagination });
+      set({ loanRequests, paginationData: { ...pagination, limit } });
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al listar las solicitudes!");
     } finally {

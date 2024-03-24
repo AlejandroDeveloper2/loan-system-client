@@ -55,6 +55,7 @@ interface ClientLoanData {
   paymentSchedules: PaymentSchedule[];
   numberOfPayments: string;
   createdAt?: string;
+  numberOfQuotas: number;
   /*custom properties*/
   amountInterest: number;
 }
@@ -141,6 +142,8 @@ interface Pagination {
   page: number;
   totalPages: number;
   totalElements: number;
+  /* custom property */
+  limit: string;
 }
 
 interface TableResponse<T> {
@@ -201,6 +204,11 @@ interface PaymentsData {
   loan: ClientLoanData;
 }
 
+interface RefreshSession {
+  token: string;
+  refreshToken: string;
+}
+
 export type {
   ScreenType,
   UserRoleType,
@@ -233,4 +241,5 @@ export type {
   GeneralIndicators,
   PaymentIndicators,
   PaymentsData,
+  RefreshSession,
 };

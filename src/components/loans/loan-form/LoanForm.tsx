@@ -110,9 +110,9 @@ const LoanForm = ({ toggleModal }: LoanFormProps): JSX.Element => {
             <CustomForm.Input
               id="deadline"
               name="deadline"
-              label="Número de cuotas *"
+              label="Tiempo del préstamo en meses *"
               type="number"
-              placeholder="Digita la cantidad de cuotas"
+              placeholder="Digita el tiempo en meses"
               value={formData.deadline}
               errorMessage={errors["deadline"].message}
               Icon={Hashtag}

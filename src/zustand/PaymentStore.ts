@@ -29,6 +29,7 @@ const usePaymentStore = create<PaymentStore>((set) => ({
     page: 0,
     totalPages: 0,
     totalElements: 0,
+    limit: "",
   },
   getTodayPayments: async (
     page: number,
@@ -50,7 +51,7 @@ const usePaymentStore = create<PaymentStore>((set) => ({
           paymentFilters,
           filter
         );
-      set({ payments, pagination });
+      set({ payments, pagination: { ...pagination, limit } });
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al listar los pagos!");
     } finally {

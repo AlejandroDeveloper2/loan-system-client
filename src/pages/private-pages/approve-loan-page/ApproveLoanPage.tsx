@@ -4,6 +4,7 @@ import {
   Calendar,
   Cash,
   Check,
+  Clock,
   HandCash,
   Hashtag,
   Percentage,
@@ -19,6 +20,7 @@ import {
 } from "@constants/form-initial-values/ApproveLoanInitialValues";
 
 import { validationSchema } from "./ValidationSchema";
+import { calculateNumberOfQuotas } from "@utils/helpers";
 import { useForm, useLoading } from "@hooks/index";
 import useLoansStore from "@zustand/LoansStore";
 
@@ -51,8 +53,14 @@ const ApproveLoanPage = (): JSX.Element => {
     useLoansStore();
 
   const action = () => {
-    console.log(formData);
-    generatePaymentSchedule(formData, toggleLoading);
+    const newFormData = {
+      ...formData,
+      numberOfQuotas: calculateNumberOfQuotas(
+        formData.deadline,
+        formData.paymentCycle
+      ),
+    };
+    generatePaymentSchedule(newFormData, toggleLoading);
   };
 
   const {
@@ -79,6 +87,10 @@ const ApproveLoanPage = (): JSX.Element => {
       updateFormInitialValues({
         ...loan,
         firstPaymentDate: loan.firstPaymentDate ? loan.firstPaymentDate : "",
+        numberOfQuotas: calculateNumberOfQuotas(
+          formData.deadline,
+          formData.paymentCycle
+        ),
       });
     }
   }, [loan]);
@@ -148,12 +160,12 @@ const ApproveLoanPage = (): JSX.Element => {
               <CustomForm.Input
                 id="deadline"
                 name="deadline"
-                label="Número de pagos *"
+                label="Tiempo del préstamo en meses *"
                 type="number"
-                placeholder="Digita la cantidad de pagos"
+                placeholder="Digita el tiempo del préstamo en meses"
                 value={formData.deadline}
                 errorMessage={errors["deadline"].message}
-                Icon={Hashtag}
+                Icon={Clock}
                 disabled={loan.loanState !== "Pendiente"}
                 onChange={handleChange}
               />
@@ -169,6 +181,18 @@ const ApproveLoanPage = (): JSX.Element => {
                 errorMessage={errors["firstPaymentDate"].message}
                 Icon={Calendar}
                 disabled={loan.loanState !== "Pendiente"}
+                onChange={handleChange}
+              />
+              <CustomForm.Input
+                id="numberOfQuotas"
+                name="numberOfQuotas"
+                label="Número de cuotas *"
+                type="number"
+                placeholder="Digita la cantidad de cuotas"
+                value={formData.numberOfQuotas}
+                errorMessage={errors["numberOfQuotas"].message}
+                Icon={Hashtag}
+                disabled={true}
                 onChange={handleChange}
               />
             </CustomForm.FieldSet>

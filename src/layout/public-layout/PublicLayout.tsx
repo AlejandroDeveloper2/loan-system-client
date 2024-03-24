@@ -2,6 +2,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import { loadIllustration } from "@utils/helpers";
+import { useSession } from "@hooks/index";
 
 import { steps } from "@constants/stepper-steps-data/StepsData";
 
@@ -12,6 +13,7 @@ import { Figure1, Figure2 } from "@assets/index";
 
 const PublicLayout = (): JSX.Element => {
   const location = useLocation();
+  useSession(0);
 
   const illustrationData = loadIllustration(location.pathname);
 

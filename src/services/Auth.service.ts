@@ -54,4 +54,29 @@ export class AuthService {
       throw new AxiosError(parsedErrorMessage.message);
     }
   }
+
+  public async verifyAuthenticatedUser(
+    session: LoginResponse
+  ): Promise<LoginResponse> {
+    let response: LoginResponse;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session.refreshToken}`,
+      },
+    };
+    try {
+      const { data } = await axiosClient.post<LoginResponse>(
+        "/auth/refresh",
+        session,
+        config
+      );
+      response = data;
+    } catch (e: unknown) {
+      const parsedError: AxiosError = e as AxiosError;
+      throw new AxiosError(parsedError.message);
+    }
+
+    return response;
+  }
 }

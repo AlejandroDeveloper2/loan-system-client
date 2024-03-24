@@ -16,14 +16,23 @@ export class FormValidations {
   constructor() {}
 
   public validateEmptyFields(
-    field: string | number,
+    field: string,
     key: string,
     formRef: React.RefObject<HTMLFormElement>
   ): Promise<FieldErrorType> {
     let error: FieldErrorType;
-    if (field === "" || field === 0) {
+    if (field === "" || (parseInt(field) === 0 && key !== "numberOfQuotas")) {
       error = {
         message: "El campo es obligatorio!",
+        error: true,
+      };
+      markWrongInput(formRef, key, true);
+      return Promise.reject(error);
+    }
+    if (parseInt(field) < 3 && key === "deadline") {
+      console.log(field);
+      error = {
+        message: "El plazo del préstamo debe ser minimo de 3 meses!",
         error: true,
       };
       markWrongInput(formRef, key, true);

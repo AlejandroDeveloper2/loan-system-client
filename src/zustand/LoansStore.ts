@@ -25,7 +25,7 @@ import { initialLoan } from "@constants/store-initial-values/LoanStoreInitialVal
 const loansService = new LoansService();
 const clientsService = new ClientsService();
 
-const useLoansStore = create<LoansStore>((set) => ({
+const useLoansStore = create<LoansStore>((set, get) => ({
   loans: [],
   loan: initialLoan,
   loanIndicators: {
@@ -40,6 +40,7 @@ const useLoansStore = create<LoansStore>((set) => ({
     page: 0,
     totalPages: 0,
     totalElements: 0,
+    limit: "",
   },
   getAllLoans: async (
     page: number,
@@ -70,7 +71,7 @@ const useLoansStore = create<LoansStore>((set) => ({
         };
       });
 
-      set({ loans: updatedLoans, paginationData: pagination });
+      set({ loans: updatedLoans, paginationData: { ...pagination, limit } });
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al listar los préstamos!");
     } finally {
@@ -117,14 +118,26 @@ const useLoansStore = create<LoansStore>((set) => ({
 
       set(({ loans }) => ({
         loans: [
-          ...loans,
           {
             ...loan,
             numberOfPayments: `${loan.numberOfPayments}/${loan.deadline}`,
             amountInterest: loan.amount + loan.earnings,
           },
+          ...loans,
         ],
       }));
+
+      await get().getAllLoans(
+        get().paginationData.page,
+        get().paginationData.limit,
+        "",
+        {
+          loanDate: "",
+          paymentCycle: "",
+        },
+        "",
+        toggleLoading
+      );
 
       toast.success("¡El préstamo se ha creado exitosamente!");
     } catch (e: unknown) {
@@ -171,6 +184,7 @@ const useLoansStore = create<LoansStore>((set) => ({
       toggleLoading("Aprobando préstamo..", true);
       const { body: updatedLoan }: ResponseGlobal<ClientLoanData> =
         await loansService.approveLoan(token, loanId, loanData);
+
       set({ loan: updatedLoan });
       set(({ loans }) => ({
         loans: loans.map((loan) => {
@@ -247,6 +261,17 @@ const useLoansStore = create<LoansStore>((set) => ({
       set(({ loans }) => ({
         loans: loans.filter((loan) => loan.id !== loanUuid.id),
       }));
+      await get().getAllLoans(
+        get().paginationData.page,
+        get().paginationData.limit,
+        "",
+        {
+          loanDate: "",
+          paymentCycle: "",
+        },
+        "",
+        toggleLoading
+      );
       toast.success("¡Préstamo eliminado!");
     } catch (e: unknown) {
       toast.error("¡Ha ocurrido un error al eliminar el préstamo!");

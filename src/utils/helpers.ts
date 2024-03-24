@@ -205,3 +205,12 @@ export const getCurrentDate = (): string => {
     currentMonth <= 9 ? "0" + currentMonth : currentMonth
   }-${currentDay <= 9 ? "0" + currentDay : currentDay}`;
 };
+
+export const calculateNumberOfQuotas = (
+  loanTime: number,
+  paymentCycle: PaymentType | string
+): number => {
+  if (paymentCycle === "Mensual") return loanTime * 1;
+  if (paymentCycle === "Quincenal") return loanTime * 2;
+  return loanTime * 4;
+};
