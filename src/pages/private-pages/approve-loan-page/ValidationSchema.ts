@@ -23,7 +23,7 @@ export const validationSchema = async (
     .then((wrongInput) => wrongInput)
     .catch((error: FieldErrorType) => error),
   interest: await formValidations
-    .validateEmptyFields(formData.interest, "interest", formRef)
+    .validateEmptyFields(String(formData.interest), "interest", formRef)
     .then(() =>
       formValidations.validateNumericFields(
         formData.interest,
@@ -47,7 +47,11 @@ export const validationSchema = async (
     .then((wrongInput) => wrongInput)
     .catch((error: FieldErrorType) => error),
   numberOfQuotas: await formValidations
-    .validateEmptyFields(formData.numberOfQuotas, "numberOfQuotas", formRef)
+    .validateEmptyFields(
+      String(formData.numberOfQuotas),
+      "numberOfQuotas",
+      formRef
+    )
     .then(() =>
       formValidations.validateNumericFields(
         formData.numberOfQuotas,

@@ -17,7 +17,7 @@ export const validationSchema = async (
     .then((wrongInput) => wrongInput)
     .catch((error: FieldErrorType) => error),
   amount: await formValidations
-    .validateEmptyFields(formData.amount, "amount", formRef)
+    .validateEmptyFields(String(formData.amount), "amount", formRef)
     .then(() =>
       formValidations.validateNumericFields(formData.amount, "amount", formRef)
     )
@@ -27,7 +27,7 @@ export const validationSchema = async (
     .then((wrongInput) => wrongInput)
     .catch((error: FieldErrorType) => error),
   deadline: await formValidations
-    .validateEmptyFields(formData.deadline, "deadline", formRef)
+    .validateEmptyFields(String(formData.deadline), "deadline", formRef)
     .then(() =>
       formValidations.validateNumericFields(
         formData.deadline,

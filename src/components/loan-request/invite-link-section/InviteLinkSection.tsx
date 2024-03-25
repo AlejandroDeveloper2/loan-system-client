@@ -7,7 +7,7 @@ import { IconOnlyButton } from "@components/index";
 import styles from "./InviteLinkSection.module.css";
 
 const InviteLinkSection = (): JSX.Element => {
-  const requestLink: string = "https://docecomsel.com/loanRequest";
+  const requestLink: string = "https://www.cashmoneyrd.com/loanRequest";
 
   return (
     <section className={styles.linkSection}>

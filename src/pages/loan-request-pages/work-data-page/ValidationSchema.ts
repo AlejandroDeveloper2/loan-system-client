@@ -25,7 +25,7 @@ export const validationSchema = async (
     .then((wrongInput) => wrongInput)
     .catch((error: FieldErrorType) => error),
   timeWorking: await formValidations
-    .validateEmptyFields(formData.timeWorking, "timeWorking", formRef)
+    .validateEmptyFields(String(formData.timeWorking), "timeWorking", formRef)
     .then(() =>
       formValidations.validateNumericFields(
         formData.timeWorking,
@@ -47,7 +47,7 @@ export const validationSchema = async (
     .then((wrongInput) => wrongInput)
     .catch((error: FieldErrorType) => error),
   salary: await formValidations
-    .validateEmptyFields(formData.salary, "salary", formRef)
+    .validateEmptyFields(String(formData.salary), "salary", formRef)
     .then(() =>
       formValidations.validateNumericFields(formData.salary, "salary", formRef)
     )
@@ -57,7 +57,7 @@ export const validationSchema = async (
     .then((wrongInput) => wrongInput)
     .catch((error: FieldErrorType) => error),
   otherIncome: await formValidations
-    .validateEmptyFields(formData.otherIncome, "otherIncome", formRef)
+    .validateEmptyFields(String(formData.otherIncome), "otherIncome", formRef)
     .then(() =>
       formValidations.validateNumericFields(
         formData.otherIncome,

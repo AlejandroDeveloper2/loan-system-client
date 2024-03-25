@@ -54,5 +54,6 @@ export const paymentInitialValues: PaymentsData = {
     paymentSchedules: [],
     numberOfPayments: "",
     amountInterest: 0,
+    numberOfQuotas: 0,
   },
 };
