@@ -27,7 +27,7 @@ export class AuthService {
 
   public async recoverPassword(email: string): Promise<void> {
     try {
-      await axiosClient.post<void>("/auth/forgot-password", {
+      await axiosClient.post<void>("/password/forgot", {
         email,
       });
     } catch (e: unknown) {
@@ -40,12 +40,9 @@ export class AuthService {
 
   public async changePassword(password: string, token: string): Promise<void> {
     try {
-      const { data } = await axiosClient.post(
-        `/auth/change-password/${token}`,
-        {
-          password,
-        }
-      );
+      const { data } = await axiosClient.post(`/password/reset/${token}`, {
+        password,
+      });
       console.log(data);
     } catch (e: unknown) {
       const parsedError: AxiosError = e as AxiosError;
