@@ -163,6 +163,7 @@ const useLoansStore = create<LoansStore>((set, get) => ({
           interest: loanData.interest,
           paymentCycle: loanData.paymentCycle,
           deadline: loanData.deadline,
+          numberOfQuotas: loanData.numberOfQuotas,
           paymentSchedules,
         },
       }));
